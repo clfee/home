@@ -1,0 +1,33 @@
+---
+title: "Contact"
+about: 
+  id: contact
+  template: solana
+  image-shape: round
+  image: img/mi.PNG
+# page-layout: full
+---
+
+
+
+:::{#contact}
+
+#### {{< fa envelope >}} &nbsp; meowoo@outlook.com
+
+#### {{< fa phone >}} &nbsp; 282-351-0640
+
+#### {{< fa map-location-dot >}} &nbsp; MD & CH, Sheridan, WY 82801
+
+
+:::
+
+
+```{r}
+#| echo: false
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=-106.74347, lat=44.793419)
+```
+
+<br>

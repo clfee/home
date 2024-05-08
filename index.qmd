@@ -1,19 +1,35 @@
 ---
-title: "About Me"
-about:
-  id: me
-  template: broadside
-  image: img/mi.PNG
+# title: 'Welcome to MD &CH: <span style="color:#757883"> Visa, Master Card, Amex, Discover..</span>'
+# subtitle: "Grow Your Business with US  "
+page-layout: full
 ---
+<div class="gradient-text">
 
-:::{#me}
+<span style="font-size: 3.1rem; letter-spacing: -2px; font-weight:700;">
+Welcome to MD & CH, a smart way to accept payments<br>
+</span>
+<span style="font-size: 2.1rem; letter-spacing: 0px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
+Breeze
+</span>
+</div>
 
-## Goals
+::::{.cmm-background}
+::: {.content-container}
+::: {.top-story }
 
-## Education
 
-## Experience
+::: grid
+::: {.g-col-12 .g-col-lg-4 .top-story-text .sand-background style="padding: 15px;"}
+
+We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of **mass spectrometry** with **biotech**. 
+
+Payment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.
+:::
 
 :::
 
-Thanks for checking out my web site!
+
+
+:::
+:::
+::::

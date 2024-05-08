@@ -1,0 +1,9 @@
+---
+title: "Gallery"
+---
+
+Some examples..."__"
+
+```{r}
+1 + 1
+```
