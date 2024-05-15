@@ -1,20 +1,22 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "MD & CH"
-  site-url: "https://github.com/clfee/web"
-  repo-url: "https://github.com/clfee/web"
+  site-url: "https://github.com/clfee/website"
+  repo-url: "https://github.com/clfee/website"
   favicon: img/mi2.PNG
   page-navigation: false
+  back-to-top-navigation: true
   search: true
   page-footer: 
     background: "#F6F5F3"
-    center: © 2024  &middot; Made with < fa brands r-project > and 
+    center: © 2024  &middot; Made with r-project and 
       [![](https://quarto.org/quarto.png){fig-alt="Quarto" width=65px}](https://quarto.org/) 
     right:
       - icon: github
-        href: https://github.com/clfee/web/
+        href: https://github.com/clfee/website/
   
   navbar:
     background: "#F6F5F3"

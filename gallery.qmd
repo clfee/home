@@ -1,9 +1,8 @@
 ---
-title: "Gallery"
+title: "Blog"
+listing:
+  contents: 
+    - "reports/*.qmd"
+  type: default
 ---
 
-Some examples..."__"
-
-```{r}
-1 + 1
-```

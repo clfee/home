@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/clfee/web/projects.html</loc>
-    <lastmod>2024-05-08T18:13:09.169Z</lastmod>
+    <lastmod>2024-05-15T19:56:56.248Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/web/gallery.html</loc>
@@ -19,5 +19,29 @@
   <url>
     <loc>https://github.com/clfee/web/index.html</loc>
     <lastmod>2024-05-15T18:27:09.148Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/contact.html</loc>
+    <lastmod>2024-05-15T20:03:39.277Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/reports.html</loc>
+    <lastmod>2024-05-15T20:33:42.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/gallery.html</loc>
+    <lastmod>2024-05-15T20:37:37.654Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/reports/test1.html</loc>
+    <lastmod>2024-05-15T20:33:42.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/index.html</loc>
+    <lastmod>2024-05-15T20:58:06.158Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/about.html</loc>
+    <lastmod>2024-05-07T19:52:41.690Z</lastmod>
   </url>
 </urlset>

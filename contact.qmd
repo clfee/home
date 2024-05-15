@@ -11,7 +11,7 @@ about:
 ::: {#contact}
 #### <i class="fa fa-address-book"></i><i class="fa fa-address-book"></i>   meowoo\@outlook.com
 
-#### \#### {{< fa phone >}} &nbsp;  282-351-0640
+#### Phone  282-351-0640
 
 #### \< i class="fa fa-anchor" style="font-size:24px"\>   MD & CH, Sheridan, WY 82801
 :::

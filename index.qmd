@@ -5,10 +5,11 @@ page-layout: full
 ---
 <div class="gradient-text">
 
-<span style="font-size: 3.1rem; letter-spacing: -2px; font-weight:700;">
+<span style="font-size: 2.1rem; letter-spacing: -2px; font-weight:700;">
 Welcome to MD & CH, a smart way to accept payments<br>
+<br>
 </span>
-<span style="font-size: 2.1rem; letter-spacing: 0.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
+<span style="font-size: 6.1rem; letter-spacing: 1.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
 Breeze
 </span>
 </div>
@@ -19,7 +20,7 @@ Breeze
 
 
 ::: grid
-::: {.g-col-12 .g-col-lg-4 .top-story-text .sand-background style="padding: 15px;"}
+::: {.g-col-10 .g-col-lg-4 .top-story-text .sand-background style="padding: 12px;"}
 
 We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of **mass spectrometry** with **biotech**. 
 
