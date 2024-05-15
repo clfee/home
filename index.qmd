@@ -5,12 +5,12 @@ page-layout: full
 ---
 <div class="gradient-text">
 
-<span style="font-size: 2.1rem; letter-spacing: -2px; font-weight:700;">
-Welcome to MD & CH, a smart way to accept payments<br>
+<span style="font-size: 4.1rem; letter-spacing: -2px; font-weight:700;">
+Welcome to MD & CH ! <br>
 <br>
 </span>
-<span style="font-size: 6.1rem; letter-spacing: 1.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
-Breeze
+<span style="font-size: 2.1rem; letter-spacing: 1.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
+A Smart Way to Accept Payments $$
 </span>
 </div>
 
@@ -20,7 +20,7 @@ Breeze
 
 
 ::: grid
-::: {.g-col-10 .g-col-lg-4 .top-story-text .sand-background style="padding: 12px;"}
+::: {.g-col-10 .g-col-lg-10 .top-story-text .sand-background style="padding: 12px;"}
 
 We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of **mass spectrometry** with **biotech**. 
 
@@ -28,9 +28,10 @@ Payment processing is a service offered by companies known as payment processors
 :::
 
 :::
-
+![](/img/background-3.jpg) 
 
 
 :::
 :::
 ::::
+

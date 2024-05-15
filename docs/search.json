@@ -4,7 +4,7 @@
     "href": "gallery.html",
     "title": "Blog",
     "section": "",
-    "text": "reports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "projects.html#project-2",
@@ -46,6 +46,13 @@
     "href": "index.html",
     "title": "MD & CH",
     "section": "",
-    "text": "Welcome to MD & CH, a smart way to accept payments    Breeze \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n Back to top"
+    "text": "Welcome to MD & CH !     A Smart Way to Accept Payments $$ \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "reports/journey.html",
+    "href": "reports/journey.html",
+    "title": "Machine learning-based investigation of secretome in cancer cells",
+    "section": "",
+    "text": "For cancer proteomics studies Chris Lee giving an overview of machine learning approaches for annotation of small compounds in mass spectrometry data.\n\n\n\n\n Back to top"
   }
 ]

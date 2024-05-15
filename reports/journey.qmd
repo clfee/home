@@ -1,0 +1,25 @@
+---
+title: "Machine learning-based investigation of secretome in cancer cells"
+description: |
+  Deregulation of the protein secretory pathway (PSP) is linked to many
+  hallmarks of cancer, such as promoting tissue invasion and modulating cell
+  -cell signaling.
+author:
+  - name: Chris Lee
+    url: https://clfee.github.io/
+    affiliation: MD & CH llc.
+    affiliation_url: https://heyheymi.com
+date: 2024-05-15
+creative_commons: CC BY
+categories:
+  - Cancer
+  - Mass Spectrometry
+  - Open Science
+preview: "mi.png"
+---
+
+For cancer proteomics studies [Chris Lee](https://github.com/clfee) giving an overview of machine learning
+approaches for annotation of small compounds in mass spectrometry data.
+
+![](/img/cmm1.png)
+

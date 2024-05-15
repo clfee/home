@@ -40,8 +40,8 @@ website:
 format:
   html:
     theme: 
-      - styles/custom.scss
-      - yeti
+      dark: solar
+    css: styles/custom.scss
     mainfont: Nunito Sans
     toc: true
     link-external-newwindow: true
