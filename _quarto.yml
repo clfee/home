@@ -10,7 +10,7 @@ website:
   search: true
   page-footer: 
     background: "#F6F5F3"
-    center: © 2024  &middot; Made with {{< fa brands r-project >}} and 
+    center: © 2024  &middot; Made with < fa brands r-project > and 
       [![](https://quarto.org/quarto.png){fig-alt="Quarto" width=65px}](https://quarto.org/) 
     right:
       - icon: github
@@ -37,9 +37,16 @@ website:
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: 
+      - styles/custom.scss
+      - yeti
+    mainfont: Nunito Sans
     toc: true
+    link-external-newwindow: true
+    date-format: "MMM YYYY"
+    smooth-scroll: true
+    resources:
+      - img
 
 editor: visual
 

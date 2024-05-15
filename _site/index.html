@@ -67,9 +67,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -137,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="gradient-text">
-<p><span style="font-size: 3.1rem; letter-spacing: -2px; font-weight:700;"> Welcome to MD &amp; CH, a smart way to accept payments<br> </span> <span style="font-size: 2.1rem; letter-spacing: 0px; line-height: 0.6; font-family:Economica; text-transform:uppercase;"> Breeze </span></p>
+<p><span style="font-size: 3.1rem; letter-spacing: -2px; font-weight:700;"> Welcome to MD &amp; CH, a smart way to accept payments<br> </span> <span style="font-size: 2.1rem; letter-spacing: 0.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;"> Breeze </span></p>
 </div>
 <div class="cmm-background">
 <div class="content-container">
@@ -250,6 +250,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -571,7 +576,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2024 · Made with {{&lt; fa brands r-project &gt;}} and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="65"></a></p>
+<p>© 2024 · Made with &lt; fa brands r-project &gt; and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="65"></a></p>
 </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
@@ -589,4 +594,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

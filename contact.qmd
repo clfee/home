@@ -8,19 +8,13 @@ about:
 # page-layout: full
 ---
 
+::: {#contact}
+#### <i class="fa fa-address-book"></i><i class="fa fa-address-book"></i>   meowoo\@outlook.com
 
+#### \#### {{< fa phone >}} &nbsp;  282-351-0640
 
-:::{#contact}
-
-#### {{< fa envelope >}} &nbsp; meowoo@outlook.com
-
-#### {{< fa phone >}} &nbsp; 282-351-0640
-
-#### {{< fa map-location-dot >}} &nbsp; MD & CH, Sheridan, WY 82801
-
-
+#### \< i class="fa fa-anchor" style="font-size:24px"\>   MD & CH, Sheridan, WY 82801
 :::
-
 
 ```{r}
 #| echo: false

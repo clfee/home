@@ -1,39 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://heyheymi/mdch/index.html</loc>
-    <lastmod>2024-05-08T21:31:05.662Z</lastmod>
+    <loc>https://github.com/clfee/web/projects.html</loc>
+    <lastmod>2024-05-08T18:13:09.169Z</lastmod>
   </url>
   <url>
-    <loc>https://heyheymi/mdch/Quarto-Website/index.html</loc>
-    <lastmod>2024-05-08T19:40:48.711Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heyheymi/mdch/Quarto-Website/about.html</loc>
-    <lastmod>2024-05-08T19:40:48.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heyheymi/mdch/Quarto-Website/gallery.html</loc>
-    <lastmod>2024-05-08T19:40:48.711Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heyheymi/mdch/contact.html</loc>
-    <lastmod>2024-05-08T21:29:38.075Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/clfee/web/contact.html</loc>
-    <lastmod>2024-05-08T21:54:44.214Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/clfee/web/index.html</loc>
-    <lastmod>2024-05-08T21:31:05.662Z</lastmod>
+    <loc>https://github.com/clfee/web/gallery.html</loc>
+    <lastmod>2024-05-07T20:03:39.957Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/web/about.html</loc>
     <lastmod>2024-05-07T19:52:41.690Z</lastmod>
   </url>
   <url>
-    <loc>https://github.com/clfee/web/gallery.html</loc>
-    <lastmod>2024-05-07T20:03:39.957Z</lastmod>
+    <loc>https://github.com/clfee/web/contact.html</loc>
+    <lastmod>2024-05-15T19:23:50.141Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/web/index.html</loc>
+    <lastmod>2024-05-15T18:27:09.148Z</lastmod>
   </url>
 </urlset>

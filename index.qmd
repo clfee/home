@@ -1,6 +1,6 @@
 ---
-# title: 'Welcome to MD &CH: <span style="color:#757883"> Visa, Master Card, Amex, Discover..</span>'
-# subtitle: "Grow Your Business with US  "
+## title: 'Welcome to MD &CH: <span style="color:#757883"> Visa, Master Card, Amex, Discover..</span>'
+### subtitle: "Grow Your Business with US  "
 page-layout: full
 ---
 <div class="gradient-text">
@@ -8,7 +8,7 @@ page-layout: full
 <span style="font-size: 3.1rem; letter-spacing: -2px; font-weight:700;">
 Welcome to MD & CH, a smart way to accept payments<br>
 </span>
-<span style="font-size: 2.1rem; letter-spacing: 0px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
+<span style="font-size: 2.1rem; letter-spacing: 0.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;">
 Breeze
 </span>
 </div>

@@ -66,6 +66,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -88,7 +89,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -165,13 +165,13 @@ ul.task-list li input[type="checkbox"] {
 </header> 
       <div class="about-contents"><div id="contact">
 <section id="meowoooutlook.com" class="level4">
-<h4 data-anchor-id="meowoooutlook.com">{{&lt; fa envelope &gt;}} &nbsp; meowoo@outlook.com</h4>
+<h4 data-anchor-id="meowoooutlook.com"><i class="fa fa-address-book"></i><i class="fa fa-address-book"></i> &nbsp; meowoo@outlook.com</h4>
 </section>
 <section id="section" class="level4">
-<h4 data-anchor-id="section">{{&lt; fa phone &gt;}} &nbsp; 282-351-0640</h4>
+<h4 data-anchor-id="section">#### {{&lt; fa phone &gt;}} &nbsp;&nbsp; 282-351-0640</h4>
 </section>
-<section id="md-ch-sheridan-wy-82801" class="level4">
-<h4 data-anchor-id="md-ch-sheridan-wy-82801">{{&lt; fa map-location-dot &gt;}} &nbsp; MD &amp; CH, Sheridan, WY 82801</h4>
+<section id="i-classfa-fa-anchor-stylefont-size24px-md-ch-sheridan-wy-82801" class="level4">
+<h4 data-anchor-id="i-classfa-fa-anchor-stylefont-size24px-md-ch-sheridan-wy-82801">&lt; i class=“fa fa-anchor” style=“font-size:24px”&gt; &nbsp; MD &amp; CH, Sheridan, WY 82801</h4>
 </section>
 </div></div>
     </div>
@@ -182,8 +182,8 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-0379722874e7c629a95e" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-0379722874e7c629a95e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[44.793419,-106.74347,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[44.793419,44.793419],"lng":[-106.74347,-106.74347]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-a8c6dfe83dd68df0040b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a8c6dfe83dd68df0040b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[44.793419,-106.74347,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[44.793419,44.793419],"lng":[-106.74347,-106.74347]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><br></p>
@@ -280,6 +280,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -601,7 +606,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2024 · Made with {{&lt; fa brands r-project &gt;}} and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="65"></a></p>
+<p>© 2024 · Made with &lt; fa brands r-project &gt; and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="65"></a></p>
 </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
@@ -619,4 +624,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
