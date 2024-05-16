@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "gallery.html",
-    "href": "gallery.html",
-    "title": "Blog",
+    "objectID": "reports/test1.html",
+    "href": "reports/test1.html",
+    "title": "reports",
     "section": "",
-    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "This is test!\n\n\n\n\n Back to top"
   },
   {
     "objectID": "projects.html#project-2",
@@ -21,6 +21,13 @@
     "text": "Project 5"
   },
   {
+    "objectID": "gallery.html",
+    "href": "gallery.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -32,14 +39,7 @@
     "href": "contact.html",
     "title": "Contact",
     "section": "",
-    "text": "meowoo@outlook.com\n\n\nPhone  282-351-0640\n\n\n&lt; i class=“fa fa-anchor” style=“font-size:24px”&gt;   MD & CH, Sheridan, WY 82801\n\n\n    \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "reports/test1.html",
-    "href": "reports/test1.html",
-    "title": "reports",
-    "section": "",
-    "text": "This is test!\n\n\n\n\n Back to top"
+    "text": "email meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States\n\n    \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
   },
   {
     "objectID": "index.html",
