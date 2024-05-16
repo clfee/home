@@ -9,12 +9,14 @@ about:
 ---
 
 ::: {#contact}
-<i class="material-icons" style="font-size:24px">email</i> meowoo\@outlook.com
+<i class="material-icons"></i> meowoo\@outlook.com
 
 <i class="fa fa-phone" style="font-size:24px"></i> 282-351-0640
 
 <i class="fa fa-map-marker" style="font-size:24px"></i> Dallas, TX 75201, United States
 :::
+
+<br>
 
 ```{r}
 #| echo: false

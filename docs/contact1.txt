@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MD &amp; CH</title>
+<title>MD &amp; CH - Contact</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -70,12 +69,33 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
 
 
 <link rel="stylesheet" href="styles/custom.scss">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -93,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -105,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./contact.html"> 
+    <a class="nav-link active" href="./contact.html" aria-current="page"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -128,34 +148,44 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 
 
-<div class="gradient-text">
-<p><span style="font-size: 4.1rem; letter-spacing: -2px; font-weight:700;"> Welcome to MD &amp; CH ! <br> <br> </span> <span style="font-size: 2.1rem; letter-spacing: 1.5px; line-height: 0.6; font-family:Economica; text-transform:uppercase;"> A Smart Way to Accept Payments $$ </span></p>
+<div class="quarto-about-solana column-body content">
+  <div class="about-entity">
+    <div class="entity-contents">
+      <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Contact</h1>
 </div>
-<div class="cmm-background">
-<div class="content-container">
-<div class="top-story">
-<div class="grid">
-<div class="g-col-10 g-col-lg-10 top-story-text sand-background" style="padding: 12px;">
-<p>We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of <strong>mass spectrometry</strong> with <strong>biotech</strong>.</p>
-<p>Payment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.</p>
-<p><img src=".\img/background-3.jpg" class="img-fluid"></p>
+<div class="quarto-title-meta">
+  </div>
+</header> 
+      <div class="about-contents"><div id="contact">
+<p><i class="material-icons" style="font-size:24px">email</i> meowoo@outlook.com</p>
+<p><i class="fa fa-phone" style="font-size:24px"></i> 282-351-0640</p>
+<p><i class="fa fa-map-marker" style="font-size:24px"></i> Dallas, TX 75201, United States</p>
+</div></div>
+    </div>
+    <img src="img/mi.PNG" class="about-image
+  round " style="height: 15em; width: 15em;">
+  </div>
+</div>
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-21f7db2da475d1a28303" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-21f7db2da475d1a28303">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[32.789216,-96.800657,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[32.789216,32.789216],"lng":[-96.800657,-96.800657]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</div>
-</div>
-</div>
+
 
 
 
@@ -324,13 +354,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     toggleColorMode(false);
   }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
