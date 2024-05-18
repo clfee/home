@@ -18,7 +18,7 @@ categories:
 preview: "mi.png"
 ---
 
-For cancer proteomics studies [Chris Lee](https://github.com/clfee) giving an overview of machine learning
+For cancer proteomics studies [Chris Lee](https://github.com/clfee) and interactive app [Shiny] ( https://clee23.shinyapps.io/World_Covid_trend/) giving an overview of machine learning
 approaches for annotation of small compounds in mass spectrometry data.
 
 ![](/img/cmm1.png)
