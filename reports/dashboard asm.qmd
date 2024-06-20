@@ -1,0 +1,19 @@
+---
+title: "Repurposing desipramine for neurological disorders?"
+description: |
+  Investigating whether Desipramine, ASM,and alpha-mangostin affect the same protein composition of lipid rafts.
+author:
+  - name: Chris Lee
+    url: https://clfee.github.io/
+    affiliation: MD & CH llc.
+    affiliation_url: https://heyheymi.com
+date: 2024-06-15
+creative_commons: CC BY
+categories:
+  - Cancer
+  - Mass Spectrometry
+  - Open Science
+preview: "mi.png"
+---
+
+dashboard test1a <iframe width = "1200" height="700" src = "dashboards/asm1.html"></iframe>

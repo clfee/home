@@ -3,6 +3,9 @@
     "listing": "/gallery.html",
     "items": [
       "/reports/journey.html",
+      "/reports/asm1.html",
+      "/reports/dashboard asm.html",
+      "/reports/dashboard.html",
       "/reports/test1.html"
     ]
   }

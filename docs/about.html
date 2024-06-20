@@ -191,10 +191,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>About this site</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" title="Heyhey 6/11 Eat diary">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>[1] 277</code></pre>
+</div>
+</div>
+<div class="cell" title="Heyhey 6/11 Eat diary">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">as.numeric</span>(hey_611<span class="sc">$</span>Eat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 277</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">8</span>, <span class="dv">373</span>, <span class="dv">347</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">9</span>, <span class="dv">356</span>, <span class="dv">349</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>c<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">10</span>, <span class="dv">379</span>, <span class="dv">346</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>d<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">14</span>, <span class="dv">356</span>, <span class="dv">341</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">15</span>, <span class="dv">364</span>, <span class="dv">342</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>f<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">20</span>, <span class="dv">489</span>, <span class="dv">451</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">21</span>, <span class="dv">490</span>, <span class="dv">462</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>h<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">22</span>, <span class="dv">376</span>, <span class="dv">349</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>hey_612 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="fu">rbind</span>(a,b,c,d,e,f,g,h))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(hey_612) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"Time"</span>,<span class="st">"Eat"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">as.numeric</span>(hey_612<span class="sc">$</span>Eat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 196</code></pre>
+</div>
+</div>
+<div class="cell" title="Heyhey 6/12 Eat diary">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">as.numeric</span>(hey_612<span class="sc">$</span>Eat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 196</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">6</span>, <span class="dv">376</span>, <span class="dv">342</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">9</span>, <span class="dv">391</span>, <span class="dv">343</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>c<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">12</span>, <span class="dv">366</span>, <span class="dv">343</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>d<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">16</span>, <span class="dv">492</span>, <span class="dv">454</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">15</span>, <span class="dv">364</span>, <span class="dv">342</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>f<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">20</span>, <span class="dv">489</span>, <span class="dv">451</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">21</span>, <span class="dv">490</span>, <span class="dv">462</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>h<span class="ot">&lt;-</span> <span class="fu">cal_eat</span>(<span class="dv">22</span>, <span class="dv">376</span>, <span class="dv">349</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>hey_613 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="fu">rbind</span>(a,b,c,d))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(hey_613) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"Time"</span>,<span class="st">"Eat"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">as.numeric</span>(hey_613<span class="sc">$</span>Eat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 143</code></pre>
 </div>
 </div>
 
