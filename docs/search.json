@@ -7,6 +7,41 @@
     "text": "This is test!\n\n\n\n\n Back to top"
   },
   {
+    "objectID": "reports/dashboard.html",
+    "href": "reports/dashboard.html",
+    "title": "Repurposing desipramine for neurological disorders?",
+    "section": "",
+    "text": "Acid sphingomyelinase (ASM) is an enzyme with important roles in various biological processes and diseases, including cancer, cell transport mechanisms, and COVID-19 infection. ASM mainly works to produce ceramide, which is crucial for maintaining cell membranes and regulating cell functions. Recent studies have linked ASM to several neurological disorders, such as major depression, Parkinson’s disease, and Alzheimer’s disease. It has been shown that upon ASM reduction, the consequential failure of intracellular cholesterol transport results in inhibition of the autophagic flux which eventually leads to cancer cell death Kuzu et al.\nDespite progress in diagnosing and treating diseases, many treatments for neurological conditions are ineffective because of the blood-brain barrier (BBB). The BBB selectively prevents many drugs from entering the brain. Therefore, repurposing medications that have anti-cancer properties and can cross the BBB could be a promising approach. Desipramine and alpha-mangostin are known ASM inhibitors that can penetrate the BBB.\nTo explore whether desipramine and alpha-mangostin affect the protein composition of lipid rafts in the same way, we treated cells with or without these ASM inhibitors and analyzed the results using the LC-MS/MS method. This dashboard presents the findings of our quantitative analysis.\ndashboard test2 \n\n\n\n Back to top"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MD & CH",
+    "section": "",
+    "text": "Welcome to MD & CH !     A Smart Way to Accept Payments $$ \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": " meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States\n\n    \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n[1] 277\n\n\n\nsum(as.numeric(hey_611$Eat))\n\n[1] 277\n\n\n\n#| echo: false\na&lt;- cal_eat(8, 373, 347)\nb&lt;- cal_eat(9, 356, 349)\nc&lt;- cal_eat(10, 379, 346)\nd&lt;- cal_eat(14, 356, 341)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_612 &lt;- data.table(rbind(a,b,c,d,e,f,g,h))\ncolnames(hey_612) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\n#| echo: false\na&lt;- cal_eat(6, 376, 342)\nb&lt;- cal_eat(9, 391, 343)\nc&lt;- cal_eat(12, 366, 343)\nd&lt;- cal_eat(16, 492, 454)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_613 &lt;- data.table(rbind(a,b,c,d))\ncolnames(hey_613) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_613$Eat))\n\n[1] 143\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "gallery.html",
+    "href": "gallery.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell-cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nInvestigating whether Desipramine, ASM,and alpha-mangostin affect the same protein composition of lipid rafts. \n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
     "objectID": "projects.html#project-2",
     "href": "projects.html#project-2",
     "title": "Projects",
@@ -21,48 +56,6 @@
     "text": "Project 5"
   },
   {
-    "objectID": "gallery.html",
-    "href": "gallery.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nInvestigating whether Desipramine, ASM,and alpha-mangostin affect the same protein composition of lipid rafts. \n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
-    "section": "",
-    "text": " meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States\n\n    \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MD & CH",
-    "section": "",
-    "text": "Welcome to MD & CH !     A Smart Way to Accept Payments $$ \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "reports/journey.html",
-    "href": "reports/journey.html",
-    "title": "Machine learning-based investigation of secretome in cancer cells",
-    "section": "",
-    "text": "For cancer proteomics studies Chris Lee and interactive app [Shiny] ( https://clee23.shinyapps.io/World_Covid_trend/) giving an overview of machine learning approaches for annotation of small compounds in mass spectrometry data.\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "reports/dashboard.html",
-    "href": "reports/dashboard.html",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "",
-    "text": "Acid sphingomyelinase (ASM) is an enzyme with important roles in various biological processes and diseases, including cancer, cell transport mechanisms, and COVID-19 infection. ASM mainly works to produce ceramide, which is crucial for maintaining cell membranes and regulating cell functions. Recent studies have linked ASM to several neurological disorders, such as major depression, Parkinson’s disease, and Alzheimer’s disease. It has been shown that upon ASM reduction, the consequential failure of intracellular cholesterol transport results in inhibition of the autophagic flux which eventually leads to cancer cell death Kuzu et al.\nDespite progress in diagnosing and treating diseases, many treatments for neurological conditions are ineffective because of the blood-brain barrier (BBB). The BBB selectively prevents many drugs from entering the brain. Therefore, repurposing medications that have anti-cancer properties and can cross the BBB could be a promising approach. Desipramine and alpha-mangostin are known ASM inhibitors that can penetrate the BBB.\nTo explore whether desipramine and alpha-mangostin affect the protein composition of lipid rafts in the same way, we treated cells with or without these ASM inhibitors and analyzed the results using the LC-MS/MS method. This dashboard presents the findings of our quantitative analysis.\ndashboard test2 \n\n\n\n Back to top"
-  },
-  {
     "objectID": "reports/dashboard asm.html",
     "href": "reports/dashboard asm.html",
     "title": "Repurposing desipramine for neurological disorders?",
@@ -70,45 +63,10 @@
     "text": "dashboard test1a \n\n\n\n Back to top"
   },
   {
-    "objectID": "reports/dashboard asm1.html",
-    "href": "reports/dashboard asm1.html",
-    "title": "Repurposing desipramine for neurological disorders?",
+    "objectID": "reports/journey.html",
+    "href": "reports/journey.html",
+    "title": "Machine learning-based investigation of secretome in cancer cells",
     "section": "",
-    "text": "dashboard test  dashboard test1  dashboard test2 \n\n\n\n Back to top"
-  },
-  {
-    "objectID": "reports/asm1.html",
-    "href": "reports/asm1.html",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "",
-    "text": "#rm(list=ls())\nlibrary(tidyverse)\nlibrary(reshape)\nlibrary(scales)\nlibrary(DT)\nlibrary(gt)\nlibrary(ggplot2)\nlibrary(data.table)\nlibrary(ggVennDiagram)\ntheme_set(theme_minimal(base_size = 24, base_family = \"Atkinson Hyperlegible\"))\ndt &lt;- read_csv(\"C:/Users/quicl/Downloads/asm.csv\")\ndt &lt;- dt |&gt;\n  filter(!is.na(name))|&gt;\n  mutate(\n    #category = str_to_sentence(category),\n    #Name = str_to_sentence(Name),\n    prot_func = paste(name,func1,func2,func3,func4,func5)\n    )|&gt;\n  select(check,name, change, change_desi, change_mango,prot_func)|&gt;\n  mutate(vesicle = str_detect(prot_func, \"esicl\", negate = FALSE),\n         kinase= str_detect(prot_func, \"ase\", negate = FALSE),\n         autophagy = str_detect(prot_func, \"utophagy\", negate = FALSE),\n         apoptosis = str_detect(prot_func, \"poptosi\", negate = FALSE))|&gt;\n  mutate(prot_function = case_when(\n        autophagy == TRUE   ~ \"autophagy\",\n        apoptosis == TRUE   ~ \"apoptosis\",\n        vesicle == TRUE  ~ \"vesicle trafficking\",\n        kinase == TRUE   ~ \"kinase & enzyme related\",\n      .default = \"others\"))|&gt;  \n  mutate(siRNA_change = case_when(\n      change &gt; 2 ~ \"Decrease\",\n      change &lt; 0.5 ~ \"Increase\",\n      .default = \"No change\"))|&gt;\n  mutate(desi_change = case_when(\n      change_desi &gt; 2 ~ \"Decrease\",\n      change_desi &lt; 0.5 ~ \"Increase\",\n      .default = \"No change\"))|&gt;\n  mutate(mango_change = case_when(\n      change_mango &gt; 2 ~ \"Decrease\",\n      change_mango &lt; 0.5 ~ \"Increase\",\n      .default = \"No change\"))"
-  },
-  {
-    "objectID": "reports/asm1.html#row",
-    "href": "reports/asm1.html#row",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "Row",
-    "text": "Row\n\nFigure 1\n\n\n\nRoles of ASM in neurological disorders ASM is linked to major neurological disorders such as major depression, Parkinson’s disease, and Alzheimer’s disease.Medications like desipramine and alpha-mangostin, which inhibit ASM and can cross the BBB, show potential for treating neurological disorders. (Modified from Exp Mol Med (2024);56.)\n\n\n\n\nColumn\n\n\n\nResearch Methods To explore whether ASM inhibition through siASM, desipramine, and alpha-mangostin affect the protein composition of lipid rafts in the same way, we treated cells with or without these ASM inhibitors and analyzed the results using the LC-MS/MS method. This dashboard presents the findings of our quantitative analysis. (Modified from Biomolecules. 2024 Feb; 14(2): 156.)"
-  },
-  {
-    "objectID": "reports/asm1.html#row-1",
-    "href": "reports/asm1.html#row-1",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "Row",
-    "text": "Row\n\nprop &lt;- \n  dt |&gt;\n  count(prot_function) |&gt;\n  mutate(p = 100* n / sum(n))\n\n\nprop |&gt;\n  ggplot(aes(x = 2, y = p, fill = prot_function )) +\n  geom_col(color = \"white\") +\n  labs(x = NULL, y = NULL) +\n  geom_text(aes(label = n),\n             position = position_stack(vjust = 0.5)) +\n  coord_polar(\"y\", start=0) +\n  scale_fill_brewer(palette = \"GnBu\") +\n  #ggtitle(\"A total of 870 Proteins identified in ASM-sensitive DRM\") +\n  theme_minimal()+\n  xlim(c(0.2, 2.5)) +\n  theme(\n        panel.grid = element_blank(),\n        #axis.title = element_blank(),\n        axis.ticks = element_blank(),\n        axis.text = element_blank())+\n  guides(fill = guide_legend(title = \"Protein Function \\nof 870 identified\\nDRM proteins:\"))\n\n\n\n\n\n\n\n\n\n# List of items\nx &lt;- list(siASM = paste0(dt$name,dt$siRNA_change), \n          Desipramine = paste0(dt$name,dt$desi_change), \n          Mangostin  = paste0(dt$name,dt$mango_change))\n\n# Venn diagram with custom colors\nggVennDiagram(x) + \n  scale_fill_gradient(low = \"#F4FAFE\", high = \"#4981BF\")"
-  },
-  {
-    "objectID": "reports/asm1.html#row-2",
-    "href": "reports/asm1.html#row-2",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "Row",
-    "text": "Row\n\ndesi &lt;- dt |&gt;\n  count(desi_change) |&gt;\n  mutate(p = n / sum(n))|&gt;\n  mutate(Treatment = \"Desi\")\n\ncolnames(desi)[1] &lt;- \"siRNA_change\"\n\nmango &lt;- dt |&gt;\n  count(mango_change) |&gt;\n  mutate(p = n / sum(n))|&gt;\n  mutate(Treatment = \"Mango\")\n\ncolnames(mango)[1] &lt;- \"siRNA_change\"\n\ndesi_siRNA &lt;- rbind(desi,mango,dt |&gt;\n  count(siRNA_change) |&gt;\n  mutate(p = n / sum(n))|&gt;\n  mutate(Treatment = \"siASM\"))  \n\ndesi_siRNA |&gt;\n  ggplot(aes(x = siRNA_change, y = n, group = Treatment, color = Treatment )) +\n\n  geom_line(linewidth = 1) +\n  geom_point(size = 2, color = \"#0e263560\") +\n  geom_point(size = 4, color = \"#0e263560\", shape = \"circle open\") +\n    labs(x = NULL) +\n  scale_y_continuous(\n    \"Count\",\n    sec.axis = sec_axis(~ . / nrow(dt), name = \"Proportion\", labels = label_percent())\n  )\n\nWarning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family\nnot found in Windows font database\nWarning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family\nnot found in Windows font database\n\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\n\n\n\n\n\n\n\n\n\n\nColumn\n\n\nColumn\n\n  dt |&gt;\n  count(siRNA_change, prot_function)|&gt;\n  ggplot(aes(x = n, y = fct_rev(prot_function), fill = siRNA_change)) +\n  geom_col(position = \"fill\", color = \"white\") +\n  scale_fill_manual(\n    values = c( \"pink\",\"steelblue\",\"#ae8b2d\"),\n    guide = guide_legend(reverse = TRUE) \n  ) +\n  scale_x_continuous(labels = label_percent()) +\n  labs(y = NULL, x = NULL, fill = \"siASM\")+\n  guides(fill = guide_legend(title = \"siASM\\nsensitive\\nproteins\"))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\n\n\n\n\n\n\n\n\n\n\n  dt |&gt;\n  count(desi_change, prot_function)|&gt;\n  ggplot(aes(x = n, y = fct_rev(prot_function), fill = desi_change)) +\n  geom_col(position = \"fill\", color = \"white\") +\n  scale_fill_manual(\n    values = c( \"pink\",\"steelblue\",\"#ae8b2d\"),\n    guide = guide_legend(reverse = TRUE)\n  ) +\n  scale_x_continuous(labels = label_percent()) +\n  labs(y = NULL, x = NULL, fill = \"desi\")+\n  guides(fill = guide_legend(title = \"Desipramine\\nsensitive\\nproteins\"))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\n\n\n\n\n\n\n\n\n\n\n  dt |&gt;\n  count(mango_change, prot_function)|&gt;\n  ggplot(aes(x = n, y = fct_rev(prot_function), fill = mango_change)) +\n  geom_col(position = \"fill\", color = \"white\") +\n  scale_fill_manual(\n    values = c( \"pink\",\"steelblue\",\"#ae8b2d\"),\n    guide = guide_legend(reverse = TRUE) \n  ) +\n  scale_x_continuous(labels = label_percent()) +\n  labs(y = NULL, x = NULL, fill = \"siASM\")+\n  guides(fill = guide_legend(title = \"Mangostin\\nsensitive\\nproteins\"))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database"
-  },
-  {
-    "objectID": "reports/asm1.html#row-3",
-    "href": "reports/asm1.html#row-3",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "Row",
-    "text": "Row\n\ndt_sub &lt;- dt |&gt; #esicle-a\n  filter(str_detect(prot_func, \"esicle-\")) |&gt;\n  arrange(desc(change))\n\ndt_sub &lt;- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |&gt; \n  mutate(name = str_replace(name,\"Vesicle-trafficking protein\",\"\"))|&gt;\nmutate(name = str_replace(name,\"Isoform 1 of \",\"\"))|&gt;\n  mutate(name = str_replace(name,\"Vesicle-associated membrane protein \", \"\"))\n\ndt_sub[ , 1:2] &lt;- str_split_fixed(dt_sub$name, \",\", 2)\n\ncolnames(dt_sub)[1:5] &lt;- c(\"name\",'x', \"siRNA\",\"Desipramine\",\"Mangosteen\")\n\ndt_sub &lt;- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars=\"name\", measured.vars=c(\"change\", \"change_desi\",\"change_mango\"))\n\nWarning: The melt generic in data.table has been passed a data.frame and will\nattempt to redirect to the relevant reshape2 method; please note that reshape2\nis superseded and is no longer actively developed, and this redirection is now\ndeprecated. To continue using melt methods from reshape2 while both libraries\nare attached, e.g. melt.list, you can prepend the namespace, i.e.\nreshape2::melt(data.frame(dt_sub[, c(1, 3:5)])). In the next version, this\nwarning will become an error.\n\ndt_sub |&gt;\n  mutate(value = ifelse(value &gt;=1 , -1*value, 1/value))|&gt;\n  arrange(desc(value))|&gt;\n  ggplot(aes(fill= variable, y=value, x=name)) + \n    geom_bar(position='dodge', stat='identity')+ \n    coord_flip() +\n    labs(y = NULL, x = NULL)+\n    scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\n\n\n\n\n\n\n\n\n\n\ndt_sub &lt;- dt |&gt; \n  filter(str_detect(prot_func, \"poptosis\")) |&gt;\n  arrange(desc(change))\n\ndt_sub &lt;- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |&gt; \n  mutate(name = str_replace(name,\"Isoform 4 of Inhibitor of nuclear factor kappa-B kinase-interacting protein\",\"IKBIP\"))|&gt;\n  mutate(name = str_replace(name,\"Carboxypeptidase D\", \"CPD\")) |&gt;\n  mutate(name = str_replace(name,\"T-complex protein 1 subunit eta\", \"CCT7\")) |&gt;\n  mutate(name = str_replace(name,\"Guanine nucleotide-binding protein G\", \"GNG12 ,\"))\n\ndt_sub[ , 1:2] &lt;- str_split_fixed(dt_sub$name, \",\", 2)\n\ncolnames(dt_sub)[1:5] &lt;- c(\"name\",'x', \"siRNA\",\"Desipramine\",\"Mangosteen\")\n\ndt_sub &lt;- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars=\"name\", measured.vars=c(\"change\", \"change_desi\",\"change_mango\"))\n\nWarning: The melt generic in data.table has been passed a data.frame and will\nattempt to redirect to the relevant reshape2 method; please note that reshape2\nis superseded and is no longer actively developed, and this redirection is now\ndeprecated. To continue using melt methods from reshape2 while both libraries\nare attached, e.g. melt.list, you can prepend the namespace, i.e.\nreshape2::melt(data.frame(dt_sub[, c(1, 3:5)])). In the next version, this\nwarning will become an error.\n\ndt_sub |&gt;\n  mutate(value = ifelse(value &gt;=1 , -1*value, 1/value))|&gt;\n  ggplot(aes(fill= variable, y=value, x=name)) + \n    geom_bar(position='dodge', stat='identity')+ \n    coord_flip() +\n    xlab(NULL) + \n    ylab(NULL)+\n    scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database\n\n\n\n\n\n\n\n\n\n\ndt_sub &lt;- dt |&gt; #esicle-a\n  filter(str_detect(prot_func, \"ase\")) |&gt;\n  arrange(desc(change))\n\ndt_sub &lt;- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |&gt; \n  mutate(name = str_replace(name,\"CD73, 5'-nucleotidase\",\"5'-nucleotidase\"))|&gt;\n  mutate(name = str_replace(name,\"ATP synthase subunit alpha, mitochondrial\", \"ATP5F1E\")) |&gt;\n  mutate(name = str_replace(name,\"Isoform alpha-enolase of Alpha-enolase\", \"ENO1\"))\n\ndt_sub[ , 1:2] &lt;- str_split_fixed(dt_sub$name, \",\", 2)\n\ncolnames(dt_sub)[1:5] &lt;- c(\"name\",'x', \"siRNA\",\"Desipramine\",\"Mangosteen\")\n\ndt_sub &lt;- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars=\"name\", measured.vars=c(\"change\", \"change_desi\",\"change_mango\"))\n\nWarning: The melt generic in data.table has been passed a data.frame and will\nattempt to redirect to the relevant reshape2 method; please note that reshape2\nis superseded and is no longer actively developed, and this redirection is now\ndeprecated. To continue using melt methods from reshape2 while both libraries\nare attached, e.g. melt.list, you can prepend the namespace, i.e.\nreshape2::melt(data.frame(dt_sub[, c(1, 3:5)])). In the next version, this\nwarning will become an error.\n\ndt_sub |&gt;\n  mutate(value = ifelse(value &gt;=1 , -1*value, 1/value))|&gt;\n  ggplot(aes(fill= variable, y=value, x=name)) + \n    geom_bar(position='dodge', stat='identity')+ \n    coord_flip() +\n    xlab(NULL) + \n    ylab(NULL)+\n  scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font\nfamily not found in Windows font database\n\n\nWarning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :\nfont family not found in Windows font database"
+    "text": "For cancer proteomics studies Chris Lee and interactive app [Shiny] ( https://clee23.shinyapps.io/World_Covid_trend/) giving an overview of machine learning approaches for annotation of small compounds in mass spectrometry data.\n\n\n\n\n Back to top"
   }
 ]
