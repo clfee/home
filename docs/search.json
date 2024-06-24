@@ -7,39 +7,39 @@
     "text": "This is test!\n\n\n\n\n Back to top"
   },
   {
-    "objectID": "reports/dashboard.html",
-    "href": "reports/dashboard.html",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "",
-    "text": "Acid sphingomyelinase (ASM) is an enzyme with important roles in various biological processes and diseases, including cancer, cell transport mechanisms, and COVID-19 infection. ASM mainly works to produce ceramide, which is crucial for maintaining cell membranes and regulating cell functions. Recent studies have linked ASM to several neurological disorders, such as major depression, Parkinson’s disease, and Alzheimer’s disease. It has been shown that upon ASM reduction, the consequential failure of intracellular cholesterol transport results in inhibition of the autophagic flux which eventually leads to cancer cell death Kuzu et al.\nDespite progress in diagnosing and treating diseases, many treatments for neurological conditions are ineffective because of the blood-brain barrier (BBB). The BBB selectively prevents many drugs from entering the brain. Therefore, repurposing medications that have anti-cancer properties and can cross the BBB could be a promising approach. Desipramine and alpha-mangostin are known ASM inhibitors that can penetrate the BBB.\nTo explore whether desipramine and alpha-mangostin affect the protein composition of lipid rafts in the same way, we treated cells with or without these ASM inhibitors and analyzed the results using the LC-MS/MS method. This dashboard presents the findings of our quantitative analysis.\ndashboard test2 \n\n\n\n Back to top"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "MD & CH",
     "section": "",
-    "text": "Welcome to MD & CH !     A Smart Way to Accept Payments $$ \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
-    "section": "",
-    "text": " meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States\n\n    \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n\n[1] 277\n\n\n\nsum(as.numeric(hey_611$Eat))\n\n[1] 277\n\n\n\n#| echo: false\na&lt;- cal_eat(8, 373, 347)\nb&lt;- cal_eat(9, 356, 349)\nc&lt;- cal_eat(10, 379, 346)\nd&lt;- cal_eat(14, 356, 341)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_612 &lt;- data.table(rbind(a,b,c,d,e,f,g,h))\ncolnames(hey_612) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\n#| echo: false\na&lt;- cal_eat(6, 376, 342)\nb&lt;- cal_eat(9, 391, 343)\nc&lt;- cal_eat(12, 366, 343)\nd&lt;- cal_eat(16, 492, 454)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_613 &lt;- data.table(rbind(a,b,c,d))\ncolnames(hey_613) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_613$Eat))\n\n[1] 143\n\n\n\n\n\n Back to top"
+    "text": "Welcome to MD & CH !     A Smart Way to Accept Payments \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\nPayment processing is a service offered by companies known as payment processors. These companies connect you to the electronic payment networks that operate on a national (and international, if needed) scale. This connection makes it possible for your business to accept debit and credit card payments.\n\n\n\n\n\n\n\n\n\n Back to top"
   },
   {
     "objectID": "gallery.html",
     "href": "gallery.html",
     "title": "Blog",
     "section": "",
-    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell-cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nInvestigating whether Desipramine, ASM,and alpha-mangostin affect the same protein composition of lipid rafts. \n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell -cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\nDeregulation of the protein secretory pathway (PSP) is linked to many hallmarks of cancer, such as promoting tissue invasion and modulating cell-cell signaling. \n\n\n\n\n\nMay 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "MD & CH",
+    "section": "",
+    "text": "About Us \n\n\n\n\n\n\nWe are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of mass spectrometry with biotech.\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States\n\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "heymi eats.html",
+    "href": "heymi eats.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n[1] 277\n\n\n\nsum(as.numeric(hey_611$Eat))\n\n[1] 277\n\n\n\n#| echo: false\na&lt;- cal_eat(8, 373, 347)\nb&lt;- cal_eat(9, 356, 349)\nc&lt;- cal_eat(10, 379, 346)\nd&lt;- cal_eat(14, 356, 341)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_612 &lt;- data.table(rbind(a,b,c,d,e,f,g,h))\ncolnames(hey_612) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\nsum(as.numeric(hey_612$Eat))\n\n[1] 196\n\n\n\n#| echo: false\na&lt;- cal_eat(6, 376, 342)\nb&lt;- cal_eat(9, 391, 343)\nc&lt;- cal_eat(12, 366, 343)\nd&lt;- cal_eat(16, 492, 454)\ne&lt;- cal_eat(15, 364, 342)\nf&lt;- cal_eat(20, 489, 451)\ng&lt;- cal_eat(21, 490, 462)\nh&lt;- cal_eat(22, 376, 349)\n\n\n\nhey_613 &lt;- data.table(rbind(a,b,c,d))\ncolnames(hey_613) &lt;- c( \"Time\",\"Eat\", \"Date\")\nsum(as.numeric(hey_613$Eat))\n\n[1] 143\n\n\n\n\n\n Back to top"
   },
   {
     "objectID": "projects.html#project-2",
@@ -54,13 +54,6 @@
     "title": "Projects",
     "section": "Project 5",
     "text": "Project 5"
-  },
-  {
-    "objectID": "reports/dashboard asm.html",
-    "href": "reports/dashboard asm.html",
-    "title": "Repurposing desipramine for neurological disorders?",
-    "section": "",
-    "text": "dashboard test1a \n\n\n\n Back to top"
   },
   {
     "objectID": "reports/journey.html",

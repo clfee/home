@@ -18,6 +18,11 @@ params:
 editor_options: 
   chunk_output_type: console
 ---
+Acid sphingomyelinase (ASM) is an enzyme with important roles in various biological processes and diseases, including cancer, cell transport mechanisms, and COVID-19 infection. ASM mainly works to produce ceramide, which is crucial for maintaining cell membranes and regulating cell functions. Recent studies have linked ASM to several neurological disorders, such as major depression, Parkinson’s disease, and Alzheimer’s disease. It has been shown that upon ASM reduction, the consequential failure of intracellular cholesterol transport results in inhibition of the autophagic flux which eventually leads to cancer cell death Kuzu et al.
+
+Despite progress in diagnosing and treating diseases, many treatments for neurological conditions are ineffective because of the blood-brain barrier (BBB). The BBB selectively prevents many drugs from entering the brain. Therefore, repurposing medications that have anti-cancer properties and can cross the BBB could be a promising approach. Desipramine and alpha-mangostin are known ASM inhibitors that can penetrate the BBB.
+
+To explore whether desipramine and alpha-mangostin affect the protein composition of lipid rafts in the same way, we treated cells with or without these ASM inhibitors and analyzed the results using the LC-MS/MS method. This dashboard presents the findings of our quantitative analysis.
 
 ```{r}
 #| label: load-packages

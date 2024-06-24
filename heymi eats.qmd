@@ -1,0 +1,85 @@
+---
+title: "About"
+---
+
+About this site
+
+```{r}
+#| echo: false
+
+library(data.table)
+cal_eat   <- function(time_ = 10, before, after){
+  date_    <- paste(time_,Sys.Date() )
+  eat <- as.numeric(before-after)
+  #return(paste(eat, "g : ", date_))
+  return(c( time_,eat, as.character(Sys.Date())))
+}
+
+
+```
+
+```{r}
+#| title: Heyhey 6/11 Eat diary
+#| echo: false
+a<- cal_eat(7, 180, 120)
+b<- cal_eat(9, 140, 120)
+c<- cal_eat(12, 284, 261)
+d<- cal_eat(14, 299, 262)
+e<- cal_eat(17, 374, 341)
+f<- cal_eat(19, 405, 344)
+g<- cal_eat(21, 375, 354)
+h<- cal_eat(23, 362, 340)
+
+hey_611 <- data.table(rbind(a,b,c,d,e,f,g,h))
+colnames(hey_611) <- c( "Time","Eat", "Date")
+#hey_611
+sum(as.numeric(hey_611$Eat))
+```
+
+```{r}
+#| title: Heyhey 6/11 Eat diary
+sum(as.numeric(hey_611$Eat))
+```
+
+```{r}
+
+#| echo: false
+a<- cal_eat(8, 373, 347)
+b<- cal_eat(9, 356, 349)
+c<- cal_eat(10, 379, 346)
+d<- cal_eat(14, 356, 341)
+e<- cal_eat(15, 364, 342)
+f<- cal_eat(20, 489, 451)
+g<- cal_eat(21, 490, 462)
+h<- cal_eat(22, 376, 349)
+
+
+
+hey_612 <- data.table(rbind(a,b,c,d,e,f,g,h))
+colnames(hey_612) <- c( "Time","Eat", "Date")
+sum(as.numeric(hey_612$Eat))
+```
+
+```{r}
+#| title: Heyhey 6/12 Eat diary
+sum(as.numeric(hey_612$Eat))
+```
+
+```{r}
+
+#| echo: false
+a<- cal_eat(6, 376, 342)
+b<- cal_eat(9, 391, 343)
+c<- cal_eat(12, 366, 343)
+d<- cal_eat(16, 492, 454)
+e<- cal_eat(15, 364, 342)
+f<- cal_eat(20, 489, 451)
+g<- cal_eat(21, 490, 462)
+h<- cal_eat(22, 376, 349)
+
+
+
+hey_613 <- data.table(rbind(a,b,c,d))
+colnames(hey_613) <- c( "Time","Eat", "Date")
+sum(as.numeric(hey_613$Eat))
+```
