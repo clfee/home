@@ -1,29 +1,22 @@
 ---
+title: "About"
 page-layout: full
 ---
-<div class="gradient-text">
-<span style="font-size: 2.1rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica; text-transform:uppercase;"> 
-About Us
-</span>
-</div>
 
-::::{.cmm-background}
-::: {.content-container}
-::: {.top-story }
+::: gradient-text
+[Our History]{style="font-size: 2.1rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica; text-transform:uppercase;"}
+:::
 
-
+::: cmm-background
+::: content-container
+::: top-story
 ::: grid
 ::: {.g-col-10 .g-col-lg-10 .top-story-text .sand-background style="padding: 12px;"}
+We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of **mass spectrometry** with **biotech**.
 
-We are a group of theoreticians with diverse backgrounds in payment processing, analytics, and applied mathematics working at the interface of **mass spectrometry** with **biotech**. 
-
-![](/img/background-3.jpg)
-:::
-
-:::
- 
-
-
+![](/img/background-2.jpg)
 :::
 :::
-::::
+:::
+:::
+:::

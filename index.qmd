@@ -1,35 +1,30 @@
-
 ---
-# title: 'Welcome: <span style="color:#757883">A Convinient Way for you</span>'
-# subtitle: "One stop to Accept Payment"
+# title: 'Welcome: <span style="color:#757883">A Convinient Stopp for you to</span>'
+# subtitle: "Accept Payments"
 page-layout: full
 ---
-<div class="gradient-text">
 
-<div class="welcome-headline">
+::: gradient-text
+::: welcome-headline
 Welcome to MD & CH<br>
-</div>
-<div class="welcome-subheadline">
-A Convinient Way for you
-</div>
-</div>
+:::
 
-::::{.cmm-background}
-::: {.content-container}
-::: {.welcome }
+::: welcome-subheadline
+A Convenient Way for you
+:::
+:::
 
-
+::: cmm-background
+::: content-container
+::: welcome
 ::: grid
-::: {.g-col-12 .g-col-lg-4 .welcome-text .sand-background style="padding: 15px;"}
-
-We are a group of theoreticians with diverse backgrounds in chemistry, physics, electrical engineering, materials science, and applied mathematics working at the interface of **electron microscopy** with **nanophotonics, quantum materials, and quantum optics**. Our research provides insight and understanding in the discovery of quantum, optical, magnetic, and thermal materials phenomena spanning the frontiers of high space, momentum, polarization, and energy resolution. Deep connection to experiment influences everything we do.
-![](/img/background-3.jpg)
-:::
-
-:::
-
-
-
+::: {.g-col-14 .g-col-lg-6 .welcome-text .sand-background style="padding: 15px;"}
+We are a group of theoreticians with diverse backgrounds in chemistry, physics, electrical engineering, materials science, and applied mathematics working at the interface of **electron microscopy** with **nanophotonics, quantum materials, and quantum optics**. Our research provides insight and understanding in the discovery of quantum, optical, magnetic, and thermal materials phenomena spanning the frontiers of high space, momentum, polarization, and energy resolution. Deep connection to experiment influences everything we do. 
+<p>
+ ![](/img/background-3.jpg)
+</p>
 :::
 :::
-::::
+:::
+:::
+:::
