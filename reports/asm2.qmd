@@ -74,12 +74,7 @@ dt <- dt |>
   mutate(mango_change = case_when(
       change_mango > 2 ~ "Decrease",
       change_mango < 0.5 ~ "Increase",
-      .default = "No change"))|>  
-  mutate(name = str_replace(name,"Isoform 1 of ", ""),
-         name = str_replace(name,"Isoform 2 of ", ""),
-         name = str_replace(name,"Isoform 3 of ", ""),
-         name = str_replace(name,"Isoform 4 of ", ""),
-         name = str_replace(name,"Isoform ", ""))
+      .default = "No change"))
 
 ```
 
@@ -225,8 +220,6 @@ prop |>
         axis.ticks = element_blank(),
         axis.text = element_blank())+
   guides(fill = guide_legend(title = "Protein Function \nof 870 identified\nDRM proteins:"))
-
-
 ```
 
 ```{r}
@@ -328,147 +321,87 @@ desi_siRNA |>
 ```
 
 ## Row {height="40%"}
-### Column {.tabset}
 
 ```{r}
 #| title: Fig 5a.Vesicle related proteins
 
-dt_sub <- dt |> 
+dt_sub <- dt |> #esicle-a
   filter(str_detect(prot_func, "esicle-")) |>
   arrange(desc(change))
 
+dt_sub <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
+  mutate(name = str_replace(name,"Vesicle-trafficking protein",""))|>
+mutate(name = str_replace(name,"Isoform 1 of ",""))|>
+  mutate(name = str_replace(name,"Vesicle-associated membrane protein ", ""))
+
 dt_sub[ , 1:2] <- str_split_fixed(dt_sub$name, ",", 2)
+
 colnames(dt_sub)[1:5] <- c("name",'x', "siRNA","Desipramine","Mangosteen")
 
-dt_exp <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
-  mutate(name = str_replace(name,"Vesicle-trafficking protein",""),
-         name = str_replace(name,"Vesicle-associated membrane protein ", ""))
+dt_sub <- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
 
-dt_exp <- reshape2::melt(data.frame(dt_exp[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
-
-dt_subx <- reshape2::melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
-
-p1 <- dt_subx |> 
-      mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
-      ggplot(aes(variable, name)) +
-      geom_tile(aes(fill = value), colour = "white") +
-      scale_fill_gradient(high = "white", low = "steelblue")+
-      coord_flip() +
-      labs(x = "", y = "") +
-      theme_minimal() +
-      theme(axis.text.x=element_blank(),
-            axis.text=element_text(size=12),
-            legend.position = "bottom")  
-p2 <- dt_exp |>
+p1 <- dt_sub |>
   mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
+  arrange(desc(value))|>
   ggplot(aes(fill= variable, y=value, x=name)) + 
     geom_bar(position='dodge', stat='identity')+ 
     coord_flip() +
-    xlab(NULL) + 
-    ylab(NULL)+
-  theme_minimal() +
-  scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))+
-  theme(axis.text=element_text(size=10,colour = "darkgray"),
-        axis.title=element_text(size=8,face="bold",colour = "darkgray"),
-         legend.position = "bottom")
+    labs(y = NULL, x = NULL)+
+    scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))
 
-grid.arrange(p1, p2, ncol = 2) 
-
-```
-
-```{r}
-#| title: Fig 5b. Apoptosis
 
 dt_sub <- dt |> 
   filter(str_detect(prot_func, "poptosis")) |>
   arrange(desc(change))
 
-dt_sub[ , 1:2] <- str_split_fixed(dt_sub$name, ",", 2)
-colnames(dt_sub)[1:5] <- c("name",'x', "siRNA","Desipramine","Mangosteen")
-
-dt_exp <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
-  mutate(name = str_replace(name,"Inhibitor of nuclear factor kappa-B kinase-interacting protein","IKBIP"))|>
+dt_sub <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
+  mutate(name = str_replace(name,"Isoform 4 of Inhibitor of nuclear factor kappa-B kinase-interacting protein","IKBIP"))|>
   mutate(name = str_replace(name,"Carboxypeptidase D", "CPD")) |>
   mutate(name = str_replace(name,"T-complex protein 1 subunit eta", "CCT7")) |>
   mutate(name = str_replace(name,"Guanine nucleotide-binding protein G", "GNG12 ,"))
 
-dt_exp[ , 1:2] <- str_split_fixed(dt_exp$name, ",", 2)
+dt_sub[ , 1:2] <- str_split_fixed(dt_sub$name, ",", 2)
 
-dt_exp <- reshape2::melt(data.frame(dt_exp[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
+colnames(dt_sub)[1:5] <- c("name",'x', "siRNA","Desipramine","Mangosteen")
 
-dt_subx <- reshape2::melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
+dt_sub <- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
 
-p1 <- dt_subx |> 
-      mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
-      ggplot(aes(variable, name)) +
-      geom_tile(aes(fill = value), colour = "white") +
-      scale_fill_gradient(high = "white", low = "steelblue")+
-      coord_flip() +
-      labs(x = "", y = "") +
-      theme_minimal() +
-      theme(axis.text.x=element_blank(),
-            axis.text=element_text(size=12),
-            legend.position = "bottom")   
-p2 <- dt_exp |>
+p2 <- dt_sub |>
   mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
   ggplot(aes(fill= variable, y=value, x=name)) + 
     geom_bar(position='dodge', stat='identity')+ 
     coord_flip() +
     xlab(NULL) + 
     ylab(NULL)+
-  theme_minimal() +
-  scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))+
-  theme(axis.text=element_text(size=10,colour = "darkgray"),
-        axis.title=element_text(size=8,face="bold",colour = "darkgray"),
-         legend.position = "bottom")
+    scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))
 
-grid.arrange(p1, p2, ncol = 2) 
 
-```
-
-```{r}
-#| title: Fig 5c.Enzymes
-
-dt_sub <- dt |> 
+dt_sub <- dt |> #esicle-a
   filter(str_detect(prot_func, "ase")) |>
   arrange(desc(change))
 
+dt_sub <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
+  mutate(name = str_replace(name,"CD73, 5'-nucleotidase","5'-nucleotidase"))|>
+  mutate(name = str_replace(name,"ATP synthase subunit alpha, mitochondrial", "ATP5F1E")) |>
+  mutate(name = str_replace(name,"Isoform alpha-enolase of Alpha-enolase", "ENO1"))
+
 dt_sub[ , 1:2] <- str_split_fixed(dt_sub$name, ",", 2)
+
 colnames(dt_sub)[1:5] <- c("name",'x', "siRNA","Desipramine","Mangosteen")
 
-dt_exp <- rbind(dt_sub[1:2,],dt_sub[(nrow(dt_sub)-1):(nrow(dt_sub)),]) |> 
-  mutate(name = str_replace(name,"CD73, 5'-nucleotidase","5'-nucleotidase"))|>
-  mutate(name = str_replace(name,"ATP synthase subunit alpha", "ATP5F1E")) |>
-  mutate(name = str_replace(name,"alpha-enolase of Alpha-enolase", "ENO1"))
-dt_exp <- reshape2::melt(data.frame(dt_exp[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
+dt_sub <- melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
 
-dt_subx <- reshape2::melt(data.frame(dt_sub[,c(1,3:5)]),id.vars="name", measured.vars=c("change", "change_desi","change_mango"))
-
-p1 <- dt_subx |> 
-      mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
-      ggplot(aes(variable, name)) +
-      geom_tile(aes(fill = value), colour = "white") +
-      scale_fill_gradient(high = "white", low = "steelblue")+
-      coord_flip() +
-      labs(x = "", y = "") +
-      theme_minimal() +
-      theme(axis.text.x=element_blank(),
-            axis.text=element_text(size=12),
-            legend.position = "bottom")   
-p2 <- dt_exp |>
+p3 <- dt_sub |>
   mutate(value = ifelse(value >=1 , -1*value, 1/value))|>
   ggplot(aes(fill= variable, y=value, x=name)) + 
     geom_bar(position='dodge', stat='identity')+ 
     coord_flip() +
-    xlab(NULL) + 
-    ylab(NULL)+
-  theme_minimal() +
-  scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))+
-  theme(axis.text=element_text(size=10,colour = "darkgray"),
-        axis.title=element_text(size=8,face="bold",colour = "darkgray"),
-         legend.position = "bottom")
+    ylab("change") + 
+    xlab(NULL)+
+  scale_fill_manual('', values=c('coral2', 'steelblue', '#ae8b2d'))
 
-grid.arrange(p1, p2, ncol = 2) 
+
+grid.arrange(p1, p2,p3, nrow = 3)   
 ```
 
 # Data

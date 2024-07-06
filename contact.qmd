@@ -16,6 +16,7 @@ about:
 <i class="fa fa-phone-square" style="font-size:24px"></i> 282-351-0640
 
 <i class="fa fa-map-marker" style="font-size:24px"></i> Dallas, TX 75201, United States
+<i class="fa fa-handshake-o" style="font-size:24px"></i> [connect](https://docs.google.com/forms/d/e/1FAIpQLSdqI0WyubQUPaSfK53NoeF18firwk4dhidd73vNZWwAYUPozQ/viewform?usp=pp_url)
 :::
 
 <br>

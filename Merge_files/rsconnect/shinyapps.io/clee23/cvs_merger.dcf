@@ -1,0 +1,12 @@
+name: cvs_merger
+title: Merge_files
+username: clee23
+account: clee23
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12259228
+bundleId: 8813520
+url: https://clee23.shinyapps.io/cvs_merger/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
