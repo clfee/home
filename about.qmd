@@ -21,8 +21,8 @@ Feel free to reach out to me on LinkedIn or drop me an email to discuss.
 ::: gradient-text
 [Experiences]{style="font-size: 1.6rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
 :::
-[**Independent Contractor**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
-
+[**Freelancer**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
+Current
 
 [**Business Analytics Consultant**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}, MCD Key Concepts , August 2015 – Dec 2023
 
@@ -39,7 +39,7 @@ I applied bio-analytical strategies, data visualization, and statistical methods
 [**Postdoc**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}, Nevada Cancer Institute, Cancer Proteomics, Jan 2009- Aug 2011 
 
 My work focused on detecting protein interactions and biomarker discoveries for both metabolome and proteome in cancer cells. I applied R  to  for data clean-up, organization, visualization ,and statistical analysis (such as SVF, Xgboost).  
-
+<br>
 
 ::: gradient-text
 [Education]{style="font-size: 1.6rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}

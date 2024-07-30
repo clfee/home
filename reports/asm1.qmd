@@ -197,10 +197,11 @@ p_mango_nc <- dt |>
 
 # Results
 
-## Row {height="40%"}
+## Row {height="30%"}
 
 ```{r}
 #| title: Fig 1. Ontology 
+#| fig-height: 8
 
 prop <- 
   dt |>
@@ -231,6 +232,7 @@ prop |>
 
 ```{r}
 #| title: Fig 2. siASM and ASM inhibitors
+#| fig-height: 8
 # List of items
 x <- list(siASM = paste0(dt$name,dt$siRNA_change), 
           Desipramine = paste0(dt$name,dt$desi_change), 
@@ -245,6 +247,7 @@ ggVennDiagram(x) +
 
 ```{r}
 #| title: Fig 3.  protein changes
+#| fig-height: 8
 
 desi <- dt |>
   count(desi_change) |>
@@ -278,7 +281,7 @@ desi_siRNA |>
   )
 ```
 
-### Column {width="30%"}
+### Column {width="40%"}
 
 ### Column {.tabset}
 
