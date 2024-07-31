@@ -5,7 +5,7 @@ author:
     url: https://clfee.github.io/
     affiliation: MD & CH llc.
     affiliation_url: https://heyheymi.com
-date: 2022-07-15
+date: 2023-02-15
 creative_commons: CC BY
 categories:
   - Cancer
@@ -13,10 +13,13 @@ categories:
   - Dashboard
 preview: "mi.png"
 ---
-![Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180. doi: 10.1002/ijc.33965. PMCID: PMC9133056.](/img/repurpose.png)
-
+<br>
 **Understanding Glioblastoma and Its Challenges** <br>
 Glioblastoma (GBM) is an aggressive brain tumor and one of the toughest cancers to treat. Despite knowing a lot about its genetic makeup, this hasn’t translated into better survival rates for patients, with most living less than two years after diagnosis. The challenges lie in its ability to infiltrate the brain, its genetic diversity, and the protection offered by the blood-brain barrier (BBB), making it resistant to treatments like surgery, radiotherapy, and chemotherapy [1](https://pubmed.ncbi.nlm.nih.gov/23937436/),[2](https://pubmed.ncbi.nlm.nih.gov/32328653/).
+<br>
+
+![Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180. doi: 10.1002/ijc.33965.](/img/repurpose.png) <br>
+***Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180.PMCID: PMC9133056.*** <br>
 
 **The Role of Lipids in GBM**<br>
 Recent studies have revealed that GBM cells have unusual compositions of cholesterol and phospholipids in their membranes, affecting how growth-promoting signals operate. Scientists are particularly interested in sphingolipids, as the balance between sphingomyelin and ceramide is crucial for organizing cell membranes and clustering signaling molecules into lipid rafts. These rafts, which float in the cell membrane, can either attract or repel signaling proteins, thereby regulating cell signaling. This unique lipid environment in GBM cells could be a potential target for new treatments [3](https://www.cell.com/cancer-cell/fulltext/S1535-6108(16)30443-3).

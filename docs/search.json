@@ -1,24 +1,17 @@
 [
   {
-    "objectID": "reports/test1.html",
-    "href": "reports/test1.html",
-    "title": "reports",
+    "objectID": "gallery.html",
+    "href": "gallery.html",
+    "title": "Blog",
     "section": "",
-    "text": "This is test!\n\n\n\n\n Back to top"
+    "text": "Mapping SMPD1/ASM dependent Lipid Raft Proteome in cancer cells\n\n\n\n\n\n\n\n\n\n\n\nFeb 2023\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nMarket Campaign at a Glance\n\n\n\n\n\n\n\n\n\n\n\nJul 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MD & CH",
+    "objectID": "reports/journey.html",
+    "href": "reports/journey.html",
+    "title": "Mapping SMPD1/ASM dependent Lipid Raft Proteome in cancer cells",
     "section": "",
-    "text": "Welcome to MD & CH\n\n\nA Convenient Way for you\n\n\n\n\n\n\n\nWe are a group of web developers, Business analysts, and business developing professionals. With more than 10 years of experience in the field, we are specialized in Web development,Analytics , Sales training, and Performance review. Deep connection to experiment influences everything we do.\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
-    "section": "",
-    "text": "meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States  connect\n\n\n\n\n\n\n\n\n\n\n Back to top"
+    "text": "Understanding Glioblastoma and Its Challenges  Glioblastoma (GBM) is an aggressive brain tumor and one of the toughest cancers to treat. Despite knowing a lot about its genetic makeup, this hasn’t translated into better survival rates for patients, with most living less than two years after diagnosis. The challenges lie in its ability to infiltrate the brain, its genetic diversity, and the protection offered by the blood-brain barrier (BBB), making it resistant to treatments like surgery, radiotherapy, and chemotherapy 1,2. \n Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180. doi: 10.1002/ijc.33965. PMCID: PMC9133056.\nThe Role of Lipids in GBM Recent studies have revealed that GBM cells have unusual compositions of cholesterol and phospholipids in their membranes, affecting how growth-promoting signals operate. Scientists are particularly interested in sphingolipids, as the balance between sphingomyelin and ceramide is crucial for organizing cell membranes and clustering signaling molecules into lipid rafts. These rafts, which float in the cell membrane, can either attract or repel signaling proteins, thereby regulating cell signaling. This unique lipid environment in GBM cells could be a potential target for new treatments 3.\nExploring Acid Sphingomyelinase (ASM) and Its Inhibitors Acid sphingomyelinase (ASM) is an enzyme that breaks down sphingomyelin into ceramide and phosphocholine. In this report, we treated cells with ASM siRNA, Desipramine (an FDA-approved antidepressant), and α-mangostin (a natural compound with anti-cancer properties) Both Desiparamine and α-mangostin were shown to block ASM activities. This study’s findings are summarized in an interactive Dashboard.\nKey Findings from the Study Our research identified around 530 proteins within lipid rafts, with 40% of them being influenced by ASM and its inhibitors. While 60% of the proteins remained unchanged, 40% involved in cell death, vesicle trafficking, and autophagy (a self-digestion process in cells) were affected. Autophagy can either help cancer cells survive under stress or lead to their death. Interestingly, inhibition of ASM led to increased levels of proteins associated with autophagy. However, this increase was not observed with Desipramine treatment. Desipramine was shown to have a dual effect, stimulatory and repressive on autophagy 4. On the other hand, α-mangostin, known to cause stress and autophagy in breast cancer cells 5.We in α-mangostin treated samples, the levels of autophagy related proteins were down-regulated.\nImplications and Future Directions This study sheds light on how ASM influences the lipid raft proteome in brain tumor cells, suggesting potential new avenues for treatment. Additionally, other research has indicated that selective serotonin reuptake inhibitors (SSRIs) might have beneficial effects in various cancer models, including brain tumors. These insights could pave the way for new strategies in treating GBM, offering hope for better outcomes in the future.\n\n\n\n Back to top"
   },
   {
     "objectID": "about.html",
@@ -28,31 +21,10 @@
     "text": "I’m driven by helping others successfully solve problems like turning complex data into clear, actionable insights that help businesses thrive. My toolkit to deliver these solutions draws on blending business understanding with machine learning using SQL, R, SAS, and Python . I’m passionate about using data to solve real-world problems, streamline processes, and find new growth opportunities. Balancing the technical side with a strong understanding of business needs, I create solutions that make a real impact and keep things moving forward.\nFeel free to reach out to me on LinkedIn or drop me an email to discuss.\n\n\n\n\n\n\nExperiences\n\nFreelancer Current\nBusiness Analytics Consultant, MCD Key Concepts , August 2015 – Dec 2023\nMy work involved in applying machine learning algorithms on data from market location, client features, and service demands. Leveraged data analytics to prioritize leads. I also built a forecasting platform using R that cut error 30-50% relative to the sales forecasts in our core business. This platform could handle forecasts for different measures (revenue, units) and different time periods (weeks, months, quarters ahead). This improved sales performance by an additional 10%. The results were communicated with teams through serverless dashboard and Shiny.\nSenior Scientist, Biotherapeutics and Proteomics,Protea, Feb 2014 - Mar 2015\nI guided experiment designs for biomarker discoveries, streamlined workflows and cut processing time 20-30%. Led a team to win multi-contracts with major pharmaceutical companies. The workflows successfully implemented cutting edge techniques, improved low abundance peptide detection limits ~10X, resulting in customer satisfaction.\nPostdoctoral fellow, The University of Texas at Austin, Proteomics core facility, Sep 2011-Jan 2014\nI applied bio-analytical strategies, data visualization, and statistical methods to support proteomics core facility. Developed a workflow using statistical/ machine learning methods to predict elution time to target low abundance signals, resulting in accepted publications and grant awards.\nPostdoc, Nevada Cancer Institute, Cancer Proteomics, Jan 2009- Aug 2011\nMy work focused on detecting protein interactions and biomarker discoveries for both metabolome and proteome in cancer cells. I applied R to for data clean-up, organization, visualization ,and statistical analysis (such as SVF, Xgboost).\n\n\nEducation\n\nPh.D. in Cancer Studies (2009) University of Manchester, Manchester, UK\n\n\n\n\n Back to top"
   },
   {
-    "objectID": "gallery.html",
-    "href": "gallery.html",
-    "title": "Blog",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MD & CH",
     "section": "",
-    "text": "Machine learning-based investigation of secretome in cancer cells\n\n\n\n\n\n\n\n\n\n\n\nJul 2022\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRepurposing desipramine for neurological disorders?\n\n\n\n\n\n\n\n\n\n\n\nJun 2024\n\n\nChris Lee\n\n\n\n\n\n\n\n\n\n\n\n\nreports\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items\n\n Back to top"
-  },
-  {
-    "objectID": "projects.html#project-2",
-    "href": "projects.html#project-2",
-    "title": "Projects",
-    "section": "Project 2",
-    "text": "Project 2"
-  },
-  {
-    "objectID": "projects.html#project-5",
-    "href": "projects.html#project-5",
-    "title": "Projects",
-    "section": "Project 5",
-    "text": "Project 5"
-  },
-  {
-    "objectID": "reports/journey.html",
-    "href": "reports/journey.html",
-    "title": "Mapping SMPD1/ASM dependent Lipid Raft Proteome in cancer cells",
-    "section": "",
-    "text": "Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180. doi: 10.1002/ijc.33965. PMCID: PMC9133056.\n\n\nUnderstanding Glioblastoma and Its Challenges  Glioblastoma (GBM) is an aggressive brain tumor and one of the toughest cancers to treat. Despite knowing a lot about its genetic makeup, this hasn’t translated into better survival rates for patients, with most living less than two years after diagnosis. The challenges lie in its ability to infiltrate the brain, its genetic diversity, and the protection offered by the blood-brain barrier (BBB), making it resistant to treatments like surgery, radiotherapy, and chemotherapy1,2.\nThe Role of Lipids in GBM Recent studies have revealed that GBM cells have unusual compositions of cholesterol and phospholipids in their membranes, affecting how growth-promoting signals operate. Scientists are particularly interested in sphingolipids, as the balance between sphingomyelin and ceramide is crucial for organizing cell membranes and clustering signaling molecules into lipid rafts. These rafts, which float in the cell membrane, can either attract or repel signaling proteins, thereby regulating cell signaling. This unique lipid environment in GBM cells could be a potential target for new treatments3.\nExploring Acid Sphingomyelinase (ASM) and Its Inhibitors Acid sphingomyelinase (ASM) is an enzyme that breaks down sphingomyelin into ceramide and phosphocholine. In this report, we treated cells with ASM siRNA, Desipramine (an FDA-approved antidepressant), and α-mangostin (a natural compound with anti-cancer properties) Both Desiparamine and α-mangostin were shown to block ASM activities. This study’s findings are summarized in an interactive Dashboard.\nKey Findings from the Study Our research identified around 530 proteins within lipid rafts, with 40% of them being influenced by ASM and its inhibitors. While 60% of the proteins remained unchanged, 40% involved in cell death, vesicle trafficking, and autophagy (a self-digestion process in cells) were affected. Autophagy can either help cancer cells survive under stress or lead to their death. Interestingly, inhibition of ASM led to increased levels of proteins associated with autophagy. However, this increase was not observed with Desipramine treatment. Desipramine was shown to have a dual effect, stimulatory and repressive on autophagy 4. On the other hand, α-mangostin, known to cause stress and autophagy in breast cancer cells5.We in α-mangostin treated samples, the levels of autophagy related proteins were down-regulated.\nImplications and Future Directions This study sheds light on how ASM influences the lipid raft proteome in brain tumor cells, suggesting potential new avenues for treatment. Additionally, other research has indicated that selective serotonin reuptake inhibitors (SSRIs) might have beneficial effects in various cancer models, including brain tumors. These insights could pave the way for new strategies in treating GBM, offering hope for better outcomes in the future.\n\n\n\n Back to top"
+    "text": "Welcome to MD & CH\n\n\nA Convenient Way for you\n\n\n\n\n\n\n\nWe are a group of web developers, Business analysts, and business developing professionals. With more than 10 years of experience in the field, we are specialized in Web development,Analytics , Sales training, and Performance review. Deep connection to experiment influences everything we do.\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
   }
 ]

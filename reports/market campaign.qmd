@@ -1,6 +1,9 @@
 ---
 title: "Market Campaign at a Glance"
-author: "clee"
+author:
+    name: Chris Lee
+    url: https://clfee.github.io/
+date: 2024-07-15
 format: 
   dashboard:
     orientation: columns
@@ -26,10 +29,9 @@ library(echarts4r)
 library(echarts4r.maps)
 library(gridExtra)  
 library(data.table)
-library(plotly)
-source("helper.R")
-train <- read.csv("train.csv")
-state <- read.csv("states.csv")
+source("~/data/helper.R")
+train <- read.csv("~/data/train.csv")
+state <- read.csv("~/data/states.csv")
 
 #| label: prep-data
 
@@ -92,26 +94,26 @@ best_q <- quarter_converted_rate |>
              pull(quater_res)
 
 ```
+
 #  {.sidebar}
 
 This dashboard displays analysis for:
 
-|              |                     |
-|--------------|---------------------|
-| **Campaign** |      New Offer      |
-| **Date**     | 2023 Q1 - 2024 Q2   |
-
+|              |                   |
+|--------------|-------------------|
+| **Campaign** | New Offer         |
+| **Date**     | 2023 Q1 - 2024 Q2 |
 
 ------------------------------------------------------------------------
 
 The campaign results were as follows:
 
-|                                    |                                            |
-|------------------------------------|--------------------------------------------|
-|  **Mean Conversion %**             |     `{r} avg_converted_rate`%              |
-| **Best way ** for Communication    | `{r} best_comm_way` , `{r} best_comm_pct`% |
-|     **Best Performing** State      | `{r} best_state` , `{r} best_state_pct`%   |
-|     **Best Performing** Quarter    | `{r} best_q` , `{r} best_q_pct`%           |
+|                                |                                            |
+|---------------------------------|---------------------------------------|
+| **Mean Conversion %**          | `{r} avg_converted_rate`%                  |
+| **Best way** for Communication | `{r} best_comm_way` , `{r} best_comm_pct`% |
+| **Best Performing** State      | `{r} best_state` , `{r} best_state_pct`%   |
+| **Best Performing** Quarter    | `{r} best_q` , `{r} best_q_pct`%           |
 
 ------------------------------------------------------------------------
 
@@ -121,8 +123,8 @@ The campaign results were as follows:
 This is a fictional compaign results. The data are simulated based on realistic new merachant offer from [this report by the MD & CH](https://clfee.github.io/python/image/classification/image-classification1/).
 :::
 
-
 # Stats
+
 ## Column
 
 ```{r}
@@ -263,7 +265,7 @@ dt <- train |>
 
 cormat <- round(cor(dt),2)
 cormat[lower.tri(cormat)]<- NA
-cormat <-  melt(cormat)
+cormat <-  reshape2::melt(cormat)
 colnames(cormat) <- c("X1","X2","value")
 a <-
   cormat|>
@@ -305,4 +307,3 @@ ggplot(aes(x = round(Freqx,2), y = fct_rev(namex), fill = Var1)) +
   theme_minimal()
 
 ```
-
