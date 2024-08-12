@@ -13,8 +13,9 @@ categories:
   - Dashboard
 preview: "mi.png"
 ---
-<br>
-**Understanding Glioblastoma and Its Challenges** <br>
+<br> **Understanding Glioblastoma and Its Challenges** <br>
+
+
 Glioblastoma (GBM) is an aggressive brain tumor and one of the toughest cancers to treat. Despite knowing a lot about its genetic makeup, this hasn’t translated into better survival rates for patients, with most living less than two years after diagnosis. The challenges lie in its ability to infiltrate the brain, its genetic diversity, and the protection offered by the blood-brain barrier (BBB), making it resistant to treatments like surgery, radiotherapy, and chemotherapy [1](https://pubmed.ncbi.nlm.nih.gov/23937436/),[2](https://pubmed.ncbi.nlm.nih.gov/32328653/).
 <br>
 
