@@ -3,8 +3,6 @@ title: "Mapping SMPD1/ASM dependent Lipid Raft Proteome in cancer cells"
 author:
   - name: Chris Lee
     url: https://clfee.github.io/
-    affiliation: MD & CH llc.
-    affiliation_url: https://heyheymi.com
 date: 2023-02-15
 creative_commons: CC BY
 categories:
