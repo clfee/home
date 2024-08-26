@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/clfee/website/gallery.html</loc>
-    <lastmod>2024-05-15T20:37:37.654Z</lastmod>
+    <lastmod>2024-08-26T21:49:52.343Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/market campaign.html</loc>
-    <lastmod>2024-07-31T19:50:45.479Z</lastmod>
+    <lastmod>2024-08-12T22:39:47.180Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/test1.html</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/journey.html</loc>
-    <lastmod>2024-07-31T20:02:29.762Z</lastmod>
+    <lastmod>2024-08-12T22:20:51.680Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/asm1.html</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://github.com/clfee/website/index.html</loc>
-    <lastmod>2024-07-29T17:48:35.425Z</lastmod>
+    <lastmod>2024-08-26T22:13:45.545Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/Image Classification - Malaria cell case study.html</loc>
@@ -46,6 +46,18 @@
   </url>
   <url>
     <loc>https://github.com/clfee/website/reports/Image Classification - Malaria cell case study 2.html</loc>
-    <lastmod>2024-08-12T22:16:02.170Z</lastmod>
+    <lastmod>2024-08-12T22:17:24.744Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/posts/2024-07-15-market-compaign/index.html</loc>
+    <lastmod>2024-08-26T22:45:34.642Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/posts/2021-08-31-malaria-cell-classification - p2/index.html</loc>
+    <lastmod>2024-08-26T22:50:14.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clfee/website/posts/2021-08-31-malaria-cell-classification/index.html</loc>
+    <lastmod>2024-08-26T19:43:26.041Z</lastmod>
   </url>
 </urlset>

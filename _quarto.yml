@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "MD & CH"
+  title: "Chris Lee"
   site-url: "https://github.com/clfee/website"
   repo-url: "https://github.com/clfee/website"
   favicon: img/mi2.PNG
@@ -14,33 +14,26 @@ website:
     background: "#F6F5F3"
     center: © 2024  &middot; Made with r-project and 
       [![](https://quarto.org/quarto.png){fig-alt="Quarto" width=65px}](https://quarto.org/) 
-    right:
-      - icon: github
-        href: https://github.com/clfee/website/
   
   navbar:
     background: "#F6F5F3"
     search: true
     title: false
     logo: img/mi_logo.png
-    left:
-      - href: index.qmd
-        text: Home
-      - gallery.qmd
-      - about.qmd
-      - contact.qmd
-    tools:
-      - icon: youtube
-        href: https://youtube.com
+    right:
+      - text: "Home"
+        file: index.qmd
+      - text: "Blog"
+        file: gallery.qmd
+      - text: "About"
+        file: about.qmd     
       - icon: github
-        menu:
-          - text: Source Code
-            href:  https://code.com
+        href: https://github.com/clfee
 
 format:
   html:
     theme: 
-      dark: solar
+      dark: zephyr
     css: styles/custom.scss
     mainfont: Nunito Sans
     toc: true

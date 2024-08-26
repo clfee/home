@@ -1,8 +1,21 @@
 ---
-title: "Blog"
 listing:
-  contents: 
-    - "reports/*.qmd"
+  contents: posts
+  feed: true
+  sort-ui: true
+  sort: 
+    - "date desc"
+    - "title desc"
   type: default
+  image-height: 150px
+  image-placeholder: img/cmm1.PNG
+  fields: [image, title, description, date, reading-time]
+  categories: true
+  date-format: "YYYY-MM-DD"
+  page-size: 9
+toc: false
+toc-location: body
+page-layout: full
+title-block-banner: false
 ---
 

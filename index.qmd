@@ -6,11 +6,11 @@ page-layout: full
 
 ::: gradient-text
 ::: welcome-headline
-Welcome to MD & CH<br>
+**Welcome** <br>
 :::
 
 ::: welcome-subheadline
-A Convenient Way for you
+<i class="fa fa-handshake-o" style="font-size:24px"></i>
 :::
 :::
 
@@ -19,7 +19,7 @@ A Convenient Way for you
 ::: welcome
 ::: grid
 ::: {.g-col-14 .g-col-lg-6 .welcome-text .sand-background style="padding: 15px;"}
-We are a group of web developers, Business analysts, and business developing professionals. With more than 10 years of experience in the field, we are specialized in **Web development**,**Analytics** , **Sales training**, and **Performance review**. Deep connection to experiment influences everything we do. 
+This is the place where I write about data science stuff. 
 <p>
  ![](/img/background-3.jpg)
 </p>
