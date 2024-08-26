@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Chris Lee</title>
+<link>https://github.com/clfee/home/</link>
+<atom:link href="https://github.com/clfee/home/index.xml" rel="self" type="application/rss+xml"/>
+<description>Data science applications brought to you by Chris Lee</description>
+<image>
+<url>https://github.com/clfee/home/img/cmm1.PNG</url>
+<title>Chris Lee</title>
+<link>https://github.com/clfee/home/</link>
+</image>
+<generator>quarto-1.4.554</generator>
+<lastBuildDate>Tue, 31 Aug 2021 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Image Classification - Malaria cell classification (part1)</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>I remember years ago seeing my colleague spent hours under a microscopes counting cells underwent of apoptosis or Dauer larva formation. I mean it is fun doing experiments in the lab but telling differences of these tiny worms would probably is the last thing I’d want to do. This task does take lots of valuable time from a researcher. Imagine, how many more novel anti-agents like this <a href="https://pubmed.ncbi.nlm.nih.gov/23049887/">article</a> Yongsoon could bring us if the deep learning techniques were ready to use back in 2011.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/dauer.PNG" class="img-fluid figure-img"></p>
+<figcaption>Kim Y, Sun H (2012) PLOS ONE 7(9): e45890</figcaption>
+</figure>
+</div>
+<p>Thanks to the advancement in deep learning field, neural network model architectures can be readily reused and, in most cases, are tested across multiple applications to establish robustness. Here, I’m going to show how easy it is to implement transfer learning using Keras in Python for Malaria cell classification. The basic concept of transfer learning is using the knowledge (architecture or weights) gained from a neural network model that was trained to recognize animals to recognize cats. The dataset used here came from <a href="https://ceb.nlm.nih.gov/repositories/malaria-datasets/">NIH</a>, along with recent publications<a href="https://peerj.com/articles/6977/">1</a>,<a href="https://peerj.com/articles/4568/">2</a>.</p>
+<section id="workflow" class="level4">
+<h4 class="anchored" data-anchor-id="workflow">Workflow</h4>
+<ul>
+<li>Loading data and data pre-processing</li>
+<li>Transfer learning and fine-tuning (DenseNet121)</li>
+<li>Result evaluation</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/flow1.PNG" class="img-fluid figure-img"></p>
+<figcaption>flow1x</figcaption>
+</figure>
+</div>
+</section>
+<section id="data-overview" class="level4">
+<h4 class="anchored" data-anchor-id="data-overview">Data Overview</h4>
+<p>There are many ways to create train/valid/test data sets. Below is one of the methods using R to create csv files containing file paths and classifications from train and test folders.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># R code</span></span>
+<span id="cb1-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">library(fs)</span></span>
+<span id="cb1-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dataset_dir &lt;- "Data/cell_images/"</span></span>
+<span id="cb1-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_dir   &lt;- paste0(dataset_dir, "/test/")</span></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># stored image paths in the image column</span></span>
+<span id="cb1-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_parasite &lt;- dir_ls(path=paste0(test_dir, "parasite"),glob = "*.png")</span></span>
+<span id="cb1-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_uninfected &lt;- dir_ls(path=paste0(test_dir, "uninfected"),glob = "*.png")</span></span>
+<span id="cb1-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_par &lt;- as.data.frame(matrix('parasite', length(test_parasite), 1))</span></span>
+<span id="cb1-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_unin &lt;- as.data.frame(matrix('uninfected', length(test_parasite), 1))</span></span>
+<span id="cb1-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_par$image &lt;- test_parasite </span></span>
+<span id="cb1-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test_unin$image &lt;- test_uninfected</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test &lt;- rbind(test_par,test_unin)</span></span>
+<span id="cb1-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colnames(test)[1] &lt;- 'label'</span></span>
+<span id="cb1-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test$normal  &lt;- ifelse(test$label != 'parasite', 1,0)</span></span>
+<span id="cb1-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">test$parasite &lt;- ifelse(test$label == 'parasite', 1,0)</span></span></code></pre></div>
+<p>And the csv file looks like this. <img src="https://github.com/clfee/home/assets/images/preview.PNG" class="img-fluid" alt="csv"></p>
+<p>In reality, we don’t usually see many cells infected with parasites, therefore less than 1/3 of the infected samples were used in this exercise.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Python</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># get ids for each label</span></span>
+<span id="cb2-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">all_img_ids = list(new_df.uninfected.index.unique())</span></span>
+<span id="cb2-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">train_ids, test_ids = train_test_split(all_img_ids, test_size=0.01, random_state=21)</span></span>
+<span id="cb2-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">train_ids, valid_ids = train_test_split(train_ids, test_size=0.1, random_state=21)</span></span></code></pre></div>
+<p>Making sure, the proportion of the infected cell is as expected after data split. <img src="https://github.com/clfee/home/assets/images/pct.PNG" class="img-fluid" alt="pct"></p>
+<p>Let’s also check few images. The images come with different sizes. They will need to reshape and normalize before xx.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract numpy values from image column in data frame</span></span>
+<span id="cb3-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">train_df = new_df.iloc[train_ids,:]</span></span>
+<span id="cb3-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">images = train_df['image'].values</span></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract 9 random images </span></span>
+<span id="cb3-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">random_images = [np.random.choice(images) for i in range(9)]</span></span>
+<span id="cb3-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">img_dir = 'C:/Users/your_image_folder'</span></span>
+<span id="cb3-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">print('Display Random Images')</span></span>
+<span id="cb3-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Adjust the size of your images</span></span>
+<span id="cb3-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.figure(figsize=(20,10))</span></span>
+<span id="cb3-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">for i in range(9)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb3-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    plt.subplot(3, 3, i + 1)</span></span>
+<span id="cb3-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    img = plt.imread(os.path.join(img_dir, random_images[i]))</span></span>
+<span id="cb3-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    plt.imshow(img)</span></span>
+<span id="cb3-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    plt.axis('off')</span></span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/random_img.PNG" class="img-fluid figure-img"></p>
+<figcaption>random_images</figcaption>
+</figure>
+</div>
+</section>
+<section id="loading-data" class="level4">
+<h4 class="anchored" data-anchor-id="loading-data">Loading data</h4>
+<p>Next is building generators from the Keras framework. The purpose of building generator is that it allows to generate batches of tensor image data with real-time data augmentation(ex: random horizontal flipping of images). We also use the generator to transform the values in each batch so that their mean is 0 and their standard deviation is 1.Here is the information of <a href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image/ImageDataGenerator#used-in-the-notebooks">ImageDataGenerator</a> and a short <a href="https://vijayabhaskar96.medium.com/tutorial-on-keras-imagedatagenerator-with-flow-from-dataframe-8bd5776e45c1">tutorial</a>. We’ll also need to build a sereperate generator for valid and test sets. Since each image will be normailized using mean and standard deviation derived from its own batch. In a real life scenario, we process one image at a time. And the incoming image is normalized using the statistics computed from the training set.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Train generator</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">def get_train_generator(df, image_dir, x_col, y_cols, shuffle=True, batch_size=8, seed=1, target_w = 224, target_h = 224)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb4-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-4"></span>
+<span id="cb4-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Args</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb4-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">train_df (dataframe)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> dataframe specifying training data.</span></span>
+<span id="cb4-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image_dir (str)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> directory where image files are held.</span></span>
+<span id="cb4-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">x_col (str)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> name of column in df that holds filenames.</span></span>
+<span id="cb4-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">y_cols (list)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> list of strings that hold y labels for images.</span></span>
+<span id="cb4-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sample_size (int)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> size of sample to use for normalization statistics.</span></span>
+<span id="cb4-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">batch_size (int)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> images per batch to be fed into model during training.</span></span>
+<span id="cb4-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seed (int)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> random seed.</span></span>
+<span id="cb4-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">target_w (int)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> final width of input images.</span></span>
+<span id="cb4-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">target_h (int)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> final height of input images.</span></span>
+<span id="cb4-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb4-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Returns</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb4-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">train_generator (DataFrameIterator)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> iterator over training set</span></span>
+<span id="cb4-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">"        </span></span>
+<span id="cb4-19"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    print("getting train generator...") </span></span>
+<span id="cb4-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    # normalize images</span></span>
+<span id="cb4-21"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    image_generator = ImageDataGenerator(</span></span>
+<span id="cb4-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        samplewise_center=True,</span></span>
+<span id="cb4-23"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        samplewise_std_normalization= True)</span></span>
+<span id="cb4-24"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb4-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    # flow from directory with specified batch size and target image size</span></span>
+<span id="cb4-26"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    generator = image_generator.flow_from_dataframe(</span></span>
+<span id="cb4-27"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            dataframe=df,</span></span>
+<span id="cb4-28"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            directory=image_dir,</span></span>
+<span id="cb4-29"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            x_col=x_col,</span></span>
+<span id="cb4-30"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            y_col=y_cols,</span></span>
+<span id="cb4-31"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            class_mode="raw",</span></span>
+<span id="cb4-32"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            batch_size=batch_size,</span></span>
+<span id="cb4-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            shuffle=shuffle,</span></span>
+<span id="cb4-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            seed=seed,</span></span>
+<span id="cb4-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            target_size=(target_w,target_h))</span></span>
+<span id="cb4-36"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb4-37"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    return generator  </span></span></code></pre></div>
+<p>Before, model building we’ll need to define a loss function to adress class imbalance. We can give more weight for the less frequent class and less weight for the other one, see <a href="https://arxiv.org/pdf/1711.05225.pdf">here</a> . We can write the overall average cross-entropy loss over the entire training set D of size N as follows:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/loss.PNG" class="img-fluid figure-img"></p>
+<figcaption>loss</figcaption>
+</figure>
+</div>
+<p>Next, we will use a pre-trained DenseNet121 model which we can load directly from Keras and then add two layers on top of it.</p>
+<ul>
+<li><p>Set include_top=False, to remove the orginal fully connect dense layer (so you can adjust the ouptut prediction clsses or<br>
+activation function).</p></li>
+<li><p>Use specific layer using get_layer(). For example: base_model.get_layer(‘conv5_block16_conv’)</p></li>
+</ul>
+<p>A GlobalAveragePooling2D layer to get the average of the last convolution layers from DenseNet121. The pooling layer typically uses a filter to extract representative features (e.g., maximum, average, etc.) for different locations. The method of extracting features from the pooling filter is called a pooling function. The commonly used pooling functions include the maximum pooling function, average pooling function, L2 normalization, and weighted average pooling function based on the distance from the center pixel. In short, the pooling layer summarizes all the feature information centered on each position of the input feature map, which makes it reasonable that the output data of the pooling layer is less than the input data. This method reduces the input data to the next layer and improves the computational efficiency of the CNN.</p>
+<p>The output of the pooling layer is flattening to convert the pooled features maps into a single dimensional array. This is done in order for the data to be fed into densely connected hidden layers.</p>
+<p>A Dense layer with sigmoid activation to get the prediction logits for each of our classes. We can set our custom loss function for the model by specifying the loss parameter in the compile() function.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Build model</span></span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">def create_dense121_model()</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    pretrained = 'fine_tuned.hdf5'</span></span>
+<span id="cb5-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    train_df = pd.read_csv("train_df.csv")</span></span>
+<span id="cb5-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    labels = ['uninfected', 'parasite']  </span></span>
+<span id="cb5-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    class_pos = train_df.loc[:, labels].sum(axis=0)</span></span>
+<span id="cb5-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    class_neg = len(train_df) - class_pos</span></span>
+<span id="cb5-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    class_total = class_pos + class_neg</span></span>
+<span id="cb5-11"></span>
+<span id="cb5-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    pos_weights =  class_pos / class_total</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> #[0.5,class_pos / class_total]</span></span>
+<span id="cb5-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    neg_weights =  class_neg / class_total</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> #[0.5,class_neg / class_total]</span></span>
+<span id="cb5-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    print("Got loss weights")</span></span>
+<span id="cb5-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">def create_model(input_shape=(224, 224,3))</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        base_model = DenseNet121(weights='imagenet', include_top=False, input_shape=input_shape)</span></span>
+<span id="cb5-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">       </span></span>
+<span id="cb5-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        # add a global spatial average pooling layer</span></span>
+<span id="cb5-20"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        x = GlobalAveragePooling2D()(base_model.output)</span></span>
+<span id="cb5-21"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        x = Flatten()(x)</span></span>
+<span id="cb5-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        x = Dense(1024, activation='relu', name='dense_post_pool')(x)</span></span>
+<span id="cb5-23"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        x = Dropout(0.8)(x)</span></span>
+<span id="cb5-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        # output has two neurons for the 2 classes (uninfected and parasite)</span></span>
+<span id="cb5-25"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        predictions = Dense(len(labels), activation='sigmoid')(x)</span></span>
+<span id="cb5-26"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        model = Model(inputs = base_model.input, outputs = predictions)</span></span>
+<span id="cb5-27"></span>
+<span id="cb5-28"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        # freeze the earlier layers</span></span>
+<span id="cb5-29"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        for layer in base_model.layers[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:-4]</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-30"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            layer.trainable=False</span></span>
+<span id="cb5-31"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span></span>
+<span id="cb5-32"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        return model</span></span>
+<span id="cb5-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">def get_weighted_loss(neg_weights, pos_weights, epsilon=1e-7)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">def weighted_loss(y_true, y_pred)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-36"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            y_true = tf.cast(y_true, tf.float32)</span></span>
+<span id="cb5-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            #print(f'neg_weights : {neg_weights}, pos_weights: {pos_weights}')</span></span>
+<span id="cb5-38"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            #print(f'y_true : {y_true}, y_pred: {y_pred}')</span></span>
+<span id="cb5-39"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            # L(X, y) = −w * y log p(Y = 1|X) − w *  (1 − y) log p(Y = 0|X)</span></span>
+<span id="cb5-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            # from https://arxiv.org/pdf/1711.05225.pdf</span></span>
+<span id="cb5-41"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            loss = 0</span></span>
+<span id="cb5-42"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span></span>
+<span id="cb5-43"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">for i in range(len(neg_weights))</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb5-44"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                loss -= (neg_weights[i] * y_true[:, i] * K.log(y_pred[:, i] + epsilon) + </span></span>
+<span id="cb5-45"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                         pos_weights[i] * (1 - y_true[:, i]) * K.log(1 - y_pred[:, i] + epsilon))</span></span>
+<span id="cb5-46"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            </span></span>
+<span id="cb5-47"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            loss = K.sum(loss)</span></span>
+<span id="cb5-48"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">            return loss</span></span>
+<span id="cb5-49"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        return weighted_loss</span></span>
+<span id="cb5-50"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-51"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">   </span></span>
+<span id="cb5-52"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    model = create_model()</span></span>
+<span id="cb5-53"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    model.load_weights(pretrained)</span></span>
+<span id="cb5-54"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    print("Loaded Model")</span></span>
+<span id="cb5-55"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb5-56"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    model.compile(optimizer='adam', loss= get_weighted_loss(neg_weights, pos_weights)) </span></span>
+<span id="cb5-57"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    print("Compiled Model")   </span></span>
+<span id="cb5-58"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span></span>
+<span id="cb5-59"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    return model</span></span></code></pre></div>
+<p>Model is fine tuned using <a href="https://keras.io/api/callbacks/model_checkpoint/">ModelCheckpoint</a> and only the model’s weights will be saved.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CallBack </span></span>
+<span id="cb6-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># -------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Callback Function 1</span></span>
+<span id="cb6-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fname = 'dense121(V)_Epoch[{epoch:02d}].ValLoss[{val_loss:.3f}].hdf5'</span></span>
+<span id="cb6-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fullpath = fname</span></span>
+<span id="cb6-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># https://keras.io/api/callbacks/model_checkpoint/</span></span>
+<span id="cb6-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callback_func1 = ModelCheckpoint(filepath=fullpath,             </span></span>
+<span id="cb6-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                monitor='val_loss',             </span></span>
+<span id="cb6-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                verbose=1,                      </span></span>
+<span id="cb6-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                save_best_only=True,            </span></span>
+<span id="cb6-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                save_weights_only=True,</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> # save weights       </span></span>
+<span id="cb6-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                mode='min',                     </span></span>
+<span id="cb6-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                                period=1)                       </span></span>
+<span id="cb6-14"></span>
+<span id="cb6-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Callback Function 2</span></span>
+<span id="cb6-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># https://keras.io/callbacks/#tensorboard</span></span>
+<span id="cb6-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callback_func2 = keras.callbacks.TensorBoard(log_dir='./logs/log2', histogram_freq=1)</span></span>
+<span id="cb6-18"></span>
+<span id="cb6-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Callback Function</span></span>
+<span id="cb6-20"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callbacks = []</span></span>
+<span id="cb6-21"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callbacks.append(callback_func1)</span></span>
+<span id="cb6-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callbacks.append(callback_func2)</span></span>
+<span id="cb6-23"></span>
+<span id="cb6-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Training and Plotting</span></span>
+<span id="cb6-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># -------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-26"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">history = model.fit(train_generator, </span></span>
+<span id="cb6-27"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                              validation_data=valid_generator,</span></span>
+<span id="cb6-28"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                              steps_per_epoch=100, </span></span>
+<span id="cb6-29"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                              validation_steps=25, </span></span>
+<span id="cb6-30"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                              epochs = 15,</span></span>
+<span id="cb6-31"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">                              callbacks=callbacks)</span></span>
+<span id="cb6-32"></span>
+<span id="cb6-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.plot(history.history['loss'])</span></span>
+<span id="cb6-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.plot(history.history['val_loss'])</span></span>
+<span id="cb6-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.ylabel("loss")</span></span>
+<span id="cb6-36"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.xlabel("epoch")</span></span>
+<span id="cb6-37"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.title("Training Loss Curve")</span></span>
+<span id="cb6-38"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plt.show()</span></span></code></pre></div>
+<p>Train versus validation loss for all epochs is shown here. The orange and blue lines indicate train loss and validation loss respectively. We can see the model may be under-fitted. One way to overcome this is simply increase the number of epochs. Also with the callback function, we can re-use the best weights saved at 12th epoch.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/history.PNG" class="img-fluid figure-img"></p>
+<figcaption>history</figcaption>
+</figure>
+</div>
+</section>
+<section id="evaluation" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation">Evaluation</h4>
+<p>The <a href="https://pubmed.ncbi.nlm.nih.gov/3753562/">ROC curve</a> is created by plotting the true positive rate against the false positive rate. We can see the model performs reasonable well.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/assets/images/ROC.PNG" class="img-fluid figure-img"></p>
+<figcaption>ROC</figcaption>
+</figure>
+</div>
+<p>We can try different approaches to improve the model perfromance, such as train the model for a longer time or use all the training data (since only 1/3 of the parasite data was used). We can also try a different base model, the previous <a href="https://peerj.com/articles/6977/">publication</a>, shows 99.32% accuracy with VGG-19 alone.</p>
+</section>
+<section id="visualize-class-activation-maps" class="level4">
+<h4 class="anchored" data-anchor-id="visualize-class-activation-maps">Visualize class activation maps</h4>
+<p>Next, I will show how to produce visual explanation using Grad-CAM. The purpose of doing this is as following:</p>
+<ul>
+<li>Debug your model and visually validate that it is “looking” and “activating” at the correct locations in an image.</li>
+<li><a href="https://arxiv.org/abs/1610.02391">Grad-CAM</a> works by (1) finding the final convolutional layer in the network and then (2) examining the gradient information flowing into that layer.</li>
+</ul>
+</section>
+<section id="notes" class="level4">
+<h4 class="anchored" data-anchor-id="notes">Notes</h4>
+<p>Note 1: AUC is the area below these ROC curves. Therefore, in other words, AUC is a great indicator of how well a classifier functions. Note 2: A good tutorial for to learn neural network image classification from <a href="https://medium.com/@saugata.paul1010/a-case-study-on-malaria-detection-using-cell-images-and-deep-convolution-neural-networks-in-keras-8d07356a3d05">scratch</a> and Andrew Ng’s deep learning <a href="https://www.coursera.org/specializations/deep-learning">course</a>.</p>
+<p>Note 3:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># packages used </span></span>
+<span id="cb7-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import os</span></span>
+<span id="cb7-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import sklearn</span></span>
+<span id="cb7-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import pandas as pd</span></span>
+<span id="cb7-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import numpy as np</span></span>
+<span id="cb7-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import seaborn as sns</span></span>
+<span id="cb7-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import matplotlib.pyplot as plt</span></span>
+<span id="cb7-8"></span>
+<span id="cb7-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">import keras</span></span>
+<span id="cb7-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.applications.densenet import DenseNet121</span></span>
+<span id="cb7-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.models import Model</span></span>
+<span id="cb7-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.layers import Dense, Activation, Flatten, Dropout, BatchNormalization, GlobalAveragePooling2D</span></span>
+<span id="cb7-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.callbacks import ModelCheckpoint, CSVLogger, LearningRateScheduler, ReduceLROnPlateau, EarlyStopping, TensorBoard</span></span>
+<span id="cb7-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras import backend as K</span></span>
+<span id="cb7-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.preprocessing import image</span></span>
+<span id="cb7-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from keras.preprocessing.image import ImageDataGenerator</span></span></code></pre></div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>python</category>
+  <category>Image Classification</category>
+  <guid>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification/</guid>
+  <pubDate>Tue, 31 Aug 2021 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
