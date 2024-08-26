@@ -1,28 +1,12 @@
 ---
-listing:
-  contents: posts
-  feed: true
-  sort-ui: true
-  sort: 
-    - "date desc"
-    - "title desc"
-  type: default
-  image-height: 150px
-  image-placeholder: img/cmm1.PNG
-  fields: [image, title, description, date, reading-time]
-  categories: true
-  date-format: "YYYY-MM-DD"
-  page-size: 9
-toc: false
-toc-location: body
+# title: 'Welcome: <span style="color:#757883">A Convinient Stopp for you to</span>'
+# subtitle: "Accept Payments"
 page-layout: full
-title-block-banner: false
 ---
-<<<<<<< HEAD
 
 ::: gradient-text
 ::: welcome-headline
-**Welcome** <br>
+*Welcome* <br>
 :::
 
 ::: welcome-subheadline
@@ -44,4 +28,3 @@ This is the place where I write about data science stuff.
 :::
 :::
 :::
-=======

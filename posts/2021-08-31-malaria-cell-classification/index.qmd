@@ -6,7 +6,7 @@ author: Chris Lee
 date: 2021-08-31
 creative_commons: CC BY
 categories:
-  - python
+  - python 
   - Image Classification
 preview: "/assets/images/dauer.PNG"
 ---

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chris Lee - Blog</title>
+<title>Chris Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,9 +79,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-description','listing-date','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -131,7 +131,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles/custom.scss">
-<meta property="og:title" content="Chris Lee - Blog">
+<link rel="alternate" type="application/rss+xml" title="Chris Lee" href="gallery.xml" data-external="1"><meta property="og:title" content="Chris Lee">
 <meta property="og:image" content="https://github.com/clfee/home/img/cmm1.PNG">
 <meta property="og:site_name" content="Chris Lee">
 </head>
@@ -154,12 +154,8 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link active" href="./gallery.html" aria-current="page"> 
-<span class="menu-text">Demo</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
@@ -171,7 +167,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="./gallery.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -183,32 +179,15 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Image Classification">Image Classification <span class="quarto-category-count">(2)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<main class="content column-page-left" id="quarto-document-content">
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 
@@ -216,170 +195,106 @@ window.Quarto = {
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+</div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="python,Image Classification&quot;" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1723500915700" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2619">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1721019600000" data-listing-file-modified-sort="1724712334642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1250">
 <div class="thumbnail">
-<p><a href="./reports/Image Classification - Malaria cell case study.html" class="no-external"></a></p><a href="./reports/Image Classification - Malaria cell case study.html" class="no-external">
-<p class="card-img-top"><img src="assets\images\dauer.PNG"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./reports/Image Classification - Malaria cell case study.html" class="no-external"></a></p>
+<p><a href="./posts/2024-07-15-market-compaign/index.html" class="no-external"></a></p><a href="./posts/2024-07-15-market-compaign/index.html" class="no-external">
+<p class="card-img-top"><img src="img/cmm1.PNG" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2024-07-15-market-compaign/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./reports/Image Classification - Malaria cell case study.html" class="no-external">Image Classification - Malaria cell classification (part1)</a>
+<a href="./posts/2024-07-15-market-compaign/index.html" class="no-external">Market Campaign at a Glance</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./reports/Image Classification - Malaria cell case study.html" class="no-external"></a>
+<a href="./posts/2024-07-15-market-compaign/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<a href="./reports/Image Classification - Malaria cell case study.html" class="no-external"><br> <strong>Image Classification - Malaria cell case study</strong> <br></a>
+<a href="./posts/2024-07-15-market-compaign/index.html" class="no-external"></a>
 </div>
 </div>
 <div class="metadata">
-<a href="./reports/Image Classification - Malaria cell case study.html" class="no-external">
+<a href="./posts/2024-07-15-market-compaign/index.html" class="no-external">
 <div class="listing-date">
-Aug 2021
+2024-07-15
 </div>
-<div class="listing-author">
-Chris Lee
+<div class="listing-reading-time">
+7 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="python,Image Classification&quot;" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1723501044744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1044">
+<div class="quarto-post image-right" data-index="1" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1724712614546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1037">
 <div class="thumbnail">
-<p><a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external"></a></p><a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external">
-<p class="card-img-top"><img src="assets\images\gradcam_res.PNG"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external"></a></p>
+<p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a></p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">
+<p class="card-img-top"><img src="assets\images\gradcam_res.PNG" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external">Image Classification - Malaria cell classification (part2)</a>
+<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">Image Classification (Part2)</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external"></a>
+<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external"><br> <strong>Image Classification - Malaria cell case study (part2)</strong> <br></a>
+<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">Save time &amp; Money! </a>
 </div>
 </div>
 <div class="metadata">
-<a href="./reports/Image Classification - Malaria cell case study 2.html" class="no-external">
+<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">
 <div class="listing-date">
-Aug 2021
+2021-08-31
 </div>
-<div class="listing-author">
-Chris Lee
+<div class="listing-reading-time">
+6 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Cancer,Mass Spectrometry,Dashboard" data-listing-date-sort="1676440800000" data-listing-file-modified-sort="1723501251680" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="435">
+<div class="quarto-post image-right" data-index="2" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1724714292051" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2611">
 <div class="thumbnail">
-<p><a href="./reports/journey.html" class="no-external"></a></p><a href="./reports/journey.html" class="no-external">
-<p class="card-img-top"><img src="img\repurpose.png" alt="Petrosyan et al.Int J Cancer. 2022 Jul 15;151(2):167-180. doi: 10.1002/ijc.33965."  class="thumbnail-image card-img"/></p>
-</a><p><a href="./reports/journey.html" class="no-external"></a></p>
+<p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a></p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">
+<p class="card-img-top"><img src="assets\images\dauer.PNG" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./reports/journey.html" class="no-external">Mapping SMPD1/ASM dependent Lipid Raft Proteome in cancer cells</a>
+<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">Image Classification (Part1)</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./reports/journey.html" class="no-external"></a>
+<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<a href="./reports/journey.html" class="no-external"><br> <strong>Understanding Glioblastoma and Its Challenges</strong> <br></a>
+<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">Save time &amp; Money! </a>
 </div>
 </div>
 <div class="metadata">
-<a href="./reports/journey.html" class="no-external">
+<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">
 <div class="listing-date">
-Feb 2023
+2021-08-31
 </div>
-<div class="listing-author">
-Chris Lee
+<div class="listing-reading-time">
+14 min
 </div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1721019600000" data-listing-file-modified-sort="1723502387180" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1250">
-<div class="thumbnail">
-<p><a href="./reports/market campaign.html" class="no-external"></a></p><a href="./reports/market campaign.html" class="no-external">
-<p class="card-img-top"><img src="reports\market-campaign_files\figure-html\unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./reports/market campaign.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./reports/market campaign.html" class="no-external">Market Campaign at a Glance</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./reports/market campaign.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./reports/market campaign.html" class="no-external">This dashboard displays analysis for:</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./reports/market campaign.html" class="no-external">
-<div class="listing-date">
-Jul 2024
-</div>
-<div class="listing-author">
-Chris Lee
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1718427600000" data-listing-file-modified-sort="1722274795518" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2274">
-<div class="thumbnail">
-<p><a href="./reports/asm1.html" class="no-external"></a></p><a href="./reports/asm1.html" class="no-external">
-<p class="card-img-top"><img src="reports\dashboards\asm.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./reports/asm1.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./reports/asm1.html" class="no-external">Repurposing desipramine for neurological disorders?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./reports/asm1.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./reports/asm1.html" class="no-external"><strong>Results</strong></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./reports/asm1.html" class="no-external">
-<div class="listing-date">
-Jun 2024
-</div>
-<div class="listing-author">
-Chris Lee
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1715805222222" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./reports/test1.html" class="no-external"></a></p><a href="./reports/test1.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./reports/test1.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./reports/test1.html" class="no-external">reports</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./reports/test1.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./reports/test1.html" class="no-external">
-
-
-
-</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./reports/test1.html" class="no-external"></a></p><a href="./reports/test1.html" class="no-external">
 </a>
 </div>
 </div>

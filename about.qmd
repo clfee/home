@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: " "
 page-layout: full
 ---
 ::: cmm-background

@@ -25,15 +25,13 @@ website:
     logo: img/mi_logo_s.png
     right:
       - text: "Home"
-        file: index.qmd
-      - text: "Demo"
         file: gallery.qmd
       - text: "About"
         file: about.qmd
       - icon: github
         href: https://github.com/clfee
       - icon: rss
-        href: index.xml
+        href: gallery.xml
 
 format:
   html:
