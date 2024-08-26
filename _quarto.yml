@@ -1,46 +1,43 @@
 project:
   type: website
-  output-dir: docs
 
 website:
-  title: "MD & CH"
-  site-url: "https://github.com/clfee/website"
-  repo-url: "https://github.com/clfee/website"
+  title: "Chris Lee"
+  description: "Data science applications brought to you by Chris Lee"
+  site-url: "https://github.com/clfee/home"
+  repo-url: "https://github.com/clfee"
   favicon: img/mi2.PNG
+  image: img/cmm1.PNG
+  open-graph: true
   page-navigation: false
   back-to-top-navigation: true
   search: true
   page-footer: 
-    background: "#F6F5F3"
+    background: "#e0ddd6"
     center: © 2024  &middot; Made with r-project and 
       [![](https://quarto.org/quarto.png){fig-alt="Quarto" width=65px}](https://quarto.org/) 
-    right:
-      - icon: github
-        href: https://github.com/clfee/website/
+
   
   navbar:
-    background: "#F6F5F3"
+    background: "#fdfeff"
     search: true
     title: false
-    logo: img/mi_logo.png
-    left:
-      - href: index.qmd
-        text: Home
-      - gallery.qmd
-      - about.qmd
-      - contact.qmd
-    tools:
-      - icon: youtube
-        href: https://youtube.com
+    logo: img/mi_logo_s.png
+    right:
+      - text: "Home"
+        file: index.qmd
+      - text: "Demo"
+        file: gallery.qmd
+      - text: "About"
+        file: about.qmd
       - icon: github
-        menu:
-          - text: Source Code
-            href:  https://code.com
+        href: https://github.com/clfee
+      - icon: rss
+        href: index.xml
 
 format:
   html:
-    theme: 
-      dark: solar
+    theme: my-litera.scss
     css: styles/custom.scss
     mainfont: Nunito Sans
     toc: true
@@ -51,4 +48,5 @@ format:
       - img
 
 editor: visual
+ 
 

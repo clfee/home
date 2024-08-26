@@ -1,30 +1,20 @@
 ---
-# title: 'Welcome: <span style="color:#757883">A Convinient Stopp for you to</span>'
-# subtitle: "Accept Payments"
+listing:
+  contents: posts
+  feed: true
+  sort-ui: true
+  sort: 
+    - "date desc"
+    - "title desc"
+  type: default
+  image-height: 150px
+  image-placeholder: img/cmm1.PNG
+  fields: [image, title, description, date, reading-time]
+  categories: true
+  date-format: "YYYY-MM-DD"
+  page-size: 9
+toc: false
+toc-location: body
 page-layout: full
+title-block-banner: false
 ---
-
-::: gradient-text
-::: welcome-headline
-Welcome to MD & CH<br>
-:::
-
-::: welcome-subheadline
-A Convenient Way for you
-:::
-:::
-
-::: cmm-background
-::: content-container
-::: welcome
-::: grid
-::: {.g-col-14 .g-col-lg-6 .welcome-text .sand-background style="padding: 15px;"}
-We are a group of web developers, Business analysts, and business developing professionals. With more than 10 years of experience in the field, we are specialized in **Web development**,**Analytics** , **Sales training**, and **Performance review**. Deep connection to experiment influences everything we do. 
-<p>
- ![](/img/background-3.jpg)
-</p>
-:::
-:::
-:::
-:::
-:::

@@ -18,35 +18,5 @@ Feel free to reach out to me on LinkedIn or drop me an email to discuss.
 :::
 
 
-::: gradient-text
-[Experiences]{style="font-size: 1.6rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
-:::
-[**Freelancer**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
-Current
-
-[**Business Analytics Consultant**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}, MCD Key Concepts , August 2015 – Dec 2023
-
-My work involved in applying ***machine learning*** algorithms on data from market location, client features, and service demands. Leveraged data analytics to prioritize leads. I also built a forecasting platform using R that cut error 30-50% relative to the sales forecasts in our core business. This platform could handle forecasts for different measures (revenue, units) and different time periods (weeks, months, quarters ahead). This improved sales performance by an additional 10%. The results were communicated with teams through  ***serverless dashboard*** and ***Shiny***.   
-
-[**Senior Scientist, Biotherapeutics and Proteomics**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"},Protea, Feb 2014 - Mar 2015
-
-I guided experiment designs for biomarker discoveries, streamlined workflows and cut processing time 20-30%. Led a team to win multi-contracts with major pharmaceutical companies. The workflows successfully implemented cutting edge techniques, improved low abundance peptide detection limits ~10X,  resulting in customer satisfaction. 
-
-[**Postdoctoral fellow**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}, The University of Texas at Austin, Proteomics core facility, Sep 2011-Jan 2014
-
-I applied bio-analytical strategies, data visualization, and statistical methods to support proteomics core facility. Developed a workflow using statistical/ machine learning methods to predict elution time to target low abundance signals, resulting in accepted publications and grant awards.  
-
-[**Postdoc**]{style="font-size: 1.0rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}, Nevada Cancer Institute, Cancer Proteomics, Jan 2009- Aug 2011 
-
-My work focused on detecting protein interactions and biomarker discoveries for both metabolome and proteome in cancer cells. I applied R  to  for data clean-up, organization, visualization ,and statistical analysis (such as SVF, Xgboost).  
-<br>
-
-::: gradient-text
-[Education]{style="font-size: 1.6rem; letter-spacing: 1.2px; line-height: 0.8; font-family:Economica;"}
-:::
-**Ph.D. in Cancer Studies** (2009) University of Manchester, Manchester, UK                                          
-
-
-
 ![](/img/background-2.jpg)
 
