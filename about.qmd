@@ -2,6 +2,7 @@
 title: " "
 page-layout: full
 ---
+
 ::: cmm-background
 ::: content-container
 ::: top-story
@@ -9,14 +10,11 @@ page-layout: full
 ::: {.g-col-10 .g-col-lg-10 .top-story-text .sand-background style="padding: 12px;"}
 I’m driven by helping others successfully solve problems like turning complex data into clear, actionable insights that help businesses thrive. My toolkit to deliver these solutions draws on blending business understanding with machine learning using SQL, R, SAS, and Python . I’m passionate about using data to solve real-world problems, streamline processes, and find new growth opportunities. Balancing the technical side with a strong understanding of business needs, I create solutions that make a real impact and keep things moving forward.
 
-Feel free to reach out to me on LinkedIn or drop me an email to discuss. 
-
+Feel free to reach out to me on LinkedIn or drop me an email to discuss.
 :::
 :::
 :::
 :::
 :::
-
 
 ![](/img/background-2.jpg)
-
