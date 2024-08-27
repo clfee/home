@@ -1,0 +1,14 @@
+---
+title: "Chris Lee"
+subtitle: "This is the place where I write about data science stuff. "
+about:
+  id: hero-heading
+  template: jolla
+  image: img/mi.PNG
+  image-width: 15em
+  image-shape: round
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/clfee
+---

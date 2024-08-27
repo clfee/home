@@ -25,9 +25,11 @@ website:
     logo: img/mi_logo_s.png
     right:
       - text: "Home"
-        file: about.qmd
+        file: index.qmd
       - text: "Blog"
         file: gallery.qmd
+      - text: "About"
+        file: about.qmd
       - icon: github
         href: https://github.com/clfee
       - icon: rss

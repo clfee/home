@@ -21,37 +21,9 @@
     "text": "When building a predictive model, there are two important criteria: predictive accuracy and interpretability, which generally have a trade-off relationship. In the previous post, we have shown that the DenseNet121 model can achieve high accuracy in detecting cells infected with parasites.\nHere, I am going to introduce a powerful technique GRAD-CAM (gradient-weighted class activation mapping) to visualize which parts of an image are most important to the predictions of an image regression network. GRAD-CAM is a generalization of the CAM technique which determines the importance of each neuron in a network prediction by considering the gradients of the target flowing through the deep network. Unlike CAM which requires a particular kind of CNN architecture to perform global average pooling prior to prediction and forces us to change the base model retrain the network. In contrast, GRAD-CAM is accessing intermediate activations in the deep learning model and computing gradients with respect to the class output. For more details, please see.\nWorkflow: - Obtain predicted class/index - Determine which intermediate layer(s) to use. Lower-level convolution layers capture low level features such as edges, and lines. Higher-level layers usually have more abstract information. - Calculate the gradients with respect to the outout of the class/index - Generate a heatmap by weighing the convolution outputs with the computed gradients - Super-impose the heatmap to the original image\nLoad base model\nWe first load the base model and will only train the last 4 layers.\ndef build_model(input_shape=(224, 224,3),pos_weights,neg_weights):\n  # load the base DenseNet121 model\n  base_model = DenseNet121(input_shape = input_shape, \n                      weights='imagenet', \n                      include_top=False)\n  \n  # add a GAP layer\n  output = layers.GlobalAveragePooling2D()(base_model.output)\n\n  # output has two neurons for the 2 classes (uninfected and parasite)\n  output = layers.Dense(2, activation='softmax')(output)\n\n  # set the inputs and outputs of the model\n  model = Model(base_model.input, output)\n\n  # freeze the earlier layers\n  for layer in base_model.layers[:-4]:\n      layer.trainable=False\n\n  # configure the model for training\n  model.compile(loss= get_weighted_loss(neg_weights, pos_weights), \n                optimizer=adam, \n                metrics=['accuracy'])\n  \n  return model\n \nWe then create a new model that has the original model’s inputs, but two different outputs. The first output contains the activation layers outputs that in this case is the final convolutional layer in the original model. And the second output is the model’s prediction for the image.\ndef get_CAM(model, processed_image, actual_label, layer_name): \n    \"\"\"\n    GradCAM method for visualizing input saliency.\n    \n    Args:\n        model (Keras.model): model to compute cam for\n        image (tensor): input to model, shape (1, H, W, 3)\n        cls (int): class to compute cam with respect to\n        layer_name (str): relevant layer in model\n        H (int): input height\n        W (int): input width\n    Return:\n        heatmap()\n    \"\"\"    \n\n    model_grad = Model([model.inputs], \n                       [model.get_layer(layer_name).output, model.output])\n    \n    with tf.GradientTape() as tape:\n        conv_output_values, predictions = model_grad(processed_image)\n\n        # assign gradient tape to monitor the conv_output\n        tape.watch(conv_output_values)\n        \n        # use binary cross entropy loss, actual_label = 0 if uninfected\n        # get prediction probability of infected  \n        pred_prob = predictions[:,1] \n        \n        # make sure actual_label is a float, like the rest of the loss calculation\n        actual_label = tf.cast(actual_label, dtype=tf.float32)\n        \n        # add a tiny value to avoid log of 0\n        smoothing = 0.00001 \n        \n        # Calculate loss as binary cross entropy\n        loss = -1 * (actual_label * tf.math.log(pred_prob + smoothing) + (1 - actual_label) * tf.math.log(1 - pred_prob + smoothing))\n        print(f\"binary loss: {loss}\")\n    \n    # get the gradient of the loss with respect to the outputs of the last conv layer\n    grads_values = tape.gradient(loss, conv_output_values)\n    grads_values = K.mean(grads_values, axis=(0,1,2))\n    \n    conv_output_values = np.squeeze(conv_output_values.numpy())\n    grads_values = grads_values.numpy()\n    \n    # weight the convolution outputs with the computed gradients\n    for i in range(grads_values.shape[-1]): \n        conv_output_values[:,:,i] *= grads_values[i]\n    heatmap = np.mean(conv_output_values, axis=-1)\n    \n    heatmap = np.maximum(heatmap, 0)\n    heatmap /= heatmap.max()\n    \n    del model_grad, conv_output_values, grads_values, loss\n   \n    return heatmap\n\n\n\nResult\n\n\nNote: Instead of using max pooling that only keeps the highest valued ones. Average pooling allows some of the lesser intensity pixels to pass on in the pooling layer. It is important as we look at the small size of the image once it reaches this layer, max pooling could leave us with very little information.\n\n\n\n Back to top"
   },
   {
-    "objectID": "gallery.html",
-    "href": "gallery.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Chris Lee",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n\n\n\n\n\n\nMarket Campaign at a Glance\n\n\n\n\n\n\n\n\n\n\n\n2024-07-15\n\n\n7 min\n\n\n\n\n\n\n\n\n\n\n\n\nImage Classification (Part2)\n\n\n\n\n\nSave time & Money! \n\n\n\n\n\n2021-08-31\n\n\n6 min\n\n\n\n\n\n\n\n\n\n\n\n\nImage Classification (Part1)\n\n\n\n\n\nSave time & Money! \n\n\n\n\n\n2021-08-31\n\n\n14 min\n\n\n\n\n\n\nNo matching items\n\n Back to top"
-  },
-  {
-    "objectID": "assets/other/year-archive.html",
-    "href": "assets/other/year-archive.html",
-    "title": "Posts by Year",
-    "section": "",
-    "text": "Back to top"
-  },
-  {
-    "objectID": "assets/other/sitemap.html",
-    "href": "assets/other/sitemap.html",
-    "title": "Website Structure",
-    "section": "",
-    "text": "Pages\n\n{% for post in site.pages %} {% include archive-single.html %} {% endfor %}\n\nPosts\n\n{% for post in site.posts %} {% include archive-single.html %} {% endfor %}\n{% capture written_label %}‘None’{% endcapture %}\n{% for collection in site.collections %} {% unless collection.output == false or collection.label == “posts” %} {% capture label %}{{ collection.label }}{% endcapture %} {% if label != written_label %}\n\n{{ label }}\n\n{% capture written_label %}{{ label }}{% endcapture %} {% endif %} {% endunless %} {% for post in collection.docs %} {% unless collection.output == false or collection.label == “posts” %} {% include archive-single.html %} {% endunless %} {% endfor %} {% endfor %}\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Chris Lee",
-    "section": "",
-    "text": "I’m driven by helping others successfully solve problems like turning complex data into clear, actionable insights that help businesses thrive. My toolkit to deliver these solutions draws on blending business understanding with machine learning using SQL, R, SAS, and Python . I’m passionate about using data to solve real-world problems, streamline processes, and find new growth opportunities. Balancing the technical side with a strong understanding of business needs, I create solutions that make a real impact and keep things moving forward.\nFeel free to reach out to me on LinkedIn or drop me an email to discuss.\n\n\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "assets/other/tags-archive.html",
-    "href": "assets/other/tags-archive.html",
-    "title": "Posts by Tags",
     "section": "",
     "text": "Back to top"
   },
@@ -61,6 +33,41 @@
     "title": "Contact",
     "section": "",
     "text": "meowoo@outlook.com\n 282-351-0640\n Dallas, TX 75201, United States  connect\n\n\n\n\n\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "assets/other/tags-archive.html",
+    "href": "assets/other/tags-archive.html",
+    "title": "Posts by Tags",
+    "section": "",
+    "text": "Back to top"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Chris Lee",
+    "section": "",
+    "text": "Hello\n\n\n\n\n\n\n\nI’m driven by helping others successfully solve problems like turning complex data into clear, actionable insights that help businesses thrive. My toolkit to deliver these solutions draws on blending business understanding with machine learning using SQL, R, SAS, and Python. I’m passionate about using data to solve real-world problems, streamline processes, and find new growth opportunities. Balancing the technical side with a strong understanding of business needs, I create solutions that make a real impact and keep things moving forward.\nFeel free to reach out to me on LinkedIn or drop me an email to discuss.\n\n\n\n\n\nEducation:\n\nUniversity of Manchester | UK PhD in Cancer Studies | Sept 2004 - Jan 2009\nNational Yang-Ming University | Taipei, Taiwan Msc in Genetics| Sept 2001 - Sept 2003\n\nExperience:\n\nFUJI WEDDING VENUE GROUP | Senior Data Analyst | Jan 2023 - PRESENT FUJI WEDDING VENUE GROUP | Data Analyst | Jan 2016 - Dec 2022 Protea | Senior Scientist | Jan 2014 - Mar 2015\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "assets/other/sitemap.html",
+    "href": "assets/other/sitemap.html",
+    "title": "Website Structure",
+    "section": "",
+    "text": "Pages\n\n{% for post in site.pages %} {% include archive-single.html %} {% endfor %}\n\nPosts\n\n{% for post in site.posts %} {% include archive-single.html %} {% endfor %}\n{% capture written_label %}‘None’{% endcapture %}\n{% for collection in site.collections %} {% unless collection.output == false or collection.label == “posts” %} {% capture label %}{{ collection.label }}{% endcapture %} {% if label != written_label %}\n\n{{ label }}\n\n{% capture written_label %}{{ label }}{% endcapture %} {% endif %} {% endunless %} {% for post in collection.docs %} {% unless collection.output == false or collection.label == “posts” %} {% include archive-single.html %} {% endunless %} {% endfor %} {% endfor %}\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "assets/other/year-archive.html",
+    "href": "assets/other/year-archive.html",
+    "title": "Posts by Year",
+    "section": "",
+    "text": "Back to top"
+  },
+  {
+    "objectID": "gallery.html",
+    "href": "gallery.html",
+    "title": "Chris Lee",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n\n\n\n\n\n\nMarket Campaign at a Glance\n\n\n\n\n\n\n\n\n\n\n\n2024-07-15\n\n\n7 min\n\n\n\n\n\n\n\n\n\n\n\n\nImage Classification (Part2)\n\n\n\n\n\nSave time & Money! \n\n\n\n\n\n2021-08-31\n\n\n6 min\n\n\n\n\n\n\n\n\n\n\n\n\nImage Classification (Part1)\n\n\n\n\n\nSave time & Money! \n\n\n\n\n\n2021-08-31\n\n\n14 min\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "posts/2021-08-31-malaria-cell-classification/index.html",
