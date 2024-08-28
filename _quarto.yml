@@ -32,8 +32,7 @@ website:
         file: about.qmd
       - icon: github
         href: https://github.com/clfee
-      - icon: rss
-        href: gallery.xml
+
 
 format:
   html:
