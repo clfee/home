@@ -19,10 +19,11 @@ website:
 
   
   navbar:
-    background: "#fdfeff"
+    background: "#96939c"
+    
     search: true
     title: false
-    logo: img/mi_logo_s.png
+    logo: img/clee.png
     right:
       - text: "Home"
         file: index.qmd
@@ -39,7 +40,10 @@ format:
     theme: my-litera.scss
     css: styles/custom.scss
     mainfont: Nunito Sans
+    monofont: fantasy
     toc: true
+    fontcolor: "#cae5ff"
+    backgroundcolor: "#3d3d3d"
     link-external-newwindow: true
     date-format: "MMM YYYY"
     smooth-scroll: true
