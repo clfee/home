@@ -375,7 +375,7 @@ font-style: inherit;">    return heatmap</span></span></code></pre></div>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
   <category>python</category>
   <category>Image Classification</category>
   <guid>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification - p2/</guid>

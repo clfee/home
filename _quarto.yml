@@ -40,7 +40,7 @@ format:
     theme: my-litera.scss
     css: styles/custom.scss
     mainfont: Nunito Sans
-    monofont: fantasy
+    monofont: monospace
     toc: true
     fontcolor: "#cae5ff"
     backgroundcolor: "#3d3d3d"
