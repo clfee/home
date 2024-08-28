@@ -10,7 +10,7 @@ format:
     nav-buttons: [github]
     github: https://github.com/clfee
 logo: "/assets/images/cmm1.PNG"
-theme: [sandstone, theme/custom.scss]
+theme: custom.scss
 editor_options: 
   chunk_output_type: console
 ---

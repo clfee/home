@@ -20,13 +20,14 @@ website:
   
   navbar:
     background: "#96939c"
-    
     search: true
     title: false
     logo: img/clee.png
-    right:
+    left:
       - text: "Home"
         file: index.qmd
+        icon: house-door-fill
+    right: 
       - text: "Blog"
         file: gallery.qmd
       - text: "About"

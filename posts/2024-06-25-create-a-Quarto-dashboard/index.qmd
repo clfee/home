@@ -1,0 +1,23 @@
+---
+title: "Creating a Serveless Dashboard"
+description: |
+  Sharing results is easy!
+author: Chris Lee
+date: 2024-06-25
+creative_commons: CC BY
+categories:
+  - R 
+  - Quarto
+  - Dashboard
+preview: "dashboard.PNG"
+---
+
+![Dashboard](dashboard.PNG)
+
+A while ago I wrote about creating a serverless dashboard (with no server dependencies) using [Flexdashboard](https://clfee.github.io/r/dashboard/crosstalk-dashboard/). As some of the functions now are no longer supported, I found a good alternative called "Quarto Dashboards". Quarto Dashboards allow to create dashboards using Python, R, Julia, and Observable. More details are [here](https://quarto.org/docs/dashboards/).
+
+Dashboards can be created either using Jupyter notebooks (.ipynb) or using plain text markdown (.qmd). I am showing how to create one using RStudio.
+
+1.  Click File -\> New File -\> Quarto Document
+
+![Demo](demo.PNG)
