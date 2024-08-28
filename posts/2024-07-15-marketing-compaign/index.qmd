@@ -1,5 +1,5 @@
 ---
-title: "Market Campaign at a Glance"
+title: "Marketing Campaign at a Glance"
 author:
     name: Chris Lee
     url: https://clfee.github.io/
@@ -14,6 +14,7 @@ theme: [sandstone, theme/custom.scss]
 editor_options: 
   chunk_output_type: console
 ---
+
 ```{r}
 #| context: setup
 rm(list=ls())
@@ -108,7 +109,7 @@ This dashboard displays analysis for:
 The campaign results were as follows:
 
 |                                |                                            |
-|--------------------------------|--------------------------------------------|
+|------------------------------|-----------------------------------------|
 | **Mean Conversion %**          | `{r} avg_converted_rate`%                  |
 | **Best way** for Communication | `{r} best_comm_way` , `{r} best_comm_pct`% |
 | **Best Performing** State      | `{r} best_state` , `{r} best_state_pct`%   |
