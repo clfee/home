@@ -19,10 +19,40 @@
 <item>
   <title></title>
   <dc:creator>Chris Lee</dc:creator>
-  <link>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign/</link>
+  <link>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign-dashboard/</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign/</guid>
+  <guid>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign-dashboard/</guid>
   <pubDate>Mon, 15 Jul 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Creating a Serveless Dashboard</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/dashboard.PNG" class="img-fluid" alt="Dashboard"> A while ago I wrote about creating a serverless dashboard (with no server dependencies) using <a href="https://clfee.github.io/r/dashboard/crosstalk-dashboard/">Flexdashboard</a>. As some of the functions now are no longer supported, I found a good alternative called “Quarto Dashboards”. Quarto Dashboards allow to create dashboards using Python, R, Julia, and Observable. More details are <a href="https://quarto.org/docs/dashboards/">here</a>.</p>
+<p>Dashboards can be created either using Jupyter notebooks (.ipynb) or using plain text markdown (.qmd). I am showing how to create one using RStudio.</p>
+<ol type="1">
+<li>Click File -&gt; New File -&gt; Quarto Document</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/demo.PNG" class="img-fluid figure-img"></p>
+<figcaption>Demo</figcaption>
+</figure>
+</div>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>R</category>
+  <category>Quarto</category>
+  <category>Dashboard</category>
+  <guid>https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/</guid>
+  <pubDate>Tue, 25 Jun 2024 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Image Classification (Part2)</title>

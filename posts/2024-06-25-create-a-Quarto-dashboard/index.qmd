@@ -12,7 +12,7 @@ categories:
 preview: "dashboard.PNG"
 ---
 
-![Dashboard](dashboard.PNG)
+![](dashboard.PNG)
 
 A while ago I wrote about creating a serverless dashboard (with no server dependencies) using [Flexdashboard](https://clfee.github.io/r/dashboard/crosstalk-dashboard/). As some of the functions now are no longer supported, I found a good alternative called "Quarto Dashboards". Quarto Dashboards allow to create dashboards using Python, R, Julia, and Observable. More details are [here](https://quarto.org/docs/dashboards/).
 
@@ -20,4 +20,21 @@ Dashboards can be created either using Jupyter notebooks (.ipynb) or using plain
 
 1.  Click File -\> New File -\> Quarto Document
 
-![Demo](demo.PNG)
+![Create Dashboards using RStudio](demo.PNG)
+
+2.  A new `.qmd` file is created
+
+Here is the code for the visual version of the dashboard [link](https://clfee.github.io/home/posts/2024-07-15-marketing-compaign-dashboard/)
+
+Here is the plain text `.qmd` version of the dashboard.
+
+(a) The document options define the title and author for the navigation bar as well as specifying the use of the dashboard format.
+(b) By default, dashboard pages are laid out first by row, then by column. In this demo, I changed this by specifying the `orientation: columns` document option:
+
+![](demo2.PNG)
+
+(c) Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the `#| fig-height: 6 `  .  
+
+![](demo3.PNG)
+
+More details about [layout](https://quarto.org/docs/dashboards/layout.html#layout).

@@ -13,9 +13,5 @@ about:
       href: https://github.com/clfee
 ---
 
-#### Experience
-Fuji Wedding Venue Group  | Senior Data Analyst | Jan 2023 - Present
 
-#### Education
-University of Manchester, UK | PhD in Cancer Studies | Sept 2004 - Jan 2009
 
