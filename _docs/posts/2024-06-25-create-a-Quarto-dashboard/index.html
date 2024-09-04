@@ -174,7 +174,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="dashboard.PNG" class="img-fluid" alt="Dashboard"> A while ago I wrote about creating a serverless dashboard (with no server dependencies) using <a href="https://clfee.github.io/r/dashboard/crosstalk-dashboard/">Flexdashboard</a>. As some of the functions now are no longer supported, I found a good alternative called “Quarto Dashboards”. Quarto Dashboards allow to create dashboards using Python, R, Julia, and Observable. More details are <a href="https://quarto.org/docs/dashboards/">here</a>.</p>
+<p><img src="dashboard.PNG" class="img-fluid"></p>
+<p>A while ago I wrote about creating a serverless dashboard (with no server dependencies) using <a href="https://clfee.github.io/r/dashboard/crosstalk-dashboard/">Flexdashboard</a>. As some of the functions now are no longer supported, I found a good alternative called “Quarto Dashboards”. Quarto Dashboards allow to create dashboards using Python, R, Julia, and Observable. More details are <a href="https://quarto.org/docs/dashboards/">here</a>.</p>
 <p>Dashboards can be created either using Jupyter notebooks (.ipynb) or using plain text markdown (.qmd). I am showing how to create one using RStudio.</p>
 <ol type="1">
 <li>Click File -&gt; New File -&gt; Quarto Document</li>
@@ -182,9 +183,24 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="demo.PNG" class="img-fluid figure-img"></p>
-<figcaption>Demo</figcaption>
+<figcaption>Create Dashboards using RStudio</figcaption>
 </figure>
 </div>
+<ol start="2" type="1">
+<li>A new <code>.qmd</code> file is created</li>
+</ol>
+<p>Here is the code for the visual version of the dashboard <a href="https://clfee.github.io/home/posts/2024-07-15-marketing-compaign-dashboard/">link</a></p>
+<p>Here is the plain text&nbsp;<code>.qmd</code>&nbsp;version of the dashboard.</p>
+<ol type="a">
+<li>The document options define the title and author for the navigation bar as well as specifying the use of the dashboard format.</li>
+<li>By default, dashboard pages are laid out first by row, then by column. In this demo, I changed this by specifying the&nbsp;<code>orientation: columns</code>&nbsp;document option:</li>
+</ol>
+<p><img src="demo2.PNG" class="img-fluid"></p>
+<ol start="3" type="a">
+<li>Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the&nbsp;<code>#| fig-height: 6</code>&nbsp; .</li>
+</ol>
+<p><img src="demo3.PNG" class="img-fluid"></p>
+<p>More details about <a href="https://quarto.org/docs/dashboards/layout.html#layout">layout</a>.</p>
 
 
 

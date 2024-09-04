@@ -20,7 +20,7 @@ Dashboards can be created either using Jupyter notebooks (.ipynb) or using plain
 
 1.  Click File -\> New File -\> Quarto Document
 
-![Create Dashboards using RStudio](demo.PNG)
+![](demo.PNG){width="557"}
 
 2.  A new `.qmd` file is created
 
@@ -31,10 +31,32 @@ Here is the plain text `.qmd` version of the dashboard.
 (a) The document options define the title and author for the navigation bar as well as specifying the use of the dashboard format.
 (b) By default, dashboard pages are laid out first by row, then by column. In this demo, I changed this by specifying the `orientation: columns` document option:
 
-![](demo2.PNG)
+``` r
+title: "Marketing Campaign at a Glance"
+author:
+    name: Chris Lee
+    url: https://clfee.github.io/
+date: 2024-07-15
+format: 
+  dashboard:
+    orientation: columns
+    nav-buttons: [github]
+    github: https://github.com/clfee
+logo: "/assets/images/cmm1.PNG"
+theme: custom.scss
+editor_options: 
+  chunk_output_type: console
+```
 
-(c) Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the `#| fig-height: 6 `  .  
+(c) Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the `#| fig-height: 6` 
 
-![](demo3.PNG)
+``` r
+#| title: Correlations
+#| fig-height: 6
+#| padding: 0;
+dt <- train
+```
 
-More details about [layout](https://quarto.org/docs/dashboards/layout.html#layout).
+More details about [full code](https://github.com/clfee/Shiny-apps/tree/main/Dashboards/Marketing Campaign).
+
+

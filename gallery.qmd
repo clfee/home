@@ -8,7 +8,7 @@ listing:
     - "title desc"
   type: default
   image-height: 150px
-  image-placeholder: img/cmm1.PNG
+  image-placeholder: assets\images\cmm1.PNG
   fields: [image, title, description, date, reading-time]
   categories: true
   date-format: "YYYY-MM-DD"
