@@ -76,6 +76,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -162,7 +164,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background-challenges" id="toc-background-challenges" class="nav-link active" data-scroll-target="#background-challenges">Background &amp; challenges</a></li>
+  <li><a href="#actions" id="toc-actions" class="nav-link" data-scroll-target="#actions">Actions</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -211,6 +221,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><img src="file_main.PNG" class="img-fluid"></p>
+<p>Have you ever get tired of typing functions into vlookup? In this post, we will use tidyverse in R to modify, combine, search, and merge several datasets. We will also create a shiny app allowing users to download the organized data.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="test.mp4"></video></div>
+<section id="background-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="background-challenges">Background &amp; challenges</h2>
 <p>Recently, we reviewed our operational costs and realized that a significant portion was going toward credit card processing fees. After some thorough research and negotiation, we secured a better deal with a new merchant service provider. This switch saved us about $1,500 USD per month, and we also qualified for next-day funding—a major win for our business.</p>
 <p>However, our bookkeeper quickly spotted an issue: the new provider’s reporting system was much less straightforward. Unlike our previous provider, which offered a master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To make matters worse, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order could have multiple funding references, making it a headache to track everything accurately.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -219,9 +233,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Different column names and multiple funded entries for one order</figcaption>
 </figure>
 </div>
+</section>
+<section id="actions" class="level2">
+<h2 class="anchored" data-anchor-id="actions">Actions</h2>
 <p>To fully benefit from the cost savings and stick with the new provider, I decided to tackle this problem head-on using R and Shiny.</p>
-<p>One of our goals is to create a master statement with all the action organized in one report as below. First, we re-organized the raw report by renaming the column names.Then read the file from where the columns are not empty or meaningful. Finally, merge the file based on the same column names.</p>
-<p><img src="file_master.PNG" class="img-fluid"></p>
+<p>One of our goals was to create a master statement with all the action organized in one report as below. To do this, the steps are as below:</p>
+<ol type="1">
+<li>We first re-organized the raw report by renaming the column names.</li>
+<li>Skipped the data where it is empty or contains not useful information.</li>
+<li>Data merge based on the same column names.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="file_master.PNG" class="img-fluid figure-img"></p>
+<figcaption>Desired master report</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -243,7 +270,7 @@ Expand for Code
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display no-overflow-x">
-<div id="out73fda801d5b552a6" class="shiny-html-output"></div>
+<div id="outd74a5bf1ca765eb0" class="shiny-html-output"></div>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
@@ -255,7 +282,7 @@ Expand for Code
 </div>
 </div>
 </div>
-<p>I also wanted to save time for our bookkeeper as they need to cross checked with internal documents.This step usually takes time to find the correct range of the data, and input <code>Vlookup</code> functions before finding and labeling the matches in Excel. To streamline the process and to reduce the manual input errors, I replicated this function in the app (full code as below and on github).</p>
+<p>I also wanted to save time for our bookkeeper as they often need to cross-check the internal documents. This step takes time to find the correct range of the data, and input <code>Vlookup</code> functions before finding and labeling the matches in Excel. To streamline the process and to reduce the manual input errors, I replicated this function in the app (full code as below and on github).</p>
 <p>The output result is shown below. This example shows that the order 891631 with two different retrieval references were received, the transactions were successful ,and the amount was deposited into the account. These records (114,115) also appeared in the uploaded internal file.</p>
 <p><img src="file_check.PNG" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -295,12 +322,15 @@ Expand for Code
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<pre class="shiny-text-output noplaceholder" id="outb36895b58fa8b7e0"></pre>
+<pre class="shiny-text-output noplaceholder" id="outc3aaa94bd0302c4d"></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>After the data merge is done, the files are ready to download to the local drive by pressing the <code>Download</code> buttons. This customized shiny app allows our accounting staff to run and download the report anytime/anywhere.</p>
 <p><img src="file_m2.PNG" class="img-fluid"></p>
 <p>By developing a custom solution, I was able to streamline the reporting process, merge the data consistently, and keep our operations running smoothly—all while cutting down on expenses.</p>
@@ -631,6 +661,7 @@ Attaching package: 'DT'</code></pre>
 </div>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1061,6 +1092,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
