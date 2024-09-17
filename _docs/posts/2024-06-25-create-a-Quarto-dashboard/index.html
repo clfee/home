@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -180,12 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>Click File -&gt; New File -&gt; Quarto Document</li>
 </ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="demo.PNG" class="img-fluid figure-img"></p>
-<figcaption>Create Dashboards using RStudio</figcaption>
-</figure>
-</div>
+<p><img src="demo.PNG" class="img-fluid" width="557"></p>
 <ol start="2" type="1">
 <li>A new <code>.qmd</code> file is created</li>
 </ol>
@@ -195,12 +224,28 @@ ul.task-list li input[type="checkbox"] {
 <li>The document options define the title and author for the navigation bar as well as specifying the use of the dashboard format.</li>
 <li>By default, dashboard pages are laid out first by row, then by column. In this demo, I changed this by specifying the&nbsp;<code>orientation: columns</code>&nbsp;document option:</li>
 </ol>
-<p><img src="demo2.PNG" class="img-fluid"></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Marketing Campaign at a Glance"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    name<span class="sc">:</span> Chris Lee</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    url<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>clfee.github.io<span class="sc">/</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="dv">2024-07-15</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  dashboard<span class="sc">:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    orientation<span class="sc">:</span> columns</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    nav<span class="sc">-</span>buttons<span class="sc">:</span> [github]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    github<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>clfee</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>logo<span class="sc">:</span> <span class="st">"/assets/images/cmm1.PNG"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>theme<span class="sc">:</span> custom.scss</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>editor_options<span class="sc">:</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  chunk_output_type<span class="sc">:</span> console</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="a">
-<li>Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the&nbsp;<code>#| fig-height: 6</code>&nbsp; .</li>
+<li>Each row in the dashboard that is not given an explicit height will determine its size by either filling available space or by flowing to its natural height.Here I changed the figure height by specifying the&nbsp;<code>#| fig-height: 6</code>&nbsp;</li>
 </ol>
-<p><img src="demo3.PNG" class="img-fluid"></p>
-<p>More details about <a href="https://quarto.org/docs/dashboards/layout.html#layout">layout</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: Correlations</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| padding: 0;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More details about <a href="https://github.com/clfee/Shiny-apps/tree/main/Dashboards/Marketing%20Campaign">full code</a>.</p>
 
 
 
