@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -222,12 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Transfer learning and fine-tuning (DenseNet121)</li>
 <li>Result evaluation</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../..\assets/images/flow1.PNG" class="img-fluid figure-img"></p>
-<figcaption>flow1x</figcaption>
-</figure>
-</div>
+<p><img src="../..\assets/images/flow1.PNG" class="img-fluid"></p>
 </section>
 <section id="data-overview" class="level4">
 <h4 class="anchored" data-anchor-id="data-overview">Data Overview</h4>
@@ -318,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="at">            target_size=(target_w,target_h))</span></span>
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span></span>
 <span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="at">    return generator  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Before, model building we’ll need to define a loss function to adress class imbalance. We can give more weight for the less frequent class and less weight for the other one, see <a href="https://arxiv.org/pdf/1711.05225.pdf">here</a> . We can write the overall average cross-entropy loss over the entire training set D of size N as follows:</p>
+<p>Before, model building we’ll need to define a loss function to address class imbalance. We can give more weight for the less frequent class and less weight for the other one, see <a href="https://arxiv.org/pdf/1711.05225.pdf">here</a> . We can write the overall average cross-entropy loss over the entire training set D of size N as follows:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../..\assets/images/loss.PNG" class="img-fluid figure-img"></p>

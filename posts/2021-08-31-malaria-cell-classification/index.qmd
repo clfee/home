@@ -23,7 +23,7 @@ Thanks to the advancement in deep learning field, neural network model architect
 -   Transfer learning and fine-tuning (DenseNet121)
 -   Result evaluation
 
-![flow1x](/assets/images/flow1.PNG)
+![](/assets/images/flow1.PNG)
 
 #### Data Overview
 
@@ -127,7 +127,7 @@ def get_train_generator(df, image_dir, x_col, y_cols, shuffle=True, batch_size=8
     return generator  
 ```
 
-Before, model building we'll need to define a loss function to adress class imbalance. We can give more weight for the less frequent class and less weight for the other one, see [here](https://arxiv.org/pdf/1711.05225.pdf) . We can write the overall average cross-entropy loss over the entire training set D of size N as follows:
+Before, model building we'll need to define a loss function to address class imbalance. We can give more weight for the less frequent class and less weight for the other one, see [here](https://arxiv.org/pdf/1711.05225.pdf) . We can write the overall average cross-entropy loss over the entire training set D of size N as follows:
 
 ![loss](/assets/images/loss.PNG)
 

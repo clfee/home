@@ -19,7 +19,6 @@ preview: "file_main.PNG"
 
 Have you ever get tired of typing functions into vlookup? In this post, we will use tidyverse in R to modify, combine, search, and merge several datasets. We will also create a shiny app allowing users to download the organized data.  
 
-{{< video test.mp4 >}}
 
 ## Background & challenges
 

@@ -10,9 +10,9 @@ format:
         grid: 
             margin-width: 350px
 fig-width: 10
-fig-height: 12
+fig-height: 6
 params:
-  year: 2021
+  year: 2022
   record_date: 2024
 editor_options: 
   chunk_output_type: console
@@ -26,11 +26,18 @@ categories:
 preview: "main.PNG"
 ---
 
-Parameterized reporting is a technique that allows to generate multiple reports simultaneously. The technique also makes your work more accurate, as it avoids copy-and-paste errors. The objective of this report is to demonstrate how to create automated custom reports to track patient days from public data.
+Parameterized reporting is a technique that allows to generate multiple reports simultaneously. 
 
-## Healthcare- Associated Infection Report, `r params$year`
+[Automatically generated one after another from an R script.]
+{{< video demo.mp4 >}}
 
-Healthcare- Associated Infections can occur during healthcare. Methicillin-resistant Staphylococcus aureus (MRSA) is one of these diseases.MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.
+The technique also makes your work more accurate, as it avoids copy-and-paste errors. 
+
+**Goal : ** The objective of this report is to demonstrate how to create automated custom reports with `Quarto` and `Purrr` in R to track patient days from public data.
+
+## Healthcare Associated Infection Report, `r params$year`
+
+Healthcare-Associated Infections can occur during healthcare. Methicillin-resistant Staphylococcus aureus (MRSA) is one of these diseases. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.
 
 All California general acute care hospitals are required to report MRSA bloodstream infection (BSI) cases that occur following hospitalization so that CDPH can calculate the rates of MRSA BSI at each hospital and make that information available to the public (Health and Safety Code Section 1288.55).
 
@@ -44,7 +51,7 @@ Note: Patient Days is define as below. A count of the number of patients in the 
 
 Once you are done with the single report. It is time to render all report variations. To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.
 
-In our example it looks like this,
+In our example the code looks like this,
 
 ```         
 # 1. First create a dataframe 
@@ -84,16 +91,14 @@ purrr::pwalk(
 
 The raw data is obtained from California Health and Human Services Open Data Portal [datasets](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals)
 
-Full code [link](https://clfee.github.io/)
+Full code [link](https://github.com/clfee)
 
 ```{r}
 #| context: setup
 #| include: false
 
 # Load required packages
-#library(dplyr)
 library(tidyverse)
-#library(stringr)
 library(ggplot2)
 
 # Load data
@@ -142,19 +147,19 @@ mrsa_combine <- mrsa_combine |>
 ```
 
 ## Results
-
+### Box plots
 ```{r}
 #| label: Boxplots
 #| code-fold: true
 #| warning: false
 
-color_palette <- c("#86C7ED","#167bb2","#2e3b4f","#7A6C5D","#2e4f42",
-    "#A54657","#624151","#16b29b","#002c47"
+color_palette <- c("#167bb2","#2e3b4f","#7A6C5D","#2e4f42","#A54657","#624151","#16b29b","#002c47","#9d72d0"
 )
 
 
  mrsa_combine|>
     filter(Year == params$year) |>
+    filter(County %in% c("San Diego" ,"San Francisco", "Los Angeles", "Sacramento", "Orange","Yolo" ))|>
     ggplot(aes(x= Hospital_Type, y= Patient_Days, fill=Hospital_Type))+
      geom_boxplot()+
     scale_fill_manual(values=color_palette)+
@@ -167,4 +172,38 @@ color_palette <- c("#86C7ED","#167bb2","#2e3b4f","#7A6C5D","#2e4f42",
     xlab("")+ylab("")+labs(caption="Produced by CF Lee")+
    facet_wrap(~County)
  
+```
+
+### Line plots
+```{r}
+#| code-fold: true
+#| warning: false
+
+ mrsa_combine$Months <- as.numeric(mrsa_combine$Months)
+
+ mrsa_combine |> 
+    filter(Year == params$year) |>
+    mutate(Quarters = case_when(
+                         Months > 0 & Months < 4 ~ 1,
+                         Months > 3 & Months < 7 ~ 2,
+                         Months > 6 & Months < 10 ~ 3 , 
+                         Months > 9 & Months < 13 ~ 4 , 
+                                .default = 4))|>
+   group_by(Quarters,Hospital_Type)|>
+    summarise(mean = mean(na.omit(Patient_Days)))|> 
+    
+    ggplot(aes(x= Quarters, y= mean, fill = Hospital_Type, color = Hospital_Type))+
+    geom_col()+
+    scale_fill_manual(values=color_palette)+
+    theme_minimal()+
+    ggtitle(paste0("Average Patients Days in ",params$year)) +
+    theme(#axis.text.x=element_blank(),
+          axis.text=element_text(size=12),
+          legend.position = "bottom",
+          axis.line = element_line(colour = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank()
+    )+xlab("")+ylab("")+labs(caption="Produced by CF Lee")
 ```

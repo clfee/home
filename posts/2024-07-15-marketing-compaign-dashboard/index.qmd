@@ -77,7 +77,7 @@ quarter_converted_rate <- train |>
   group_by(quater_res)|>
   count(conversion_status) |>
   mutate(p = round(100*(n / sum(n)),2))|>
-  filter(conversion_status == "converted")
+  filter(conversion_status == "converted") 
 
 best_comm_pct <- max(comm_converted_rate$p)
 best_comm_way <- comm_converted_rate|>

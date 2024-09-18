@@ -13,13 +13,13 @@ website:
   back-to-top-navigation: true
   search: true
   page-footer: 
-    background: "#e0ddd6"
+    background: "#f2f3f3"
     center: © 2024  &middot; Made with r-project and 
       [![](https://quarto.org/quarto.png){fig-alt="Quarto" width=65px}](https://quarto.org/) 
 
   
   navbar:
-    background: "#96939c"
+    background: "#908989"
     search: true
     title: false
     logo: img/clee.png
@@ -43,8 +43,8 @@ format:
     mainfont: Nunito Sans
     monofont: monospace
     toc: true
-    fontcolor: "#cae5ff"
-    backgroundcolor: "#3d3d3d"
+    fontcolor: "#252528"
+    backgroundcolor: "#f4f4f5"
     link-external-newwindow: true
     date-format: "MMM YYYY"
     smooth-scroll: true

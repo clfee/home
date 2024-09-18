@@ -15,7 +15,158 @@
 <link>https://github.com/clfee/home/gallery.html</link>
 </image>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Thu, 01 Aug 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 16 Aug 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Automated Custom reports - parameterized reporting</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Parameterized reporting is a technique that allows to generate multiple reports simultaneously. The technique also makes your work more accurate, as it avoids copy-and-paste errors. The objective of this report is to demonstrate how to create automated custom reports to track patient days from public data.</p>
+<section id="healthcare--associated-infection-report-2021" class="level2">
+<h2 class="anchored" data-anchor-id="healthcare--associated-infection-report-2021">Healthcare- Associated Infection Report, 2021</h2>
+<p>Healthcare- Associated Infections can occur during healthcare. Methicillin-resistant Staphylococcus aureus (MRSA) is one of these diseases.MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.</p>
+<p>All California general acute care hospitals are required to report MRSA bloodstream infection (BSI) cases that occur following hospitalization so that CDPH can calculate the rates of MRSA BSI at each hospital and make that information available to the public (Health and Safety Code Section 1288.55).</p>
+</section>
+<section id="demo--single-report" class="level2">
+<h2 class="anchored" data-anchor-id="demo--single-report">Demo- single report</h2>
+<p>Let’s look at the data of Patient Days across the State in California in 2021.</p>
+<p>Note: Patient Days is define as below. A count of the number of patients in the hospital during a time period, excluding IRFs and IPFs with their own CCN numbers. A rehabilitation unit (IRF) with its own CCN number reports separately from the rest of the hospital. To calculate patient days, the number of patients is recorded at the same time each day for each day of the month. At the end of the month, the daily counts are summed. See the NHSN website: http://www.cdc.gov/nhsn.</p>
+</section>
+<section id="demo--all-variations-at-once" class="level2">
+<h2 class="anchored" data-anchor-id="demo--all-variations-at-once">Demo- All variations at once</h2>
+<p>Once you are done with the single report. It is time to render all report variations. To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.</p>
+<p>In our example it looks like this,</p>
+<pre><code># 1. First create a dataframe 
+
+data &lt;- expand.grid(
+  year = c(2019,2021:2023),
+  record_date = Sys.Date(), 
+  stringsAsFactors = FALSE)
+
+df &lt;- data |&gt; 
+  dplyr::mutate(
+    output_format = "html",       # Output format (html, word, etc.)
+    output_file = paste(          # Output file name
+      year, "report.html",
+      sep = "-"
+    ),
+    execute_params = purrr::map2( # Named list of parameters
+      record_date, year, 
+      \(record_date, year) list(record_date = record_date, year = year)
+    )
+  ) |&gt; 
+  dplyr::select(-c(record_date, year))
+
+df
+
+# 2. Use purrr::pwalk() to map over each row of the dataframe and render each report variation.
+
+purrr::pwalk(
+  .l = df,                      # Dataframe to map over
+  .f = quarto::quarto_render,   # Quarto render function
+  input = "demo_autoreport.qmd",       # Named arguments of .f
+  .progress = TRUE              # Optionally, show a progress bar
+)</code></pre>
+</section>
+<section id="data-and-code" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-code">Data and code</h2>
+<p>The raw data is obtained from California Health and Human Services Open Data Portal <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">datasets</a></p>
+<p>Full code <a href="https://clfee.github.io/">link</a></p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb2-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: Boxplots</span></span>
+<span id="cb2-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb2-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">color_palette &lt;- c("#86C7ED","#167bb2","#2e3b4f","#7A6C5D","#2e4f42",</span></span>
+<span id="cb2-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    "#A54657","#624151","#16b29b","#002c47"</span></span>
+<span id="cb2-8"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10"></span>
+<span id="cb2-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> mrsa_combine|&gt;</span></span>
+<span id="cb2-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    filter(Year == params$year) |&gt;</span></span>
+<span id="cb2-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    ggplot(aes(x= Hospital_Type, y= Patient_Days, fill=Hospital_Type))+</span></span>
+<span id="cb2-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">     geom_boxplot()+</span></span>
+<span id="cb2-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    scale_fill_manual(values=color_palette)+</span></span>
+<span id="cb2-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       theme(</span></span>
+<span id="cb2-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      legend.position="none",</span></span>
+<span id="cb2-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      plot.title = element_text(size=11),</span></span>
+<span id="cb2-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)</span></span>
+<span id="cb2-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    ) +</span></span>
+<span id="cb2-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    ggtitle(paste0("Patients Days in ",params$year)) +</span></span>
+<span id="cb2-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    xlab("")+ylab("")+labs(caption="Produced by CF Lee")+</span></span>
+<span id="cb2-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   facet_wrap(~County)</span></span>
+<span id="cb2-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/index_files/figure-html/Boxplots-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
+  <category>R</category>
+  <category>Data organization</category>
+  <guid>https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/</guid>
+  <pubDate>Fri, 16 Aug 2024 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Tying the data together</title>
   <dc:creator>Chris Lee</dc:creator>
@@ -26,6 +177,10 @@
 
 
 <p><img src="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/file_main.PNG" class="img-fluid"></p>
+<p>Have you ever get tired of typing functions into vlookup? In this post, we will use tidyverse in R to modify, combine, search, and merge several datasets. We will also create a shiny app allowing users to download the organized data.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="test.mp4"></video></div>
+<section id="background-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="background-challenges">Background &amp; challenges</h2>
 <p>Recently, we reviewed our operational costs and realized that a significant portion was going toward credit card processing fees. After some thorough research and negotiation, we secured a better deal with a new merchant service provider. This switch saved us about $1,500 USD per month, and we also qualified for next-day funding—a major win for our business.</p>
 <p>However, our bookkeeper quickly spotted an issue: the new provider’s reporting system was much less straightforward. Unlike our previous provider, which offered a master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To make matters worse, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order could have multiple funding references, making it a headache to track everything accurately.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -34,9 +189,22 @@
 <figcaption>Different column names and multiple funded entries for one order</figcaption>
 </figure>
 </div>
+</section>
+<section id="actions" class="level2">
+<h2 class="anchored" data-anchor-id="actions">Actions</h2>
 <p>To fully benefit from the cost savings and stick with the new provider, I decided to tackle this problem head-on using R and Shiny.</p>
-<p>One of our goals is to create a master statement with all the action organized in one report as below. First, we re-organized the raw report by renaming the column names.Then read the file from where the columns are not empty or meaningful. Finally, merge the file based on the same column names.</p>
-<p><img src="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/file_master.PNG" class="img-fluid"></p>
+<p>One of our goals was to create a master statement with all the action organized in one report as below. To do this, the steps are as below:</p>
+<ol type="1">
+<li>We first re-organized the raw report by renaming the column names.</li>
+<li>Skipped the data where it is empty or contains not useful information.</li>
+<li>Data merge based on the same column names.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/file_master.PNG" class="img-fluid figure-img"></p>
+<figcaption>Desired master report</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -84,7 +252,7 @@ background-color: null;
 font-style: inherit;">choices =</span> var_names)</span>
 <span id="cb1-7">  })</span></code></pre></div>
 <div class="cell-output-display no-overflow-x">
-<div id="out73fda801d5b552a6" class="shiny-html-output"></div>
+<div id="outd74a5bf1ca765eb0" class="shiny-html-output"></div>
 </div>
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -140,7 +308,7 @@ font-style: inherit;">$</span>var_bc))</span>
 </div>
 </div>
 </div>
-<p>I also wanted to save time for our bookkeeper as they need to cross checked with internal documents.This step usually takes time to find the correct range of the data, and input <code>Vlookup</code> functions before finding and labeling the matches in Excel. To streamline the process and to reduce the manual input errors, I replicated this function in the app (full code as below and on github).</p>
+<p>I also wanted to save time for our bookkeeper as they often need to cross-check the internal documents. This step takes time to find the correct range of the data, and input <code>Vlookup</code> functions before finding and labeling the matches in Excel. To streamline the process and to reduce the manual input errors, I replicated this function in the app (full code as below and on github).</p>
 <p>The output result is shown below. This example shows that the order 891631 with two different retrieval references were received, the transactions were successful ,and the amount was deposited into the account. These records (114,115) also appeared in the uploaded internal file.</p>
 <p><img src="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/file_check.PNG" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -398,12 +566,15 @@ background-color: null;
 font-style: inherit;">unique</span>(counts_summary)</span>
 <span id="cb3-23">  })</span></code></pre></div>
 <div class="cell-output-display">
-<pre class="shiny-text-output noplaceholder" id="outb36895b58fa8b7e0"></pre>
+<pre class="shiny-text-output noplaceholder" id="outc3aaa94bd0302c4d"></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>After the data merge is done, the files are ready to download to the local drive by pressing the <code>Download</code> buttons. This customized shiny app allows our accounting staff to run and download the report anytime/anywhere.</p>
 <p><img src="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/file_m2.PNG" class="img-fluid"></p>
 <p>By developing a custom solution, I was able to streamline the reporting process, merge the data consistently, and keep our operations running smoothly—all while cutting down on expenses.</p>
@@ -2152,6 +2323,7 @@ font-style: inherit;">shinyApp</span>(ui, server)</span></code></pre></div>
 </div>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>
   <category>R</category>
