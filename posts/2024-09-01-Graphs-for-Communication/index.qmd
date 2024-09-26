@@ -1,0 +1,190 @@
+---
+title: "Graphs for Communication - Creating Animated Maps "
+author:
+    name: Chris Lee
+    url: https://clfee.github.io/
+date: 2024-09-01
+format: 
+  html:
+        html-math-method: katex
+        grid: 
+            margin-width: 350px
+fig-width: 8
+fig-height: 6
+editor_options: 
+  chunk_output_type: console
+execute: 
+  echo: fenced
+reference-location: margin
+citation-location: margin
+categories:
+  - R 
+  - Data organization
+preview: "main.PNG"
+---
+Making the data easier to understand!
+
+**Goal :** The objective of this report is to demonstrate how to create animated maps with `ggplot2` and `gganimate` in R to track MRSA BSI incidence in the State of California.
+
+
+## Graphs for Communication
+
+Earlier this year, I was preparing a presentation for stakeholders to showcase how our business performed, especially after large events and gatherings were no longer restricted. While we saw solid growth overall, it wasn’t consistent across all locations. One key focus of the presentation was to highlight how sales evolved over time at wedding venues and restaurants.
+
+I wanted to present the data in a way that was not only accurate but also engaging enough to capture everyone's attention. To achieve this, I turned to the `ggplot2` and `gganimate` packages in R. These tools allowed me to transform dry numbers into visually compelling animations, making the data easier to understand and far more impact for my audience.
+
+The same storytelling strategy can also be applied to the datasets of Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) in [California Hospitals](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals.)
+
+The datasets include the associated 95% confidence intervals for the SIR and statistical interpretation to show whether MRSA BSI incidence was the same (no different), better (lower) or worse (higher) than the national baseline. Another performance measure in this dataset allows for tracking hospital progress in meeting national HAI reduction goals. Hospitals must have an SIR at or below incremental targets each year to be considered on track.
+
+We will generate an animated map displays whether MRSA BSI incidence in the State of California was the same (no different), better (lower) or worse (higher) than the national baseline from 2019 – 2023. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, worse than the national average).
+
+## Steps
+
+The first section simply loads the libraries and data that will be used.
+
+```{r}
+#| context: setup
+#| include: false
+
+# Load required packages
+library(gganimate)
+library(gifski)
+library(dplyr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
+# Load data
+url_2022 <- "https://data.chhs.ca.gov/dataset/a345bba7-25ed-4019-b6e3-0b597bea7368/resource/3ff809c6-c1e2-4107-be0c-f976521aadb2/download/mrsa_bsi_odp_2022.csv"
+url_2021 <- "https://data.chhs.ca.gov/dataset/a345bba7-25ed-4019-b6e3-0b597bea7368/resource/23bef156-ae4d-4800-8512-d29660b2269f/download/cdph_mrsa_bsi_odp_2021.csv"
+url_2019 <- "https://data.chhs.ca.gov/dataset/a345bba7-25ed-4019-b6e3-0b597bea7368/resource/62aead61-e320-4a74-b64c-1f65efa72b35/download/cdph_mrsa_bsi_odp_2019.csv"
+url_2023 <-"https://data.chhs.ca.gov/dataset/a345bba7-25ed-4019-b6e3-0b597bea7368/resource/15c4962f-e357-4b03-9d24-655a2bc8030c/download/mrsa_bsi_odp_2023.csv"
+
+data_2023 <- read_csv(url_2023)
+data_2022 <- read_csv(url_2022)
+data_2021 <- read_csv(url_2021)
+data_2019 <- read_csv(url_2019)
+
+# Combine data
+mrsa_combine <- bind_rows(data_2023,data_2022, data_2021, data_2019)
+
+# Remove redundant data
+mrsa_combine <- unique(mrsa_combine)
+us_counties <- map_data("county")|> filter(region =="california")|> mutate( subregion = toupper( subregion))|> dplyr::select(-c( order,  region)) 
+
+# Data transformation
+mrsa_combine <- mrsa_combine |>
+  dplyr::select(-State, -HAI, -Met_2020_Goal, -SIR_CI_95_Lower_Limit,-SIR_CI_95_Upper_Limit, -On_Track, -Notes) |>
+  mutate(Months = as.numeric(ifelse(is.na(Months), 13, Months)),
+         Year = as.integer(ifelse(is.na(Year), 2021, Year)),
+         Comparison = case_when(
+      Comparison == "Worse" ~ -1,
+      Comparison == "Better" ~ 1,
+      Comparison == "Same" ~ 0,
+      .default = 0),
+         Patient_Stay = cut(      
+           Patient_Days,
+           breaks = quantile(Patient_Days, probs = seq(0, 1, by = 0.1), na.rm = TRUE),
+           labels = 1:10),
+         Months = as.character(Months),
+         Year = as.character(Year),
+         Infections_Reported = as.numeric(Infections_Reported))|>
+  filter(!grepl("Pooled", Facility_Name, ignore.case = TRUE),
+         !grepl("Pooled", Facility_Type, ignore.case = TRUE))|> 
+  mutate( subregion = toupper(County))
+
+```
+
+
+### Step 1
+
+As gganimate extends the grammar of graphics as implemented by ggplot2 to include the description of animation.We will need to generate a base map using ggplot2. Then, add a function of facet_wrap(Hospital_Category_RiskAdjustment) to track the average performance of each hospital category across counties in California. 
+
+### Step 2
+Finally, the gganimate library is used to animate the display of points by year (2019 – 2023). Here we define the transition time (in years), add a title and subtitle, animate the map, and save it to a gif.
+
+Note: transition_*() defines how the data should be spread out and how it relates to itself across time.
+
+```{r}
+#| title: Bloodstream infections (BSI) compare to national overtime
+#| code-fold: true
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+
+
+st <- mrsa_combine|>
+    dplyr::select(subregion, Year, Comparison,Hospital_Category_RiskAdjustment)|>
+  mutate(Year = as.integer(Year))|>
+  group_by(subregion, Year,Hospital_Category_RiskAdjustment)|> 
+  summarise(`national baseline` = round(mean(na.omit(as.numeric(Comparison))),2)) 
+
+st <- left_join(st, unique(us_counties), by= "subregion", relationship = "many-to-many") 
+
+a <-
+st|> 
+
+  ggplot(mapping = aes(x = long, y = lat, group = group, fill = `national baseline` ))+
+              geom_polygon(color = "gray90", linewidth = 0.3) +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
+  scale_fill_continuous(type = "viridis")+
+  theme(axis.line=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        panel.grid=element_blank())+
+        scale_color_gradient(low = "green", high = "red")+ 
+   facet_wrap(~Hospital_Category_RiskAdjustment)
+            
+            
+a + transition_time(Year) +labs(title = "MRSA BSI incidence compares to the national baseline \nsame (0), better (1) or worse (-1)   \nYear: {frame_time}")
+
+```
+
+### Bonus
+
+We can apply the same strategy for other types of graph!
+
+In this example we see a trend plot of continuous variables infections cases and days of patient hospital stays between 2019 and 2023.   
+
+```{r}
+#| title: Patients Days vs Reported infection cases 
+#| code-fold: true
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+
+
+st <- left_join(mrsa_combine, unique(us_counties), by= "subregion", relationship = "many-to-many") 
+
+p <-     
+  st|> 
+  ggplot(aes(x= Patient_Days, y= Infections_Reported))+
+    geom_point(alpha = 0.5, show.legend = FALSE, color = "#167bb2") +
+    scale_size(range = c(2, 12)) +
+    theme_bw()+
+    ggtitle(paste0("Length of Patients stay vs Reported infection cases")) +
+    theme(#axis.text.x=element_blank(),
+          axis.text=element_text(size=12),
+          legend.position = "bottom",
+          axis.line = element_line(colour = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank())+
+          facet_wrap(~Hospital_Category_RiskAdjustment)+
+    xlab("Days")+ylab("Cases")+labs(caption="Produced by CF Lee")
+
+
+p + transition_time(as.integer(Year))+  
+  enter_fade() +
+  exit_fade()+labs(title = "Year: {frame_time}")
+
+```
+## Resources
+1. gganimate [link](https://gganimate.com/)
+2. California Hospitals [data](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals).

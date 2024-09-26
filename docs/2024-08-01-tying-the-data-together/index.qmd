@@ -1,0 +1,402 @@
+---
+title: "Tying the data together"
+description: |
+  Effortless data combine, merge ,and search.
+author: Chris Lee
+date: 2024-08-01
+creative_commons: CC BY
+categories:
+  - R 
+  - Shiny
+  - Data organization
+  - sql
+  - vlookup
+preview: "file_main.PNG"
+---
+
+![](file_main.PNG)
+
+
+Have you ever get tired of typing functions into vlookup? In this post, we will use tidyverse in R to modify, combine, search, and merge several datasets. We will also create a shiny app allowing users to download the organized data.  
+
+
+## Background & challenges
+
+Recently, we reviewed our operational costs and realized that a significant portion was going toward credit card processing fees. After some thorough research and negotiation, we secured a better deal with a new merchant service provider. This switch saved us about $1,500 USD per month, and we also qualified for next-day funding—a major win for our business.
+
+However, our bookkeeper quickly spotted an issue: the new provider’s reporting system was much less straightforward. Unlike our previous provider, which offered a master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To make matters worse, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order could have multiple funding references, making it a headache to track everything accurately.
+
+![Different column names and multiple funded entries for one order](file_demo.PNG)
+
+## Actions
+
+To fully benefit from the cost savings and stick with the new provider, I decided to tackle this problem head-on using R and Shiny. 
+
+One of our goals was to create a master statement with all the action organized in one report as below. To do this, the steps are as below:
+
+
+1. We first re-organized the raw report by renaming the column names.
+2. Skipped the data where it is empty or contains not useful information.
+3. Data merge based on the same column names.
+
+![Desired master report](file_master.PNG)
+
+:::{.callout-tip collapse="true"}
+
+## Expand for Code
+```{r}
+library(shiny)
+
+# identify columns appear in both data sets
+renderUI({
+    var_names <- intersect(names(data_a()), names(data_b()))
+    selectInput("var_ab", "Select merge variable for Transaction and Sales", choices = var_names)
+  })
+# merge data 
+  merged_data <- reactive({
+    req(data_a(), data_b(), data_c(), input$var_ab, input$var_bc)
+    temp_ab <- dplyr::full_join(data_a(), data_b(), by = input$var_ab)
+    unique(dplyr::full_join(temp_ab, data_c(), by = input$var_bc))
+  })
+```
+:::
+
+I also wanted to save time for our bookkeeper as they often need to cross-check the internal documents. This step takes time to find the correct range of the data, and input `Vlookup` functions before finding and labeling the matches in Excel. To streamline the process and to reduce the manual input errors, I replicated this function in the app (full code as below and on github).       
+
+The output result is shown below. This example  shows that the order 891631 with two different retrieval references were received, the transactions were successful ,and the amount was deposited into the account. These records (114,115) also appeared in the uploaded internal file.  
+
+![](file_check.PNG)
+
+:::{.callout-tip collapse="true"}
+
+## Expand for Code
+```{r} 
+
+reactive({
+    req(merged_data(),data_f())
+    dt_org <- dplyr::full_join(merged_data(),data_f(), by = input$var_checklist)
+    dt_org <- dt_org |>
+        select(`Date and Time`,`Transaction Date`,`Transaction Count`,`Merchant Reference Number`,`Summary          Transaction Slip`,Retrieval_Ref,
+              `Transaction Gross`,`Transaction Net`,`Gross Amount`,`Net Amount`,Currency,`Reversal Flag`,
+               `Transaction Type`)
+    counts <- dt_org |>
+      filter(`Summary Transaction Slip` != "")|>
+      group_by(`Summary Transaction Slip`) |>
+      mutate(Check_merchantID = list(`Merchant Reference Number`), count = n())|>
+      mutate(Check_Retrieval_Ref = list(Retrieval_Ref), countx = n())|>
+      mutate(has_Summary_Transaction_Slip = "Yes")|>
+      select(-count, -countx)
+
+    not_in_counts <- dt_org |>
+      filter(is.na(`Summary Transaction Slip`))|>
+      mutate(Check_merchantID = list(0))|>
+      mutate(Check_Retrieval_Ref = list(0))|>
+      mutate(has_Summary_Transaction_Slip = "No")
+     counts_summary <- apply(rbind(counts,not_in_counts),2,as.character)
+     unique(counts_summary)
+  })
+```
+:::
+
+## Results
+
+After the data merge is done, the files are ready to download to the local drive by pressing the `Download` buttons. This customized shiny app allows our accounting staff to run and download the report anytime/anywhere. 
+
+![](file_m2.PNG)
+
+By developing a custom solution, I was able to streamline the reporting process, merge the data consistently, and keep our operations running smoothly—all while cutting down on expenses.
+
+[Full code on Github](https://github.com/clfee/Shiny-apps/blob/main/Data_organization.R)
+
+:::{.callout-tip collapse="true"}
+
+## Expand for Full Code
+```{r}
+
+library(shiny)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(readr)
+library(DT)
+
+ui <- fluidPage(
+  titlePanel("File Merger"),
+  sidebarLayout(
+    sidebarPanel(
+      p("1. Convert Retrieval Reference Number to General"),
+      fileInput("file_a", "Transaction file (CSV or XLSX)",
+                accept = c(".csv", ".xlsx")),
+      p("2a. Convert Retrieval Ref to General"),
+      p("2b. Remove all rows above Merchant ID "),
+      fileInput("file_b", "Sales (CSV or XLSX)",
+                accept = c(".csv", ".xlsx")),
+      p("3. Remove all rows above Summary Transaction Slip"),
+      p("   Output: Merged File; Auto-Checked File "),
+      fileInput("file_c", "Funded Deposit (CSV or XLSX)",
+                accept = c(".csv", ".xlsx")),
+      p("------------------------------------------"),
+      p("4. (Optional) Upload a payportal list. Output: Manual-Checked File"),
+      p("Must contain a column called **Merchant Reference Number**!"),
+      checkboxInput("checklist", "Manual Check", value = FALSE),
+      fileInput("file", "Checklist (CSV or XLSX)", accept = c(".csv", ".xlsx")),
+      
+      uiOutput("merge_vars_a_b"),
+      uiOutput("merge_vars_b_c"),
+      uiOutput("merge_vars_checklist"),
+      br(),
+      #p("------------------------------------------"),
+      p("A: Contains Summary Transaction Slip & Retrival Ref (matched & unmatched)"),
+      downloadButton("downloadData", "Download Merged File"),
+      #p("------------------------------------------"),
+      p("B: Contains non-empty Summary Transaction Slip, count matched Retrival Ref & Merchant ref"),
+      downloadButton("exportData",   "Download Auto-Checkeds File"),
+      #p("------------------------------------------"),
+      p("C: Using uploaded checklist to match and count non-empty Summary Transaction Slip, Retrival Ref & Merchant ref"),
+      downloadButton("manual_input", "Download Manual-Checked File")
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Transaction List", DT::dataTableOutput("table_a")),
+        tabPanel("Sales List", DT::dataTableOutput("table_b")),
+        tabPanel("Funded Deposit List", DT::dataTableOutput("table_c")),
+        tabPanel("Merged File", DT::dataTableOutput("table_d")),
+        tabPanel("Auto-Checked File", DT::dataTableOutput("table_e")),
+        tabPanel("Checklist", DT::dataTableOutput("table_f")),
+        tabPanel("Manual-Checked File", DT::dataTableOutput("table_g"))
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  read_data <- function(file) {
+    if (is.null(file)) {
+      return(NULL)
+    }
+    ext <- tools::file_ext(file$name)
+    if (ext == "csv") {
+      df <- read_csv(file$datapath)
+    } else if (ext == "xlsx") {
+      df <- read_excel(file$datapath)
+    } else {
+      return(NULL)
+    }
+    return(df)
+  }
+  
+  data_a <- reactive({
+    validate(
+      need(input$file_a != "", label = "data set")
+    )
+    
+    da <- read_data(input$file_a)%>%
+      mutate(Retrieval_Ref = `Retrieval Reference Number`)%>% 
+      select(`Date and Time`, Retrieval_Ref,`Merchant Reference Number`,Amount) 
+    return(da)
+    
+  })
+  
+  # remove all rows above Merchant ID and change 
+  data_b <- reactive({
+    req(input$file_b)
+    db <- read_data(input$file_b)%>% 
+      mutate(Retrieval_Ref = `Retrieval Ref.`)%>% 
+      select(`Transaction Date`, Retrieval_Ref, `Summary Transaction Slip`,
+             `Payment Transaction Slip`, `Transaction Gross`,`Transaction Net`)
+    db 
+  })
+  
+  
+  # remove all rows above Summary Transaction Slip
+  data_c <- reactive({
+    req(input$file_c)
+    dc <- read_data(input$file_c)
+    dc<- dc[!grepl('Payment', dc$`Summary Transaction Slip`)&
+              !grepl('Sale', dc$`Summary Transaction Slip`)&
+              !grepl('/', dc$`Summary Transaction Slip`)&
+              !grepl('Summary', dc$`Summary Transaction Slip`),]
+    dc$`Summary Transaction Slip` <-  as.numeric(dc$`Summary Transaction Slip`)
+    
+    #colnames(dc)[2:7] <-  c("Summary Transaction Slip","Transaction Type","Transaction Count", "Reversal Flag",
+    #                   "Currency","Gross Amount", "Net Amount")
+    return(dc) 
+  })
+  
+  output$merge_vars_a_b <- renderUI({
+    #req(data_a(), data_b())
+    validate(
+      need(input$file_a != "", label = "data set")
+    )
+    var_names <- intersect(names(data_a()), names(data_b()))
+    selectInput("var_ab", "Select merge variable for Transaction and Sales", choices = var_names)
+  })
+  
+  output$merge_vars_b_c <- renderUI({
+    #req(data_b(), data_c())
+    validate(
+      need(input$file_a != "", label = "data set")
+    )
+    #get(input$file_a, 'package:datasets')
+    var_names <- intersect(names(data_b()), names(data_c()))
+    selectInput("var_bc", "Select merge variable for Sales and Funded Depos it", choices = var_names)
+  })
+  
+  
+  output$merge_vars_checklist <- renderUI({
+    validate(
+      need(input$checklist != FALSE, label = "data set")
+    )
+    #get(input$file_a, 'package:datasets')
+    var_names <- intersect(names(merged_data()), names(data_f()))
+    selectInput("var_checklist", "Select merge variable for Merge data and Checklist", choices = var_names)
+  })
+  data_f <- reactive({
+    validate(
+      need(input$file != "", label = "data set")
+    )
+    dt <- read_data(input$file)
+    return(dt)
+  })
+  
+  output$table_a <- DT::renderDataTable({
+    #req(data_a())
+    DT::datatable(data = unique(data_a()),
+                  options = list(pageLength = 100, rownames = FALSE) 
+    )  
+  })
+  
+  output$table_b <- DT::renderDataTable({
+    #req(data_b())
+    DT::datatable(data = unique(data_b()),
+                  options = list(pageLength = 100, rownames = FALSE) 
+    )  
+  })
+  
+  output$table_c <- DT::renderDataTable({
+    #req(data_c())
+    DT::datatable(data = unique(data_c()),
+                  options = list(pageLength = 100, rownames = FALSE) 
+    )  
+  })
+  
+  merged_data <- reactive({
+    req(data_a(), data_b(), data_c(), input$var_ab, input$var_bc)
+    temp_ab <- dplyr::full_join(data_a(), data_b(), by = input$var_ab)
+    unique(dplyr::full_join(temp_ab, data_c(), by = input$var_bc))
+  })
+  
+  processed_data <- reactive({
+    req(merged_data())
+    df <-
+      merged_data() %>%
+      filter(`Summary Transaction Slip` != "")%>%
+      group_by(`Summary Transaction Slip`) %>%
+      mutate(Check_merchantID = list(`Merchant Reference Number`), count = n())%>%
+      mutate(Check_Retrieval_Ref = list(Retrieval_Ref), countx = n())%>%
+      select(`Date and Time`,`Transaction Date`,`Transaction Count`,`Merchant Reference Number`,`Summary Transaction Slip`,Retrieval_Ref,
+             `Check_merchantID`,Check_Retrieval_Ref,`Transaction Gross`,`Transaction Net`,`Gross Amount`,`Net Amount`,Currency,`Reversal Flag`,
+             `Transaction Type`)
+    apply(df,2,as.character)
+    
+  })
+  
+  manual_check <-reactive({
+    req(merged_data(),data_f())
+    dt_org <- dplyr::full_join(merged_data(),data_f(), by = input$var_checklist)
+    dt_org <- dt_org |>
+        select(`Date and Time`,`Transaction Date`,`Transaction Count`,`Merchant Reference Number`,`Summary Transaction Slip`,Retrieval_Ref,
+              `Transaction Gross`,`Transaction Net`,`Gross Amount`,`Net Amount`,Currency,`Reversal Flag`,
+               `Transaction Type`)
+
+    counts <- dt_org |>
+      filter(`Summary Transaction Slip` != "")|>
+      group_by(`Summary Transaction Slip`) |>
+      mutate(Check_merchantID = list(`Merchant Reference Number`), count = n())|>
+      mutate(Check_Retrieval_Ref = list(Retrieval_Ref), countx = n())|>
+      mutate(has_Summary_Transaction_Slip = "Yes")|>
+      select(-count, -countx)
+
+
+    not_in_counts <- dt_org |>
+      filter(is.na(`Summary Transaction Slip`))|>
+      mutate(Check_merchantID = list(0))|>
+      mutate(Check_Retrieval_Ref = list(0))|>
+      mutate(has_Summary_Transaction_Slip = "No")
+
+     #counts_summary <- rbind(counts,not_in_counts)
+     counts_summary <- apply(rbind(counts,not_in_counts),2,as.character)#rbind(apply(counts,2,as.character),apply(not_in_counts,2,as.character))
+    
+    
+     unique(counts_summary)
+    
+  })
+  
+  output$table_d <- DT::renderDataTable({
+    req(merged_data())
+    DT::datatable(data = unique(merged_data()),
+                  options = list(pageLength = 100, rownames = FALSE) 
+    )  
+  })
+  
+  output$table_e <- DT::renderDataTable({
+    req(merged_data())
+    DT::datatable(data = unique(processed_data()),
+                  options = list(pageLength = 100, rownames = FALSE) 
+    )  
+  })
+  
+  # Render the data table only if the checkbox is checked
+  output$table_f <- renderDT({
+    req(input$checklist)
+    #manual_check()
+    
+    DT::datatable(data = unique(data_f()),
+                  options = list(pageLength = 100, rownames = FALSE)
+    )
+  })
+  
+  output$table_g <- renderDT({
+    req(input$checklist)
+    
+    DT::datatable(data = unique(manual_check()),
+                  options = list(pageLength = 100, rownames = FALSE)
+    )
+  })
+  
+  ######### Download ############
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "merged_data.csv")
+    },
+    content = function(file) {
+      write.csv(unique(merged_data()), file, row.names = FALSE)
+    }
+  )
+  
+  
+  output$exportData <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "auto_checked.csv")
+    },
+    content = function(file) {
+      write.csv(unique(processed_data()), file, row.names = FALSE)
+    }
+  )
+  
+  output$manual_input <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "manual_checked.csv")
+    },
+    content = function(file) {
+      write.csv(unique( manual_check()), file, row.names = FALSE)
+    }
+  ) 
+  
+}
+shinyApp(ui, server)
+```
+:::
+
+
