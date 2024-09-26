@@ -33,7 +33,7 @@ Earlier this year, I was preparing a presentation for stakeholders to showcase h
 
 I wanted to present the data in a way that was not only accurate but also engaging enough to capture everyone's attention. To achieve this, I turned to the `ggplot2` and `gganimate` packages in R. These tools allowed me to transform dry numbers into visually compelling animations, making the data easier to understand and far more impact for my audience.
 
-The same storytelling strategy can also be applied to the datasets of Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) in [California Hospitals](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals.)
+The same storytelling strategy can also be applied to the datasets of Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) in [California Hospitals](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals).
 
 The datasets include the associated 95% confidence intervals for the SIR and statistical interpretation to show whether MRSA BSI incidence was the same (no different), better (lower) or worse (higher) than the national baseline. Another performance measure in this dataset allows for tracking hospital progress in meeting national HAI reduction goals. Hospitals must have an SIR at or below incremental targets each year to be considered on track.
 
