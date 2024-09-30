@@ -24,7 +24,7 @@ preview: "main.PNG"
 ---
 Making the data easier to understand!
 
-**Goal :** The objective of this report is to demonstrate how to create animated maps with `ggplot2` and `gganimate` in R to track MRSA BSI incidence in the State of California.
+**Goal :** To demonstrate how to create animated maps with `ggplot2` and `gganimate` in R to track MRSA BSI incidence in the State of California.
 
 
 ## Graphs for Communication
@@ -37,7 +37,7 @@ The same storytelling strategy can also be applied to the datasets of Methicilli
 
 The datasets include the associated 95% confidence intervals for the SIR and statistical interpretation to show whether MRSA BSI incidence was the same (no different), better (lower) or worse (higher) than the national baseline. Another performance measure in this dataset allows for tracking hospital progress in meeting national HAI reduction goals. Hospitals must have an SIR at or below incremental targets each year to be considered on track.
 
-We will generate an animated map displays whether MRSA BSI incidence in the State of California was the same (no different), better (lower) or worse (higher) than the national baseline from 2019 – 2023. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, worse than the national average).
+In this practice, we will generate an animated map displays whether MRSA BSI incidence in the State of California was the same (no different), better (lower) or worse (higher) than the national baseline from 2019 – 2023. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, better than the national average).
 
 ## Steps
 
@@ -45,7 +45,8 @@ The first section simply loads the libraries and data that will be used.
 
 ```{r}
 #| context: setup
-#| include: false
+#| code-fold: true
+#| warning: false
 
 # Load required packages
 library(gganimate)
@@ -72,6 +73,7 @@ mrsa_combine <- bind_rows(data_2023,data_2022, data_2021, data_2019)
 
 # Remove redundant data
 mrsa_combine <- unique(mrsa_combine)
+# Lon and lat info
 us_counties <- map_data("county")|> filter(region =="california")|> mutate( subregion = toupper( subregion))|> dplyr::select(-c( order,  region)) 
 
 # Data transformation
@@ -100,12 +102,15 @@ mrsa_combine <- mrsa_combine |>
 
 ### Step 1
 
-As gganimate extends the grammar of graphics as implemented by ggplot2 to include the description of animation.We will need to generate a base map using ggplot2. Then, add a function of facet_wrap(Hospital_Category_RiskAdjustment) to track the average performance of each hospital category across counties in California. 
+As gganimate extends the grammar of graphics as implemented by ggplot2 to include the description of animation. Therefore, we will need to generate a base map using ggplot2. Then, add a function of facet_wrap(Hospital_Category_RiskAdjustment) to track the average performance of each hospital category in each county across California. 
 
 ### Step 2
-Finally, the gganimate library is used to animate the display of points by year (2019 – 2023). Here we define the transition time (in years), add a title and subtitle, animate the map, and save it to a gif.
+Then, the gganimate library is used to animate the display of color by year (2019 – 2023). Here we define the transition time (in years), add a title and subtitle.
 
-Note: transition_*() defines how the data should be spread out and how it relates to itself across time.
+Note: 
+1. transition_*() defines how the data should be spread out and how it relates to itself across time.
+<br>
+2. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, better than the national average).
 
 ```{r}
 #| title: Bloodstream infections (BSI) compare to national overtime
@@ -141,15 +146,17 @@ st|>
    facet_wrap(~Hospital_Category_RiskAdjustment)
             
             
-a + transition_time(Year) +labs(title = "MRSA BSI incidence compares to the national baseline \nsame (0), better (1) or worse (-1)   \nYear: {frame_time}")
+a + transition_time(Year) +labs(title = "MRSA BSI incidence compares to the national baseline, Year: {frame_time}")
 
 ```
 
 ### Bonus
 
-We can apply the same strategy for other types of graph!
+Also compatible with other ggplot graphs!
 
-In this example we see a trend plot of continuous variables infections cases and days of patient hospital stays between 2019 and 2023.   
+In this example we see trend plots of continuous variables infections cases and days of patient hospital stays between 2019 and 2023.
+
+Did you notice the length of patient stay in a hospital is not necessarily positive correlated with numbers of reported cases (except for the acute care hospital category)?
 
 ```{r}
 #| title: Patients Days vs Reported infection cases 

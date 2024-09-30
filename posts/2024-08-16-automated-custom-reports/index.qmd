@@ -40,7 +40,7 @@ The demo uses the data from [California Health and Human Services Open Data Port
 
 ## First Step - single report
 
-First, let's prepare a single report as a template from  the data of Patient Days across the State in California in `r params$year`.
+First, let's prepare a single report as a template from the data in `r params$year`.
 
 
 ### Healthcare Associated Infection Report, `r params$year`
@@ -48,6 +48,7 @@ First, let's prepare a single report as a template from  the data of Patient Day
 ```{r}
 #| context: setup
 #| include: false
+
 
 # Load required packages
 library(tidyverse)

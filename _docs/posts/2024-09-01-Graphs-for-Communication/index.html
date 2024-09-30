@@ -8,7 +8,7 @@
 
 <meta name="author" content="Chris Lee">
 
-<title>Chris Lee - Automated Custom reports - parameterized reporting</title>
+<title>Chris Lee - Graphs for Communication - Creating Animated Maps</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,8 +75,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,9 +106,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles/custom.scss">
-<meta property="og:title" content="Chris Lee - Automated Custom reports - parameterized reporting">
+<meta property="og:title" content="Chris Lee - Graphs for Communication - Creating Animated Maps">
 <meta property="og:description" content="Data science applications brought to you by Chris Lee">
-<meta property="og:image" content="https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/img/cmm1.PNG">
+<meta property="og:image" content="https://github.com/clfee/home/posts/2024-09-01-Graphs-for-Communication/img/cmm1.PNG">
 <meta property="og:site_name" content="Chris Lee">
 </head>
 
@@ -167,11 +165,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#first-step---single-report" id="toc-first-step---single-report" class="nav-link active" data-scroll-target="#first-step---single-report">First Step - single report</a>
+  <li><a href="#graphs-for-communication" id="toc-graphs-for-communication" class="nav-link active" data-scroll-target="#graphs-for-communication">Graphs for Communication</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a>
   <ul class="collapse">
-  <li><a href="#healthcare-associated-infection-report-2022" id="toc-healthcare-associated-infection-report-2022" class="nav-link" data-scroll-target="#healthcare-associated-infection-report-2022">Healthcare Associated Infection Report, 2022</a></li>
+  <li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1">Step 1</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2">Step 2</a></li>
+  <li><a href="#bonus" id="toc-bonus" class="nav-link" data-scroll-target="#bonus">Bonus</a></li>
   </ul></li>
-  <li><a href="#second-step--all-variations-at-once" id="toc-second-step--all-variations-at-once" class="nav-link" data-scroll-target="#second-step--all-variations-at-once">Second Step- All variations at once</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
 </nav>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Automated Custom reports - parameterized reporting</h1>
+<h1 class="title">Graphs for Communication - Creating Animated Maps</h1>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
     <div class="quarto-category">Data organization</div>
@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Aug 2024</p>
+      <p class="date">Sep 2024</p>
     </div>
   </div>
   
@@ -214,146 +214,130 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Automatically generated reports, one after another from an R script!</p>
-<p>Parameterized reporting is a technique that allows to generate multiple reports simultaneously. The technique also makes your work more accurate, as it avoids copy-and-paste errors.</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo.mp4"></video></div>
-<p><strong>Goal : </strong> The objective of this report is to demonstrate how to create automated custom reports with <code>Quarto</code> and <code>Purrr</code> in R to track patient days from public data.</p>
-<p>The demo uses the data from <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">California Health and Human Services Open Data Portal</a>. All California general acute care hospitals are required to report Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infection (BSI) cases that occur following hospitalization. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.</p>
-<section id="first-step---single-report" class="level2">
-<h2 class="anchored" data-anchor-id="first-step---single-report">First Step - single report</h2>
-<p>First, let’s prepare a single report as a template from the data of Patient Days across the State in California in 2022.</p>
-<section id="healthcare-associated-infection-report-2022" class="level3">
-<h3 class="anchored" data-anchor-id="healthcare-associated-infection-report-2022">Healthcare Associated Infection Report, 2022</h3>
-<section id="results" class="level4">
-<h4 class="anchored" data-anchor-id="results">Results</h4>
-<p>Figure 1. Box plots of Standardized Infection Ratio (SIR) in 2022</p>
-<div class="cell">
+<p>Making the data easier to understand!</p>
+<p><strong>Goal :</strong> The objective of this report is to demonstrate how to create animated maps with <code>ggplot2</code> and <code>gganimate</code> in R to track MRSA BSI incidence in the State of California.</p>
+<section id="graphs-for-communication" class="level2">
+<h2 class="anchored" data-anchor-id="graphs-for-communication">Graphs for Communication</h2>
+<p>Earlier this year, I was preparing a presentation for stakeholders to showcase how our business performed, especially after large events and gatherings were no longer restricted. While we saw solid growth overall, it wasn’t consistent across all locations. One key focus of the presentation was to highlight how sales evolved over time at wedding venues and restaurants.</p>
+<p>I wanted to present the data in a way that was not only accurate but also engaging enough to capture everyone’s attention. To achieve this, I turned to the <code>ggplot2</code> and <code>gganimate</code> packages in R. These tools allowed me to transform dry numbers into visually compelling animations, making the data easier to understand and far more impact for my audience.</p>
+<p>The same storytelling strategy can also be applied to the datasets of Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) in <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals.">California Hospitals</a></p>
+<p>The datasets include the associated 95% confidence intervals for the SIR and statistical interpretation to show whether MRSA BSI incidence was the same (no different), better (lower) or worse (higher) than the national baseline. Another performance measure in this dataset allows for tracking hospital progress in meeting national HAI reduction goals. Hospitals must have an SIR at or below incremental targets each year to be considered on track.</p>
+<p>We will generate an animated map displays whether MRSA BSI incidence in the State of California was the same (no different), better (lower) or worse (higher) than the national baseline from 2019 – 2023. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, worse than the national average).</p>
+</section>
+<section id="steps" class="level2">
+<h2 class="anchored" data-anchor-id="steps">Steps</h2>
+<p>The first section simply loads the libraries and data that will be used.</p>
+<section id="step-1" class="level3">
+<h3 class="anchored" data-anchor-id="step-1">Step 1</h3>
+<p>As gganimate extends the grammar of graphics as implemented by ggplot2 to include the description of animation.We will need to generate a base map using ggplot2. Then, add a function of facet_wrap(Hospital_Category_RiskAdjustment) to track the average performance of each hospital category across counties in California.</p>
+</section>
+<section id="step-2" class="level3">
+<h3 class="anchored" data-anchor-id="step-2">Step 2</h3>
+<p>Finally, the gganimate library is used to animate the display of points by year (2019 – 2023). Here we define the transition time (in years), add a title and subtitle, animate the map, and save it to a gif.</p>
+<p>Note: transition_*() defines how the data should be spread out and how it relates to itself across time.</p>
+<div class="cell" title="Bloodstream infections (BSI) compare to national overtime">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Boxplots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| title: Bloodstream infections (BSI) compare to national overtime</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">color_palette &lt;- c("#167bb2","#2e3b4f","#7A6C5D","#2e4f42","#A54657","#624151","#16b29b","#002c47","#9d72d0"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in"> mrsa_combine|&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(Year == params$year) |&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(County %in% c("San Diego" ,"San Francisco", "Los Angeles", "Sacramento", "Orange","Yolo" ))|&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot(aes(x= Hospital_Type, y= SIR, fill=Hospital_Type))+</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">     geom_boxplot()+</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">    scale_fill_manual(values=color_palette)+</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">       theme(</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="none",</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">    ) +</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">    ggtitle(paste0("Standardized Infection Ratio (SIR) in ",params$year)) +</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">    xlab("")+ylab("")+labs(caption="Produced by CF Lee")+</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">   facet_wrap(~County)</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">st &lt;- mrsa_combine|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">    dplyr::select(subregion, Year, Comparison,Hospital_Category_RiskAdjustment)|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(Year = as.integer(Year))|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(subregion, Year,Hospital_Category_RiskAdjustment)|&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(`national baseline` = round(mean(na.omit(as.numeric(Comparison))),2)) </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">st &lt;- left_join(st, unique(us_counties), by= "subregion", relationship = "many-to-many") </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">a &lt;-</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">st|&gt; </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(mapping = aes(x = long, y = lat, group = group, fill = `national baseline` ))+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">              geom_polygon(color = "gray90", linewidth = 0.3) +</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_continuous(type = "viridis")+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(axis.line=element_blank(),</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text=element_blank(),</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.ticks=element_blank(),</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title=element_blank(),</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.background=element_blank(),</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.border=element_blank(),</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid=element_blank())+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">        scale_color_gradient(low = "green", high = "red")+ </span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="in">   facet_wrap(~Hospital_Category_RiskAdjustment)</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="in">            </span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="in">            </span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="in">a + transition_time(Year) +labs(title = "MRSA BSI incidence compares to the national baseline \nsame (0), better (1) or worse (-1)   \nYear: {frame_time}")</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/Boxplots-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.gif" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Figure 2. Patients Days vs Reported infection cases in 2022</p>
-<div class="cell">
+</section>
+<section id="bonus" class="level3">
+<h3 class="anchored" data-anchor-id="bonus">Bonus</h3>
+<p>We can apply the same strategy for other types of graph!</p>
+<p>In this example we see a trend plot of continuous variables infections cases and days of patient hospital stays between 2019 and 2023.</p>
+<div class="cell" title="Patients Days vs Reported infection cases">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in"> mrsa_combine$Months &lt;- as.numeric(mrsa_combine$Months)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in"> mrsa_combine |&gt; </span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(Year == params$year) |&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(Quarters = case_when(</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">                         Months &gt; 0 &amp; Months &lt; 4 ~ 1,</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">                         Months &gt; 3 &amp; Months &lt; 7 ~ 2,</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">                         Months &gt; 6 &amp; Months &lt; 10 ~ 3 , </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">                         Months &gt; 9 &amp; Months &lt; 13 ~ 4 , </span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">                                .default = 4))|&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">  # group_by(Quarters,Hospital_Category_RiskAdjustment, Year)|&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">  #  summarise(mean = mean(na.omit(Infections_Reported)))|&gt; </span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot(aes(x= Patient_Days, y= Infections_Reported, </span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="in">               colour = as.integer(Quarters)))+</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="in">     geom_point(alpha = 0.7, show.legend = FALSE) +</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">    theme_bw()+</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="in">    ggtitle(paste0("Patients Days vs Reported infection cases in ",params$year)) +</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(#axis.text.x=element_blank(),</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.text=element_text(size=12),</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="in">          legend.position = "bottom",</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.line = element_line(colour = "black"),</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.grid.major = element_blank(),</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.grid.minor = element_blank(),</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.border = element_blank(),</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.background = element_blank())+</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in">          facet_wrap(~Hospital_Category_RiskAdjustment)+</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="in">    xlab("Days")+ylab("Cases")+labs(caption="Produced by CF Lee")</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| title: Patients Days vs Reported infection cases</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">st &lt;- left_join(mrsa_combine, unique(us_counties), by= "subregion", relationship = "many-to-many") </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">p &lt;-     </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">  st|&gt; </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x= Patient_Days, y= Infections_Reported))+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_point(alpha = 0.5, show.legend = FALSE, color = "#167bb2") +</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">    scale_size(range = c(2, 12)) +</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">    theme_bw()+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">    ggtitle(paste0("Length of Patients stay vs Reported infection cases")) +</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(#axis.text.x=element_blank(),</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.text=element_text(size=12),</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="in">          legend.position = "bottom",</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.line = element_line(colour = "black"),</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.grid.major = element_blank(),</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.grid.minor = element_blank(),</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.border = element_blank(),</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.background = element_blank())+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="in">          facet_wrap(~Hospital_Category_RiskAdjustment)+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="in">    xlab("Days")+ylab("Cases")+labs(caption="Produced by CF Lee")</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">p + transition_time(as.integer(Year))+  </span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">  enter_fade() +</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="in">  exit_fade()+labs(title = "Year: {frame_time}")</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.gif" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Note: Patient Days is define as below. A count of the number of patients in the hospital during a time period, excluding IRFs and IPFs with their own CCN numbers. A rehabilitation unit (IRF) with its own CCN number reports separately from the rest of the hospital. To calculate patient days, the number of patients is recorded at the same time each day for each day of the month. At the end of the month, the daily counts are summed. See the NHSN website: http://www.cdc.gov/nhsn.</p>
 </section>
-</section>
-</section>
-<section id="second-step--all-variations-at-once" class="level2">
-<h2 class="anchored" data-anchor-id="second-step--all-variations-at-once">Second Step- All variations at once</h2>
-<p>Once you are done with the single report. It is time to render all report variations. To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.</p>
-<p>In our example the code looks like this,</p>
-<pre><code># 1. First create a dataframe 
-
-data &lt;- expand.grid(
-  year = c(2019,2021:2023),
-  record_date = Sys.Date(), 
-  stringsAsFactors = FALSE)
-
-df &lt;- data |&gt; 
-  dplyr::mutate(
-    output_format = "html",       # Output format (html, word, etc.)
-    output_file = paste(          # Output file name
-      year, "report.html",
-      sep = "-"
-    ),
-    execute_params = purrr::map2( # Named list of parameters
-      record_date, year, 
-      \(record_date, year) list(record_date = record_date, year = year)
-    )
-  ) |&gt; 
-  dplyr::select(-c(record_date, year))
-
-df
-
-# 2. Use purrr::pwalk() to map over each row of the dataframe and render each report variation.
-
-purrr::pwalk(
-  .l = df,                      # Dataframe to map over
-  .f = quarto::quarto_render,   # Quarto render function
-  input = "demo_autoreport.qmd",       # Named arguments of .f
-  .progress = TRUE              # Optionally, show a progress bar
-)</code></pre>
 </section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
 <ol type="1">
-<li><p>The raw data is obtained from California Health and Human Services Open Data Portal <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">datasets</a></p></li>
-<li><p>Full code <a href="https://github.com/clfee">link</a></p></li>
+<li>gganimate <a href="https://gganimate.com/">link</a></li>
+<li>California Hospitals <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">data</a>.</li>
 </ol>
 
 
@@ -788,7 +772,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
