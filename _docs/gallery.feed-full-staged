@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Chris Lee</title>
+<link>https://github.com/clfee/home/gallery.html</link>
+<atom:link href="https://github.com/clfee/home/gallery.xml" rel="self" type="application/rss+xml"/>
+<description>Data science applications brought to you by Chris Lee</description>
+<image>
+<url>https://github.com/clfee/home/img/cmm1.PNG</url>
+<title>Chris Lee</title>
+<link>https://github.com/clfee/home/gallery.html</link>
+</image>
+<generator>quarto-1.4.554</generator>
+<lastBuildDate>Sun, 15 Sep 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>{B4F502887207:/posts/2024-09-15-SIR-Forecast-using-Xgboost/Forecasting MRSA_.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-09-15-SIR-Forecast-using-Xgboost/Forecasting MRSA_.html</link>
+  <description>{B4F502887207:/posts/2024-09-15-SIR-Forecast-using-Xgboost/Forecasting MRSA_.html}</description>
+  <guid>https://github.com/clfee/home/posts/2024-09-15-SIR-Forecast-using-Xgboost/Forecasting MRSA_.html</guid>
+  <pubDate>Sun, 15 Sep 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2024-09-01-Graphs-for-Communication/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-09-01-Graphs-for-Communication/</link>
+  <description>{B4F502887207:/posts/2024-09-01-Graphs-for-Communication/index.html}</description>
+  <category>R</category>
+  <category>Data organization</category>
+  <guid>https://github.com/clfee/home/posts/2024-09-01-Graphs-for-Communication/</guid>
+  <pubDate>Sun, 01 Sep 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2024-08-16-automated-custom-reports/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/</link>
+  <description>{B4F502887207:/posts/2024-08-16-automated-custom-reports/index.html}</description>
+  <category>R</category>
+  <category>Data organization</category>
+  <guid>https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/</guid>
+  <pubDate>Fri, 16 Aug 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2024-08-01-tying-the-data-together/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/</link>
+  <description>{B4F502887207:/posts/2024-08-01-tying-the-data-together/index.html}</description>
+  <category>R</category>
+  <category>Shiny</category>
+  <category>Data organization</category>
+  <category>sql</category>
+  <category>vlookup</category>
+  <guid>https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/</guid>
+  <pubDate>Thu, 01 Aug 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2024-07-15-marketing-compaign-dashboard/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign-dashboard/</link>
+  <description>{B4F502887207:/posts/2024-07-15-marketing-compaign-dashboard/index.html}</description>
+  <guid>https://github.com/clfee/home/posts/2024-07-15-marketing-compaign-dashboard/</guid>
+  <pubDate>Mon, 15 Jul 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2024-06-25-create-a-Quarto-dashboard/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/</link>
+  <description>{B4F502887207:/posts/2024-06-25-create-a-Quarto-dashboard/index.html}</description>
+  <category>R</category>
+  <category>Quarto</category>
+  <category>Dashboard</category>
+  <guid>https://github.com/clfee/home/posts/2024-06-25-create-a-Quarto-dashboard/</guid>
+  <pubDate>Tue, 25 Jun 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2021-08-31-malaria-cell-classification - p2/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification - p2/</link>
+  <description>{B4F502887207:/posts/2021-08-31-malaria-cell-classification - p2/index.html}</description>
+  <category>python</category>
+  <category>Image Classification</category>
+  <guid>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification - p2/</guid>
+  <pubDate>Tue, 31 Aug 2021 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/2021-08-31-malaria-cell-classification/index.html}</title>
+  <dc:creator>Chris Lee</dc:creator>
+  <link>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification/</link>
+  <description>{B4F502887207:/posts/2021-08-31-malaria-cell-classification/index.html}</description>
+  <category>python</category>
+  <category>Image Classification</category>
+  <guid>https://github.com/clfee/home/posts/2021-08-31-malaria-cell-classification/</guid>
+  <pubDate>Tue, 31 Aug 2021 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

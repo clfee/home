@@ -1,15 +1,16 @@
 ---
 listing:
   contents: posts
-  feed: true
+  feed: 
+    items: 10
   sort-ui: true
   sort: 
     - "date desc"
     - "title desc"
   type: default
-  image-height: 150px
-  image-placeholder: assets\images\cmm1.PNG
-  fields: [image, title, description, date, reading-time]
+  image-height: 50px
+  image-placeholder: /assets/images/dashboard.PNG
+  fields: [date, image, title]
   categories: true
   date-format: "YYYY-MM-DD"
   page-size: 9
@@ -18,4 +19,3 @@ toc-location: body
 page-layout: full
 title-block-banner: false
 ---
-

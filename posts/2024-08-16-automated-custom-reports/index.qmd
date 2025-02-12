@@ -1,5 +1,5 @@
 ---
-title: "Automated Custom reports - parameterized reporting "
+title: "Automated Reporting: A Game-Changer for Data Analysis "
 author:
     name: Chris Lee
     url: https://clfee.github.io/
@@ -23,27 +23,24 @@ citation-location: margin
 categories:
   - R 
   - Data organization
-preview: "main.PNG"
+preview: "cover.PNG"
 ---
-Automatically generated reports, one after another from an R script!
 
-Parameterized reporting is a technique that allows to generate multiple reports simultaneously. The technique also makes your work more accurate, as it avoids copy-and-paste errors. 
+In the fast-paced world of data analysis, efficiency is key. Automated reporting is revolutionizing how we handle recurring data-rich reports, offering on-demand production and enhanced data exploration capabilities. This innovative approach not only saves time but also allows for deeper, more strategic insights. Parameterized reporting is a cutting-edge technique that enables simultaneous generation of multiple reports. This method not only boosts productivity but also significantly reduces errors associated with manual data handling.
 
-{{< video demo.mp4 >}}
+**Goal :** The objective of this report is to demonstrate how to create automated custom reports with `Quarto` and `Purrr` in R to track patient days from public data.
 
+## Real-World Application: California MRSA Data Analysis
 
+To illustrate the power of automated reporting, let's consider a case study using data from the California [California Health and Human Services Open Data Portal](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals). The demo uses the data from All California general acute care hospitals are required to report Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infection (BSI) cases that occur following hospitalization. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.
 
-**Goal : ** The objective of this report is to demonstrate how to create automated custom reports with `Quarto` and `Purrr` in R to track patient days from public data.
+## Step-by-Step Guide
 
-The demo uses the data from [California Health and Human Services Open Data Portal](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals). All California general acute care hospitals are required to report Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infection (BSI) cases that occur following hospitalization. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly. 
+### Step 1: Create a Single Report Template
 
+We began by preparing a single report template using data from 2022. This template serves as the foundation for all subsequent reports. Let's prepare a single report as a template from the data in `r params$year`.
 
-## First Step - single report
-
-First, let's prepare a single report as a template from the data in `r params$year`.
-
-
-### Healthcare Associated Infection Report, `r params$year`
+#### Healthcare Associated Infection Report, `r params$year`
 
 ```{r}
 #| context: setup
@@ -83,9 +80,10 @@ mrsa_combine <- mrsa_combine |>
          !grepl("Pooled", Facility_Type, ignore.case = TRUE))
 ```
 
-#### Results
+##### Results
 
-Figure 1. Box plots of Standardized Infection Ratio (SIR) in `r params$year`
+**Figure 1:** Box plots of Standardized Infection Ratio (SIR) in `r params$year`.
+
 ```{r}
 #| label: Boxplots
 #| code-fold: true
@@ -111,7 +109,8 @@ color_palette <- c("#167bb2","#2e3b4f","#7A6C5D","#2e4f42","#A54657","#624151","
  
 ```
 
-Figure 2. Patients Days vs Reported infection cases in `r params$year`  
+**Figure 2:** Patients Days vs Reported infection cases in `r params$year`
+
 ```{r}
 #| code-fold: true
 #| warning: false
@@ -149,9 +148,9 @@ Figure 2. Patients Days vs Reported infection cases in `r params$year`
 
 Note: Patient Days is define as below. A count of the number of patients in the hospital during a time period, excluding IRFs and IPFs with their own CCN numbers. A rehabilitation unit (IRF) with its own CCN number reports separately from the rest of the hospital. To calculate patient days, the number of patients is recorded at the same time each day for each day of the month. At the end of the month, the daily counts are summed. See the NHSN website: http://www.cdc.gov/nhsn.
 
-## Second Step- All variations at once
+#### Step 2: Generate All Report Variations
 
-Once you are done with the single report. It is time to render all report variations. To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.
+After creating the single report, we used an R script to render the parameterized Quarto template with each defined parameter. This step allows for the simultaneous generation of all report variations, ensuring consistency and accuracy.To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.
 
 In our example the code looks like this,
 
@@ -188,7 +187,15 @@ purrr::pwalk(
   .progress = TRUE              # Optionally, show a progress bar
 )
 ```
-## Resources
-1. The raw data is obtained from California Health and Human Services Open Data Portal [datasets](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals)
 
-2. Full code [link](https://github.com/clfee)
+By adopting this automated approach, analysts can shift their focus from report creation to data interpretation, leading to more impact decision-making and strategic planning.
+
+Automatically generated reports, one after another!
+
+{{< video demo.mp4 >}}
+
+## Resources
+
+1.  The raw data is obtained from California Health and Human Services Open Data Portal [datasets](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals)
+
+2.  Full code [link](https://github.com/clfee)

@@ -8,7 +8,7 @@ creative_commons: CC BY
 categories:
   - python  
   - Image Classification
-preview: "/assets/images/dauer.PNG"
+preview: "cover.JPG"
 ---
 
 I remember years ago seeing my colleague spent hours under a microscopes counting cells underwent of apoptosis or Dauer larva formation. I mean it is fun doing experiments in the lab but telling differences of these tiny worms would probably is the last thing I'd want to do. This task does take lots of valuable time from a researcher. Imagine, how many more novel anti-agents like this [article](https://pubmed.ncbi.nlm.nih.gov/23049887/) Yongsoon could bring us if the deep learning techniques were ready to use back in 2011.
