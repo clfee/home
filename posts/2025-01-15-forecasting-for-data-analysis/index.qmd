@@ -249,16 +249,16 @@ grid.arrange(a,b,c, ncol = 3)
 
 In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.
 
-**Imapact of Promotions:**\
+*Impact of Promotions:*\
 Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied ("promotion_flag" - pink color). This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the "Double promotion" (green color) or "Email promotion" seems to have a noticeable impact compared to "No promotion".
 
-**Web Promotion Baseline:**\
+*Web Promotion Baseline:*\
 "Web promotion" (purple color) seems to be always present at some level for all meals, which suggests that web promotion might be a baseline strategy applied to all meals. 
 
-**Meal-Specific Promotion Effectiveness:**\
+*Meal-Specific Promotion Effectiveness:*\
 Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from "promotion_flag". Other meals, like Meal ID 1558, benefits more from "Email promotion". 
 
-**Meals with Low Promotion Impact:**\
+*Meals with Low Promotion Impact:*\
 On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.
 
 #### Analysis of Meal Popularity During Promotions and No-Promotions
