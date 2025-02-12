@@ -1,6 +1,6 @@
 ---
 title: "Chris Lee"
-subtitle: "This is the place where I test new techniques, tools, and trends in data analysis, data science, and AI, "
+subtitle: "This is the place where I share new techniques and tools in data analysis, data science, and AI, "
 about:
   id: hero-heading
   template: jolla
