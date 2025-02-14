@@ -25,8 +25,9 @@ categories:
 
 **Why Forecasting Matters for Our Business**
 
-Predicting customer demand is essential for a growing online business. Without accurate forecasts, we risk running out of stock or having too much inventory, which can lead to wasted resources. For a food delivery service like ours, this is even more important because we deal with fresh ingredients that don’t last long. By accurately estimating daily and weekly demand, we can ensure we have just the right amount of stock—minimizing waste, keeping costs under control, and ensuring our customers always get what they want.
+Predicting customer demand is crucial for growing business. Without reliable forecasts, we risk stockouts or excess inventory, leading to wasted resources. This is especially important for our wedding and event catering service, where we work with perishable ingredients. By precisely estimating daily and weekly demand, we can optimize inventory, reduce waste, control costs, and consistently meet customer expectations.
 
+Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting] (https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).  
 
 
 ```{r}
@@ -69,7 +70,7 @@ train <- train |>
     promotion_flag = case_when(
     emailer_for_promotion == 0 & homepage_featured == 0 ~ "No promotion",
     emailer_for_promotion == 1 & homepage_featured == 0 ~ "Email promotion",
-    emailer_for_promotion == 0 & homepage_featured == 1 ~ "Web promotion",
+    emailer_for_promotion == 0 & homepage_featured == 1 ~ "Homepage promotion",
     emailer_for_promotion == 1 & homepage_featured == 1 ~ "Double promotion"
   ))
 
@@ -80,14 +81,13 @@ avg_promotion_rate <- train |>
 ```
 
 
-We examined data from `{r} length(unique(train$center_id))` stores over a period of `{r} length(unique(unique(train$week)))` weeks.  
-During this time, we tested two types of promotions (web, email) :\
+The data contains information from `{r} length(unique(train$center_id))` stores over a period of `{r} length(unique(unique(train$week)))` weeks.  
+Two types of promotions (web, email) were shown in the data as below:\
 - `{r} sum(avg_promotion_rate$p[c(2,4)])`% stores ran one type of promotion.\
 - `{r} avg_promotion_rate$p[1]`% stores ran both types at the same time.\
 - `{r} avg_promotion_rate$p[3]`% stores didn't run any promotions.
 
-Our goals were:\
-To see if promotions boosted our bottom line\
+Our initial analysis is aim to discover:\
 (1) Did revenue or profit increase?\
 (2) Which promotion worked best?\
 (3) To predict future demand for our menu items.
@@ -96,7 +96,7 @@ To see if promotions boosted our bottom line\
 
 ### Visulization: Effect of Promotion types on Weekly Profit in each store
 
-As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits.The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Web promotion
+As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion
 
 1. While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.\
 2.Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.
@@ -125,7 +125,7 @@ tst|>
   geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion
   scale_fill_gradient(low = "white", high = "darkgreen", name = "Average profit") +
   scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =
-                                  "lightblue", "Web promotion" = "#167bb2","No promotion" = "darkred"),
+                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "darkred"),
                      name = "Promotion") +
   labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store
        x = "Week", y = "Store ID") +
@@ -137,7 +137,7 @@ tst|>
 
 ### Visulization: Average Sales and Revenue Over Time
 
-The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Web promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.
+The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Homepage promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.
 
 *Note:* The non-promoted sales and revenue (blue line) remain relatively stable over time. The promoted periods exhibit more volatility, meaning promotions may be shifting demand rather than creating long-term sales growth.
 
@@ -189,16 +189,16 @@ sales_trend <- train |>
 **Promotion Effectiveness: Average Weekly Sales & Revenue by Promotion Type**
 
 *Sales Volume*\
-Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and web), followed by web promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.
+Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and homepage), followed by homepage promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.
 
 *Checkout Price*\
 Figure 2B shows the range of prices customers paid at checkout under different promotions. Unlike the sales volume, there is no major difference in checkout price across promotions. There is some right-skewness with outliers, suggesting a small number of high-value purchases, but the overall trend remains stable. This suggests that promotions influence the number of items bought, but not the price per visit.
 
 *Profit*\
-Revenue is also log-transformed for better visualization as in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by web promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.
+Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.
 
 *Key Takeaways*\
-While double promotions drive the highest sales and revenue, web and email promotions individually are not as effective as using both together. Checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more.
+While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. Checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more.
 
 ```{r}
 #| label: Boxplot of sales volume, checkout price and revenue
@@ -245,26 +245,22 @@ c<- ggplot(train, aes(x = promotion_flag, y = log((profit),2), fill = promotion_
 grid.arrange(a,b,c, ncol = 3)
 
 ```
+
 ### Analysis of Meal Popularity During Promotions and No-Promotions
 
 In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.
 
 *Impact of Promotions:*\
-Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied ("promotion_flag" - pink color). This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the "Double promotion" (green color) or "Email promotion" seems to have a noticeable impact compared to "No promotion".
+Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to "No promotion".
 
-*Web Promotion Baseline:*\
-"Web promotion" (purple color) seems to be always present at some level for all meals, which suggests that web promotion might be a baseline strategy applied to all meals. 
+*Homepage Promotion Baseline:*\
+Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals. 
 
 *Meal-Specific Promotion Effectiveness:*\
 Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from "promotion_flag". Other meals, like Meal ID 1558, benefits more from "Email promotion". 
 
 *Meals with Low Promotion Impact:*\
 On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.
-
-#### Analysis of Meal Popularity During Promotions and No-Promotions
-The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There's noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs. promotins (web, email, and web+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.  
-
-We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (web and email) promotion, suggesting targeted discounts may work well for these meals.This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn't universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.
 
 ```{r}
 #| label: del Promotions Impact popular items
@@ -283,7 +279,7 @@ train |>
   ggplot(aes(x = reorder(factor(meal_id),p,, decreasing = TRUE),  fill = promotion_flag)) +
   geom_bar(aes(y = p), stat='identity', alpha=0.7) +
   scale_color_manual(values=c('Order Percent'="#d88bb4")) +
-  labs(x = 'Meal ID', y = 'Percentage', 
+  labs(x = '', y = 'Percentage', 
        title = '3A) Popular Meals During Promotions and No Promotions') +
   theme_minimal()+
   theme(legend.position="bottom",
@@ -305,9 +301,24 @@ train|>
 grid.arrange(c1, c2, nrow = 2)
 ```
 
+#### Analysis of Meal Popularity During Promotions and No-Promotions
+The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There's noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs. promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.  
+
+We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn't universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.
+
 ## Supplementary Analysis
 
 The data contains no missing values.
+
+```{r}
+#| label: Overview data
+#| fig-cap: "Indentify missing values"
+#| code-fold: true
+#| fig-width: 8
+
+# Check for missing values
+kable(colSums(is.na(train)))
+```
 
 *Numerical Variables*\
 ID Variables: id, week, center_id, meal_id\
@@ -322,11 +333,32 @@ Meal Category: Fourteen categories, 'Beverages' being the most frequent.\
 Cuisine: Four types, with 'Italian' being the most common.
 
 ```{r}
-#| label: Overview data
-#| fig-cap: "Indentify missing values"
+#| label: data distribution
+#| fig-cap: ""
 #| code-fold: true
 #| fig-width: 8
 
-kable(summary(train))
+# Plot the original distribution of num_orders
+s1 <- 
+  train|>
+  ggplot(aes(x = sqrt(num_orders))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution of Square Root Transformation of num_orders") +
+  xlab("Square Root transformed num_orders") +
+  ylab("Frequency")+
+  theme_minimal()
 
+s2 <- 
+  train|>
+  ggplot(aes(x = sqrt(checkout_price))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution of Square Root Transformation of checkout_price") +
+  xlab("Square Root transformed checkout_price") +
+  ylab("Frequency")+
+  theme_minimal()
+
+#kable(summary(train))
+grid.arrange(s1, s2, nrow = 2)
 ```

@@ -22,9 +22,9 @@ Have you ever get tired of typing functions into vlookup? In this post, we will 
 
 ## Background & challenges
 
-Recently, we reviewed our operational costs and realized that a significant portion was going toward credit card processing fees. After some thorough research and negotiation, we secured a better deal with a new merchant service provider. This switch saved us about $1,500 USD per month, and we also qualified for next-day funding—a major win for our business.
+Recently, we reviewed our operational costs and found that a significant portion was allocated to credit card processing fees. After thorough research and negotiation, we secured a better deal with a new merchant service provider, saving about $1,500 USD per month and qualifying for next-day funding—a major win for our business.
 
-However, our bookkeeper quickly spotted an issue: the new provider’s reporting system was much less straightforward. Unlike our previous provider, which offered a master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To make matters worse, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order could have multiple funding references, making it a headache to track everything accurately.
+However, our bookkeeper quickly identified an issue: the new provider’s reporting system is less straightforward. Unlike our previous provider, which offered a comprehensive master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To complicate matters, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order can have multiple funding references, making it challenging to track everything accurately.
 
 ![Different column names and multiple funded entries for one order](file_demo.PNG)
 

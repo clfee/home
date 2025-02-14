@@ -28,15 +28,16 @@ Making the data easier to understand!
 
 ## Graphs for Communication
 
-Earlier this year, I was preparing a presentation for stakeholders to showcase how our business performed, especially after large events and gatherings were no longer restricted. While we saw solid growth overall, it wasn’t consistent across all locations. One key focus of the presentation was to highlight how sales evolved over time at wedding venues and restaurants.
+Earlier this year, I prepared a presentation for our stakeholders to showcase our business performance, particularly after the lifting of restrictions on large events and gatherings. While we saw overall growth, the performance varied across different locations. One of the key focuses of the presentation was to illustrate how sales at wedding venues and restaurants evolved over time.
 
-I wanted to present the data in a way that was not only accurate but also engaging enough to capture everyone's attention. To achieve this, I turned to the `ggplot2` and `gganimate` packages in R. These tools allowed me to transform dry numbers into visually compelling animations, making the data easier to understand and far more impact for my audience.
+To make the data not only accurate but also engaging, I used the `ggplot2` and `gganimate` packages in R. These tools allowed me to transform raw numbers into visually compelling animations, making the data more understandable and impactful for the audience.
 
-The same storytelling strategy can also be applied to the datasets of Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) in [California Hospitals](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals).
+This same storytelling approach can be applied to datasets tracking Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infections (BSI) (BSI) in [California Hospitals](https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals).
 
-The datasets include the associated 95% confidence intervals for the SIR and statistical interpretation to show whether MRSA BSI incidence was the same (no different), better (lower) or worse (higher) than the national baseline. Another performance measure in this dataset allows for tracking hospital progress in meeting national HAI reduction goals. Hospitals must have an SIR at or below incremental targets each year to be considered on track.
+These datasets include 95% confidence intervals for the Standardized Infection Ratio (SIR) and statistical interpretations to compare MRSA BSI incidence against the national baseline. Additionally, the data tracks hospital progress towards national Healthcare-Associated Infection (HAI) reduction goals. Hospitals need to meet or exceed incremental SIR targets each year to stay on track.
 
-In this practice, we will generate an animated map displays whether MRSA BSI incidence in the State of California was the same (no different), better (lower) or worse (higher) than the national baseline from 2019 – 2023. The comparison is depicted values and colors range from -1 (purple, worse than the national average) to 1 (yellow, better than the national average).
+In this exercise, we will create an animated map to show whether MRSA BSI incidence in California was the same, better, or worse than the national baseline from 2019 to 2023. The map will use a color scale ranging from purple (-1, indicating worse than the national average) to yellow (1, indicating better than the national average) to depict these comparisons.
+
 
 ## Steps
 

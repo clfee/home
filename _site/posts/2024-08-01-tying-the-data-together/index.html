@@ -222,8 +222,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Have you ever get tired of typing functions into vlookup? In this post, we will use tidyverse in R to modify, combine, search, and merge several datasets. We will also create a shiny app allowing users to download the organized data.</p>
 <section id="background-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="background-challenges">Background &amp; challenges</h2>
-<p>Recently, we reviewed our operational costs and realized that a significant portion was going toward credit card processing fees. After some thorough research and negotiation, we secured a better deal with a new merchant service provider. This switch saved us about $1,500 USD per month, and we also qualified for next-day funding—a major win for our business.</p>
-<p>However, our bookkeeper quickly spotted an issue: the new provider’s reporting system was much less straightforward. Unlike our previous provider, which offered a master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To make matters worse, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order could have multiple funding references, making it a headache to track everything accurately.</p>
+<p>Recently, we reviewed our operational costs and found that a significant portion was allocated to credit card processing fees. After thorough research and negotiation, we secured a better deal with a new merchant service provider, saving about $1,500 USD per month and qualifying for next-day funding—a major win for our business.</p>
+<p>However, our bookkeeper quickly identified an issue: the new provider’s reporting system is less straightforward. Unlike our previous provider, which offered a comprehensive master report with detailed order and funding information, the new service splits this data into three separate reports: Sales, Transaction, and Funded. To complicate matters, some data points, like order details, are labeled differently across the reports (e.g., order.ifo in Sales versus order_detail in Transaction). Additionally, a single order can have multiple funding references, making it challenging to track everything accurately.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="file_demo.PNG" class="img-fluid figure-img"></p>
@@ -267,7 +267,7 @@ Expand for Code
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display no-overflow-x">
-<div id="out672edcb168a514f5" class="shiny-html-output"></div>
+<div id="out4bfbd3a1dfefb08d" class="shiny-html-output"></div>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
@@ -319,7 +319,7 @@ Expand for Code
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<pre class="shiny-text-output noplaceholder" id="outb2f752611f0f78ea"></pre>
+<pre class="shiny-text-output noplaceholder" id="outba1a20ff811f49a6"></pre>
 </div>
 </div>
 </div>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Chris Lee">
 
-<title>Chris Lee - Automated Custom reports - parameterized reporting</title>
+<title>Chris Lee - Automated Reporting: A Game-Changer for Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles/custom.scss">
-<meta property="og:title" content="Chris Lee - Automated Custom reports - parameterized reporting">
+<meta property="og:title" content="Chris Lee - Automated Reporting: A Game-Changer for Data Analysis">
 <meta property="og:description" content="Data science applications brought to you by Chris Lee">
 <meta property="og:image" content="https://github.com/clfee/home/posts/2024-08-16-automated-custom-reports/img/cmm1.PNG">
 <meta property="og:site_name" content="Chris Lee">
@@ -167,11 +167,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#first-step---single-report" id="toc-first-step---single-report" class="nav-link active" data-scroll-target="#first-step---single-report">First Step - single report</a>
+  <li><a href="#real-world-application-california-mrsa-data-analysis" id="toc-real-world-application-california-mrsa-data-analysis" class="nav-link active" data-scroll-target="#real-world-application-california-mrsa-data-analysis">Real-World Application: California MRSA Data Analysis</a></li>
+  <li><a href="#step-by-step-guide" id="toc-step-by-step-guide" class="nav-link" data-scroll-target="#step-by-step-guide">Step-by-Step Guide</a>
   <ul class="collapse">
-  <li><a href="#healthcare-associated-infection-report-2022" id="toc-healthcare-associated-infection-report-2022" class="nav-link" data-scroll-target="#healthcare-associated-infection-report-2022">Healthcare Associated Infection Report, 2022</a></li>
+  <li><a href="#step-1-create-a-single-report-template" id="toc-step-1-create-a-single-report-template" class="nav-link" data-scroll-target="#step-1-create-a-single-report-template">Step 1: Create a Single Report Template</a></li>
   </ul></li>
-  <li><a href="#second-step--all-variations-at-once" id="toc-second-step--all-variations-at-once" class="nav-link" data-scroll-target="#second-step--all-variations-at-once">Second Step- All variations at once</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
 </nav>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Automated Custom reports - parameterized reporting</h1>
+<h1 class="title">Automated Reporting: A Game-Changer for Data Analysis</h1>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
     <div class="quarto-category">Data organization</div>
@@ -214,19 +214,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Automatically generated reports, one after another from an R script!</p>
-<p>Parameterized reporting is a technique that allows to generate multiple reports simultaneously. The technique also makes your work more accurate, as it avoids copy-and-paste errors.</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo.mp4"></video></div>
-<p><strong>Goal : </strong> The objective of this report is to demonstrate how to create automated custom reports with <code>Quarto</code> and <code>Purrr</code> in R to track patient days from public data.</p>
-<p>The demo uses the data from <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">California Health and Human Services Open Data Portal</a>. All California general acute care hospitals are required to report Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infection (BSI) cases that occur following hospitalization. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.</p>
-<section id="first-step---single-report" class="level2">
-<h2 class="anchored" data-anchor-id="first-step---single-report">First Step - single report</h2>
-<p>First, let’s prepare a single report as a template from the data in 2022.</p>
-<section id="healthcare-associated-infection-report-2022" class="level3">
-<h3 class="anchored" data-anchor-id="healthcare-associated-infection-report-2022">Healthcare Associated Infection Report, 2022</h3>
-<section id="results" class="level4">
-<h4 class="anchored" data-anchor-id="results">Results</h4>
-<p>Figure 1. Box plots of Standardized Infection Ratio (SIR) in 2022</p>
+<p>In the fast-paced world of data analysis, efficiency is key. Automated reporting is revolutionizing how we handle recurring data-rich reports, offering on-demand production and enhanced data exploration capabilities. This innovative approach not only saves time but also allows for deeper, more strategic insights. Parameterized reporting is a cutting-edge technique that enables simultaneous generation of multiple reports. This method not only boosts productivity but also significantly reduces errors associated with manual data handling.</p>
+<p><strong>Goal :</strong> The objective of this report is to demonstrate how to create automated custom reports with <code>Quarto</code> and <code>Purrr</code> in R to track patient days from public data.</p>
+<section id="real-world-application-california-mrsa-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="real-world-application-california-mrsa-data-analysis">Real-World Application: California MRSA Data Analysis</h2>
+<p>To illustrate the power of automated reporting, let’s consider a case study using data from the California <a href="https://data.chhs.ca.gov/dataset/methicillin-resistant-staphylococcus-aureus-mrsa-bloodstream-infections-bsi-in-california-hospitals">California Health and Human Services Open Data Portal</a>. The demo uses the data from All California general acute care hospitals are required to report Methicillin-resistant Staphylococcus aureus (MRSA) bloodstream infection (BSI) cases that occur following hospitalization. MRSA is a serious, contagious bacterial infection that starts on your skin. It’s a type of staph infection that resists most common antibiotics, making it especially dangerous. Without treatment, MRSA can be deadly.</p>
+</section>
+<section id="step-by-step-guide" class="level2">
+<h2 class="anchored" data-anchor-id="step-by-step-guide">Step-by-Step Guide</h2>
+<section id="step-1-create-a-single-report-template" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-a-single-report-template">Step 1: Create a Single Report Template</h3>
+<p>We began by preparing a single report template using data from 2022. This template serves as the foundation for all subsequent reports. Let’s prepare a single report as a template from the data in 2022.</p>
+<section id="healthcare-associated-infection-report-2022" class="level4">
+<h4 class="anchored" data-anchor-id="healthcare-associated-infection-report-2022">Healthcare Associated Infection Report, 2022</h4>
+<section id="results" class="level5">
+<h5 class="anchored" data-anchor-id="results">Results</h5>
+<p><strong>Figure 1:</strong> Box plots of Standardized Infection Ratio (SIR) in 2022.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -262,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Figure 2. Patients Days vs Reported infection cases in 2022</p>
+<p><strong>Figure 2:</strong> Patients Days vs Reported infection cases in 2022</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -312,10 +315,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note: Patient Days is define as below. A count of the number of patients in the hospital during a time period, excluding IRFs and IPFs with their own CCN numbers. A rehabilitation unit (IRF) with its own CCN number reports separately from the rest of the hospital. To calculate patient days, the number of patients is recorded at the same time each day for each day of the month. At the end of the month, the daily counts are summed. See the NHSN website: http://www.cdc.gov/nhsn.</p>
 </section>
 </section>
-</section>
-<section id="second-step--all-variations-at-once" class="level2">
-<h2 class="anchored" data-anchor-id="second-step--all-variations-at-once">Second Step- All variations at once</h2>
-<p>Once you are done with the single report. It is time to render all report variations. To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.</p>
+<section id="step-2-generate-all-report-variations" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-generate-all-report-variations">Step 2: Generate All Report Variations</h4>
+<p>After creating the single report, we used an R script to render the parameterized Quarto template with each defined parameter. This step allows for the simultaneous generation of all report variations, ensuring consistency and accuracy.To do this, write an R script to render the parameterized Quarto template with each of the defined parameters.</p>
 <p>In our example the code looks like this,</p>
 <pre><code># 1. First create a dataframe 
 
@@ -348,6 +350,11 @@ purrr::pwalk(
   input = "demo_autoreport.qmd",       # Named arguments of .f
   .progress = TRUE              # Optionally, show a progress bar
 )</code></pre>
+<p>By adopting this automated approach, analysts can shift their focus from report creation to data interpretation, leading to more impact decision-making and strategic planning.</p>
+<p>Automatically generated reports, one after another!</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo.mp4"></video></div>
+</section>
+</section>
 </section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
