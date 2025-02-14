@@ -32,9 +32,9 @@
 <p>Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - <a href="https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders">Food Demand Forecasting</a>.</p>
 <p>The data contains information from 77 stores over a period of 145 weeks.<br>
 Two types of promotions (web, email) were shown in the data as below:<br>
-- 89.08% stores ran one type of promotion.<br>
+- 10.61% stores ran one type of promotion.<br>
 - 4.21% stores ran both types at the same time.<br>
-- 6.71% stores didn’t run any promotions.</p>
+- 85.18% stores didn’t run any promotions.</p>
 <p>Our initial analysis is aim to discover:<br>
 (1) Did revenue or profit increase?<br>
 (2) Which promotion worked best?<br>
@@ -44,10 +44,13 @@ Two types of promotions (web, email) were shown in the data as below:<br>
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <section id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="level3">
 <h3 class="anchored" data-anchor-id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</h3>
-<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion</p>
+<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion.<br>
+</p>
 <ol type="1">
 <li>While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.<br>
-2.Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.</li>
+</li>
+<li>Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.<br>
+</li>
 <li>Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.</li>
 </ol>
 <p><strong>Keytakeaway</strong><br>
