@@ -27,7 +27,7 @@ categories:
 
 Predicting customer demand is crucial for growing business. Without reliable forecasts, we risk stockouts or excess inventory, leading to wasted resources. This is especially important for our wedding and event catering service, where we work with perishable ingredients. By precisely estimating daily and weekly demand, we can optimize inventory, reduce waste, control costs, and consistently meet customer expectations.
 
-Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting] (https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).  
+Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting](https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).  
 
 
 ```{r}
@@ -125,7 +125,7 @@ tst|>
   geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion
   scale_fill_gradient(low = "white", high = "darkgreen", name = "Average profit") +
   scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =
-                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "darkred"),
+                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "#d88bb4"),
                      name = "Promotion") +
   labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store
        x = "Week", y = "Store ID") +

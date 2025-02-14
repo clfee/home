@@ -29,7 +29,7 @@
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p><strong>Why Forecasting Matters for Our Business</strong></p>
 <p>Predicting customer demand is crucial for growing business. Without reliable forecasts, we risk stockouts or excess inventory, leading to wasted resources. This is especially important for our wedding and event catering service, where we work with perishable ingredients. By precisely estimating daily and weekly demand, we can optimize inventory, reduce waste, control costs, and consistently meet customer expectations.</p>
-<p>Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting] (https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).</p>
+<p>Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - <a href="https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders">Food Demand Forecasting</a>.</p>
 <p>The data contains information from 77 stores over a period of 145 weeks.<br>
 Two types of promotions (web, email) were shown in the data as below:<br>
 - 89.08% stores ran one type of promotion.<br>
@@ -108,7 +108,7 @@ background-color: null;
 font-style: inherit;">  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =</span></span>
 <span id="cb1-19"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "darkred"),</span></span>
+font-style: inherit;">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "#d88bb4"),</span></span>
 <span id="cb1-20"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">                     name = "Promotion") +</span></span>
@@ -701,7 +701,7 @@ background-color: null;
 font-style: inherit;">#| label: data distribution</span></span>
 <span id="cb6-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| fig-cap: "Distrinution of  values"</span></span>
+font-style: inherit;">#| fig-cap: ""</span></span>
 <span id="cb6-4"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#| code-fold: true</span></span>
@@ -711,170 +711,77 @@ font-style: inherit;">#| fig-width: 8</span></span>
 <span id="cb6-6"></span>
 <span id="cb6-7"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Check for missing values</span></span>
+font-style: inherit;"># Plot the original distribution of num_orders</span></span>
 <span id="cb6-8"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">kable(colSums(is.na(train)))</span></span>
-<span id="cb6-9"></span>
+font-style: inherit;">s1 &lt;- </span></span>
+<span id="cb6-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  train|&gt;</span></span>
 <span id="cb6-10"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Plot the original distribution of num_orders</span></span>
+font-style: inherit;">  ggplot(aes(x = sqrt(num_orders))) +</span></span>
 <span id="cb6-11"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">s1 &lt;- </span></span>
+font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
 <span id="cb6-12"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  train|&gt;</span></span>
+font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
 <span id="cb6-13"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggplot(aes(x = sqrt(num_orders))) +</span></span>
+font-style: inherit;">  ggtitle("Distribution of Square Root Transformation of num_orders") +</span></span>
 <span id="cb6-14"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+font-style: inherit;">  xlab("Square Root transformed num_orders") +</span></span>
 <span id="cb6-15"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+font-style: inherit;">  ylab("Frequency")+</span></span>
 <span id="cb6-16"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggtitle("Distribution of Square Root Transformation of num_orders") +</span></span>
-<span id="cb6-17"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  xlab("Square Root transformed num_orders") +</span></span>
+font-style: inherit;">  theme_minimal()</span></span>
+<span id="cb6-17"></span>
 <span id="cb6-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ylab("Frequency")+</span></span>
+font-style: inherit;">s2 &lt;- </span></span>
 <span id="cb6-19"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  theme_minimal()</span></span>
-<span id="cb6-20"></span>
-<span id="cb6-21"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">s2 &lt;- </span></span>
-<span id="cb6-22"><span class="in" style="color: #5E5E5E;
-background-color: null;
 font-style: inherit;">  train|&gt;</span></span>
-<span id="cb6-23"><span class="in" style="color: #5E5E5E;
+<span id="cb6-20"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  ggplot(aes(x = sqrt(checkout_price))) +</span></span>
-<span id="cb6-24"><span class="in" style="color: #5E5E5E;
+<span id="cb6-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
-<span id="cb6-25"><span class="in" style="color: #5E5E5E;
+<span id="cb6-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
-<span id="cb6-26"><span class="in" style="color: #5E5E5E;
+<span id="cb6-23"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  ggtitle("Distribution of Square Root Transformation of checkout_price") +</span></span>
-<span id="cb6-27"><span class="in" style="color: #5E5E5E;
+<span id="cb6-24"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  xlab("Square Root transformed checkout_price") +</span></span>
-<span id="cb6-28"><span class="in" style="color: #5E5E5E;
+<span id="cb6-25"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  ylab("Frequency")+</span></span>
-<span id="cb6-29"><span class="in" style="color: #5E5E5E;
+<span id="cb6-26"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">  theme_minimal()</span></span>
-<span id="cb6-30"></span>
-<span id="cb6-31"><span class="in" style="color: #5E5E5E;
+<span id="cb6-27"></span>
+<span id="cb6-28"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#kable(summary(train))</span></span>
-<span id="cb6-32"><span class="in" style="color: #5E5E5E;
+<span id="cb6-29"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">grid.arrange(s1, s2, nrow = 2)</span></span>
-<span id="cb6-33"><span class="in" style="color: #5E5E5E;
+<span id="cb6-30"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">x</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">week</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">center_id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">meal_id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">checkout_price</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">base_price</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">emailer_for_promotion</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">homepage_featured</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">num_orders</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">city_code</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">region_code</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">center_type</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">op_area</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">category</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">cuisine</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">promotions</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">profit</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">promotion_flag</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-<p>Distrinution of values</p>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
 <p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/data distribution-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption>Distrinution of values</figcaption>
 </figure>
 </div>
 </div>
