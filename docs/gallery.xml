@@ -29,30 +29,19 @@
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p><strong>Why Forecasting Matters for Our Business</strong></p>
 <p>Predicting customer demand is crucial for growing business. Without reliable forecasts, we risk stockouts or excess inventory, leading to wasted resources. This is especially important for our wedding and event catering service, where we work with perishable ingredients. By precisely estimating daily and weekly demand, we can optimize inventory, reduce waste, control costs, and consistently meet customer expectations.</p>
-<p>Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting] (https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).</p>
+<p>Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - <a href="https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders">Food Demand Forecasting</a>.</p>
 <p>The data contains information from 77 stores over a period of 145 weeks.<br>
 Two types of promotions (web, email) were shown in the data as below:<br>
-- 89.08% stores ran one type of promotion.<br>
+- 10.61% stores ran one type of promotion.<br>
 - 4.21% stores ran both types at the same time.<br>
-- 6.71% stores didn’t run any promotions.</p>
+- 85.18% stores didn’t run any promotions.</p>
 <p>Our initial analysis is aim to discover:<br>
 (1) Did revenue or profit increase?<br>
 (2) Which promotion worked best?<br>
 (3) To predict future demand for our menu items.</p>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<section id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="level3">
-<h3 class="anchored" data-anchor-id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</h3>
-<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion</p>
-<ol type="1">
-<li>While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.<br>
-2.Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.</li>
-<li>Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.</li>
-</ol>
-<p><strong>Keytakeaway</strong><br>
-Not all stores need promotions, and some can maintain high profitability without them. Consider store-specific promotion strategies instead of universal discounting. Identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).</p>
-<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.</p>
+<section id="data-summary" class="level3">
+<h3 class="anchored" data-anchor-id="data-summary">Data Summary</h3>
+<p>The data contains no missing values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -61,536 +50,27 @@ background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb1-2"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| label: Overview profit with heatmap</span></span>
+font-style: inherit;">#| label: Overview data</span></span>
 <span id="cb1-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| fig-cap: " How Promotions Impact Sales Volume (num_orders)"</span></span>
+font-style: inherit;">#| fig-cap: "Indentify missing values"</span></span>
 <span id="cb1-4"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| warning: false</span></span>
+font-style: inherit;">#| code-fold: true</span></span>
 <span id="cb1-5"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
+font-style: inherit;">#| fig-width: 8</span></span>
 <span id="cb1-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| fig-width: 10</span></span>
-<span id="cb1-7"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-height: 10</span></span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">tst &lt;- train |&gt;</span></span>
-<span id="cb1-10"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    group_by(week, promotion_flag, center_id) |&gt;</span></span>
-<span id="cb1-11"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))</span></span>
-<span id="cb1-12"></span>
-<span id="cb1-13"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#----------------------</span></span>
-<span id="cb1-14"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">tst|&gt;</span></span>
-<span id="cb1-15"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +</span></span>
-<span id="cb1-16"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion</span></span>
-<span id="cb1-17"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  scale_fill_gradient(low = "white", high = "darkgreen", name = "Average profit") +</span></span>
-<span id="cb1-18"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =</span></span>
-<span id="cb1-19"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "darkred"),</span></span>
-<span id="cb1-20"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">                     name = "Promotion") +</span></span>
-<span id="cb1-21"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store</span></span>
-<span id="cb1-22"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">       x = "Week", y = "Store ID") +</span></span>
-<span id="cb1-23"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal() +</span></span>
-<span id="cb1-24"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(legend.position="bottom",</span></span>
-<span id="cb1-25"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">          axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))</span></span>
-<span id="cb1-26"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Overview profit with heatmap-1.png" class="img-fluid figure-img" width="960"></p>
-<figcaption>How Promotions Impact Sales Volume (num_orders)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="visulization-average-sales-and-revenue-over-time" class="level3">
-<h3 class="anchored" data-anchor-id="visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</h3>
-<p>The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Homepage promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.</p>
-<p><em>Note:</em> The non-promoted sales and revenue (blue line) remain relatively stable over time. The promoted periods exhibit more volatility, meaning promotions may be shifting demand rather than creating long-term sales growth.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```{r}</span></span>
-<span id="cb2-2"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| label: Time series plots of sales volume and revenue</span></span>
-<span id="cb2-3"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-cap: " "</span></span>
-<span id="cb2-4"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| warning: false</span></span>
-<span id="cb2-5"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
-<span id="cb2-6"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-width: 8</span></span>
-<span id="cb2-7"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-height: 8</span></span>
-<span id="cb2-8"></span>
-<span id="cb2-9"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ---------------------------</span></span>
-<span id="cb2-10"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 1. Time Series Plot of Sales Volume &amp; Revenue</span></span>
-<span id="cb2-11"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ---------------------------</span></span>
-<span id="cb2-12"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">sales_trend &lt;- train |&gt;</span></span>
-<span id="cb2-13"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  group_by(week, promotion_flag) |&gt;</span></span>
-<span id="cb2-14"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  dplyr::summarise(average_sales = log(mean(num_orders),2), </span></span>
-<span id="cb2-15"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">            average_profit = log(mean(profit),2),</span></span>
-<span id="cb2-16"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">            .groups = 'drop')</span></span>
-<span id="cb2-17"></span>
-<span id="cb2-18"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Plot Sales Volume Over Time</span></span>
-<span id="cb2-19"></span>
-<span id="cb2-20"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"> a1 &lt;-</span></span>
-<span id="cb2-21"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   ggplot(sales_trend, aes(x = week, y = average_sales, color = as.factor(promotion_flag))) +</span></span>
-<span id="cb2-22"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_line(size = 1) +</span></span>
-<span id="cb2-23"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "1A) Average Sales Volume Over Time", x = "", y = "Average Sales (log2)", color = "Promotion") +</span></span>
-<span id="cb2-24"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb2-25"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   theme(legend.title=element_blank(),</span></span>
-<span id="cb2-26"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">         legend.position="bottom",</span></span>
-<span id="cb2-27"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    panel.background = element_blank())+</span></span>
-<span id="cb2-28"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(axis.line = element_line(color = 'black'))+</span></span>
-<span id="cb2-29"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    guides(color="none")</span></span>
-<span id="cb2-30"></span>
-<span id="cb2-31"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Plot Revenue Over Time</span></span>
-<span id="cb2-32"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"> a2 &lt;-</span></span>
-<span id="cb2-33"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  ggplot(sales_trend, aes(x = week, y = average_profit, color = as.factor(promotion_flag))) +</span></span>
-<span id="cb2-34"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_line(size = 0.8) +</span></span>
-<span id="cb2-35"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "1B) Profit Over Time", x = "Week", y = "Average Profit (log2)", color = "Promotion") +</span></span>
-<span id="cb2-36"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb2-37"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   theme(legend.title=element_blank(),</span></span>
-<span id="cb2-38"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">         legend.position="bottom",</span></span>
-<span id="cb2-39"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    panel.background = element_blank())+</span></span>
-<span id="cb2-40"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(axis.line = element_line(color = 'black'))</span></span>
-<span id="cb2-41"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"> </span></span>
-<span id="cb2-42"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"> grid.arrange(a1, a2, nrow = 2)</span></span>
-<span id="cb2-43"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Time series plots of sales volume and revenue-1.png" class="img-fluid figure-img" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Promotion Effectiveness: Average Weekly Sales &amp; Revenue by Promotion Type</strong></p>
-<p><em>Sales Volume</em><br>
-Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and homepage), followed by homepage promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.</p>
-<p><em>Checkout Price</em><br>
-Figure 2B shows the range of prices customers paid at checkout under different promotions. Unlike the sales volume, there is no major difference in checkout price across promotions. There is some right-skewness with outliers, suggesting a small number of high-value purchases, but the overall trend remains stable. This suggests that promotions influence the number of items bought, but not the price per visit.</p>
-<p><em>Profit</em><br>
-Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.</p>
-<p><em>Key Takeaways</em><br>
-While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. Checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```{r}</span></span>
-<span id="cb3-2"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| label: Boxplot of sales volume, checkout price and revenue</span></span>
-<span id="cb3-3"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-cap: " "</span></span>
-<span id="cb3-4"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| warning: false</span></span>
-<span id="cb3-5"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
-<span id="cb3-6"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-width: 8</span></span>
-<span id="cb3-7"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-height: 4</span></span>
-<span id="cb3-8"></span>
-<span id="cb3-9"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ---------------------------</span></span>
-<span id="cb3-10"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Boxplots of Sales with vs. without Promotion</span></span>
-<span id="cb3-11"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ---------------------------</span></span>
-<span id="cb3-12"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">a &lt;- ggplot(train, aes(x = promotion_flag, y = log(num_orders,2), fill = promotion_flag)) +</span></span>
-<span id="cb3-13"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_boxplot() +</span></span>
-<span id="cb3-14"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "2A) Sales Distribution", x = "", y = "Order Volume (log2)") +</span></span>
-<span id="cb3-15"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb3-16"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(</span></span>
-<span id="cb3-17"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      legend.position="bottom",</span></span>
-<span id="cb3-18"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-19"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-20"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  guides(fill="none")</span></span>
-<span id="cb3-21"></span>
-<span id="cb3-22"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">b&lt;- ggplot(train, aes(x = promotion_flag, y = checkout_price,  fill = promotion_flag)) +</span></span>
-<span id="cb3-23"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_boxplot() +</span></span>
-<span id="cb3-24"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "2B) Checkout Price Distribution", x = "Promotion", y = "Checkout Price") +</span></span>
-<span id="cb3-25"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb3-26"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(</span></span>
-<span id="cb3-27"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      legend.position="bottom",</span></span>
-<span id="cb3-28"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-29"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-30"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  guides(fill="none")</span></span>
-<span id="cb3-31"></span>
-<span id="cb3-32"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">c&lt;- ggplot(train, aes(x = promotion_flag, y = log((profit),2), fill = promotion_flag)) +</span></span>
-<span id="cb3-33"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_boxplot() +</span></span>
-<span id="cb3-34"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "2C) Profit Distribution", x = "", y = "Revenue (log2)") +</span></span>
-<span id="cb3-35"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb3-36"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(</span></span>
-<span id="cb3-37"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      legend.position="bottom",</span></span>
-<span id="cb3-38"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-39"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-40"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  guides(fill="none")</span></span>
-<span id="cb3-41"></span>
-<span id="cb3-42"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">grid.arrange(a,b,c, ncol = 3)</span></span>
-<span id="cb3-43"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Boxplot of sales volume, checkout price and revenue-1.png" class="img-fluid figure-img" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions" class="level3">
-<h3 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</h3>
-<p>In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.</p>
-<p><em>Impact of Promotions:</em><br>
-Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to “No promotion”.</p>
-<p><em>Homepage Promotion Baseline:</em><br>
-Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals.</p>
-<p><em>Meal-Specific Promotion Effectiveness:</em><br>
-Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from “promotion_flag”. Other meals, like Meal ID 1558, benefits more from “Email promotion”.</p>
-<p><em>Meals with Low Promotion Impact:</em><br>
-On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```{r}</span></span>
-<span id="cb4-2"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| label: del Promotions Impact popular items</span></span>
-<span id="cb4-3"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-cap: " How Promotions Impact checkout price?"</span></span>
-<span id="cb4-4"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| warning: false</span></span>
-<span id="cb4-5"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
-<span id="cb4-6"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-width: 8</span></span>
-<span id="cb4-7"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-height: 8</span></span>
-<span id="cb4-8"></span>
-<span id="cb4-9"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">c1 &lt;- </span></span>
-<span id="cb4-10"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">train |&gt;</span></span>
-<span id="cb4-11"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  group_by(promotion_flag)|&gt;</span></span>
-<span id="cb4-12"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  dplyr::count(meal_id) |&gt;</span></span>
-<span id="cb4-13"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  mutate(p = round(100*(n / sum(n)),2))|&gt;</span></span>
-<span id="cb4-14"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  select(-n)|&gt;</span></span>
-<span id="cb4-15"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  ggplot(aes(x = reorder(factor(meal_id),p,, decreasing = TRUE),  fill = promotion_flag)) +</span></span>
-<span id="cb4-16"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_bar(aes(y = p), stat='identity', alpha=0.7) +</span></span>
-<span id="cb4-17"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  scale_color_manual(values=c('Order Percent'="#d88bb4")) +</span></span>
-<span id="cb4-18"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(x = '', y = 'Percentage', </span></span>
-<span id="cb4-19"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">       title = '3A) Popular Meals During Promotions and No Promotions') +</span></span>
-<span id="cb4-20"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb4-21"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme(legend.position="bottom",</span></span>
-<span id="cb4-22"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=0.5))+</span></span>
-<span id="cb4-23"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  guides(fill="none")</span></span>
-<span id="cb4-24"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">c2 &lt;- </span></span>
-<span id="cb4-25"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">train|&gt;</span></span>
-<span id="cb4-26"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  #filter(meal_id %in% radom_meal)|&gt;</span></span>
-<span id="cb4-27"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  group_by(meal_id, promotion_flag) |&gt;</span></span>
-<span id="cb4-28"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  summarise(avg_profit = mean(profit), .groups = 'drop')|&gt;</span></span>
-<span id="cb4-29"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  ggplot(aes(x = as.factor(meal_id), y = log(avg_profit,2), fill = as.factor(promotion_flag))) +</span></span>
-<span id="cb4-30"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  geom_bar(stat = "identity", position = "dodge") +</span></span>
-<span id="cb4-31"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  labs(title = "3B) Average Profit per Menu Item (With &amp; Without Promotion)", x = "Menu ID", y = "Avg Profit (log2)", fill = "Promotion") +</span></span>
-<span id="cb4-32"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  theme_minimal()+</span></span>
-<span id="cb4-33"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  #guides(fill="none") +</span></span>
-<span id="cb4-34"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    theme(legend.position="bottom",</span></span>
-<span id="cb4-35"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        axis.text.x = element_text(angle = 90, vjust = 0.2, hjust=0.1))</span></span>
-<span id="cb4-36"></span>
-<span id="cb4-37"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">grid.arrange(c1, c2, nrow = 2)</span></span>
-<span id="cb4-38"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/del Promotions Impact popular items-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption>How Promotions Impact checkout price?</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1" class="level4">
-<h4 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1">Analysis of Meal Popularity During Promotions and No-Promotions</h4>
-<p>The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There’s noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs.&nbsp;promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.</p>
-<p>We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn’t universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.</p>
-</section>
-</section>
-</section>
-<section id="supplementary-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="supplementary-analysis">Supplementary Analysis</h2>
-<p>The data contains no missing values.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">```{r}</span></span>
-<span id="cb5-2"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| label: Overview data</span></span>
-<span id="cb5-3"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-cap: "Indentify missing values"</span></span>
-<span id="cb5-4"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
-<span id="cb5-5"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#| fig-width: 8</span></span>
-<span id="cb5-6"></span>
-<span id="cb5-7"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">#| fig-height: 6</span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Check for missing values</span></span>
-<span id="cb5-8"><span class="in" style="color: #5E5E5E;
+<span id="cb1-9"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">kable(colSums(is.na(train)))</span></span>
-<span id="cb5-9"><span class="in" style="color: #5E5E5E;
+<span id="cb1-10"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 </details>
@@ -680,16 +160,464 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>Indentify missing values</p>
 </div>
 </div>
-<p><em>Numerical Variables</em><br>
-ID Variables: id, week, center_id, meal_id<br>
-Pricing Variables: checkout_price, base_price<br>
-Promotional Indicators: emailer_for_promotion, homepage_featured<br>
-Demand Variable (Target): num_orders<br>
-Location and Size Variables: city_code, region_code, op_area</p>
-<p><em>Categorical Variables</em><br>
-Center Type: Three types, with ‘TYPE_A’ being the most frequent.<br>
+<section id="categorical-variables" class="level4">
+<h4 class="anchored" data-anchor-id="categorical-variables">Categorical Variables<br>
+</h4>
+<p>Center Type: Three types, with ‘TYPE_A’ being the most frequent.<br>
 Meal Category: Fourteen categories, ‘Beverages’ being the most frequent.<br>
 Cuisine: Four types, with ‘Italian’ being the most common.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb2-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: Overview categorical data</span></span>
+<span id="cb2-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: " Distribution of the categorical variables"</span></span>
+<span id="cb2-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb2-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb2-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb2-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 6</span></span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">freq_data &lt;- function(df){</span></span>
+<span id="cb2-10"></span>
+<span id="cb2-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  df &lt;- as.data.frame(df)</span></span>
+<span id="cb2-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  results_list &lt;- vector("list", ncol(df) - 1)</span></span>
+<span id="cb2-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  </span></span>
+<span id="cb2-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  # Loop through the columns starting from the 2nd column</span></span>
+<span id="cb2-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  for (i in 2:ncol(df)) {</span></span>
+<span id="cb2-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       # Store the result of cal_freq(i) in the list</span></span>
+<span id="cb2-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       results_list[[i - 1]] &lt;- cal_freqx(i, df)</span></span>
+<span id="cb2-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      }</span></span>
+<span id="cb2-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  df &lt;- do.call(rbind, results_list)</span></span>
+<span id="cb2-20"></span>
+<span id="cb2-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  # label bar graph</span></span>
+<span id="cb2-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  df$vars &lt;- ifelse(df$Freqx &gt; 0.08, as.character(df$Var1), "")</span></span>
+<span id="cb2-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  return(df)</span></span>
+<span id="cb2-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb2-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> p &lt;-  freq_data(train |&gt; select(-promotion_flag) |&gt; mutate(store_id = as.factor(center_id)))</span></span>
+<span id="cb2-26"></span>
+<span id="cb2-27"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> p |&gt;</span></span>
+<span id="cb2-28"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       ggplot(aes(x = round(Freqx,2), y = fct_rev(namex), fill = Var1)) + </span></span>
+<span id="cb2-29"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       geom_col(position = "fill", color = "white") +</span></span>
+<span id="cb2-30"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       scale_x_continuous(labels = label_percent()) +</span></span>
+<span id="cb2-31"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       labs(title = "Distribution of Categorical Variables:",</span></span>
+<span id="cb2-32"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       subtitle = paste("Top to down :" , unique(p$namex)[2],"," ,unique(p$namex)[1],"," , unique(p$namex)[3],"," , unique(p$namex)[4],"," , unique(p$namex)[5]),y = NULL, x = NULL, fill = "var1")+</span></span>
+<span id="cb2-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       guides(fill="none") +</span></span>
+<span id="cb2-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       geom_text(aes(label = vars), position = position_stack(vjust = 0.5),</span></span>
+<span id="cb2-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                 color = "white")+</span></span>
+<span id="cb2-36"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      theme_void()</span></span>
+<span id="cb2-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Overview categorical data-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Distribution of the categorical variables</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-variables" class="level4">
+<h4 class="anchored" data-anchor-id="numerical-variables">Numerical Variables<br>
+</h4>
+<p>ID Variables: id, week, center_id, meal_id<br>
+Pricing Variables: checkout_price, base_price<br>
+Demand Variable (Target): num_orders<br>
+Location and Size Variables: city_code, region_code, op_area</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb3-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: data distribution</span></span>
+<span id="cb3-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: ""</span></span>
+<span id="cb3-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb3-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb3-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 4</span></span>
+<span id="cb3-7"></span>
+<span id="cb3-8"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the original distribution of num_orders</span></span>
+<span id="cb3-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">s1 &lt;- </span></span>
+<span id="cb3-10"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  train|&gt;</span></span>
+<span id="cb3-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = (num_orders))) +</span></span>
+<span id="cb3-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+<span id="cb3-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggtitle("Distribution of num_orders") +</span></span>
+<span id="cb3-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  xlab("num_orders") +</span></span>
+<span id="cb3-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ylab("Frequency")+</span></span>
+<span id="cb3-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()</span></span>
+<span id="cb3-18"></span>
+<span id="cb3-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">s2 &lt;- </span></span>
+<span id="cb3-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  train|&gt;</span></span>
+<span id="cb3-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = (checkout_price))) +</span></span>
+<span id="cb3-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_density(alpha = 0.3, color = "#d88bb4", outline.type = "upper") +</span></span>
+<span id="cb3-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggtitle("Distribution  of checkout_price") +</span></span>
+<span id="cb3-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  xlab("checkout_price") +</span></span>
+<span id="cb3-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ylab("Frequency")+</span></span>
+<span id="cb3-27"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()</span></span>
+<span id="cb3-28"></span>
+<span id="cb3-29"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">s3 &lt;- </span></span>
+<span id="cb3-30"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  train|&gt;</span></span>
+<span id="cb3-31"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = (base_price))) +</span></span>
+<span id="cb3-32"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+<span id="cb3-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggtitle("Distribution  of base_price") +</span></span>
+<span id="cb3-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  xlab("checkout_price") +</span></span>
+<span id="cb3-36"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ylab("Frequency")+</span></span>
+<span id="cb3-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()</span></span>
+<span id="cb3-38"></span>
+<span id="cb3-39"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#kable(summary(train))</span></span>
+<span id="cb3-40"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">grid.arrange(s1, s2, s3, ncol = 3)</span></span>
+<span id="cb3-41"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/data distribution-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="time-series-engineering" class="level4">
+<h4 class="anchored" data-anchor-id="time-series-engineering">Time series engineering&nbsp;</h4>
+<p>Computes correlations to identify feature importance.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb4-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: time series engineering</span></span>
+<span id="cb4-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: ""</span></span>
+<span id="cb4-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb4-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb4-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 6</span></span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">df_filtered &lt;- train |&gt;</span></span>
+<span id="cb4-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  #filter(center_id %in% c(24:26))|&gt;</span></span>
+<span id="cb4-10"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  group_by(week,center_id,meal_id, promotion_flag) |&gt;</span></span>
+<span id="cb4-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  summarise(avg_order = mean(num_orders), .groups = 'drop')|&gt;</span></span>
+<span id="cb4-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  arrange(week) |&gt;</span></span>
+<span id="cb4-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  mutate(</span></span>
+<span id="cb4-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    num_orders_lag_1 = lag(avg_order, 1, default = 0),</span></span>
+<span id="cb4-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    num_orders_lag_2 = lag(avg_order, 2, default = 0),</span></span>
+<span id="cb4-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    num_orders_lag_4 = lag(avg_order, 4, default = 0),</span></span>
+<span id="cb4-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    num_orders_ma_2 = rollapply(avg_order, width = 2, FUN = mean, fill = NA, align = "right"),</span></span>
+<span id="cb4-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    num_orders_ma_4 = rollapply(avg_order, width = 4, FUN = mean, fill = NA, align = "right"),</span></span>
+<span id="cb4-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    week_sin = sin(2 * pi * week / 52),</span></span>
+<span id="cb4-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    week_cos = cos(2 * pi * week / 52)</span></span>
+<span id="cb4-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  )</span></span>
+<span id="cb4-22"></span>
+<span id="cb4-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ---------- Compute Correlation and Feature Importance -----</span></span>
+<span id="cb4-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> cor_matrix_menu &lt;- cor(df_filtered |&gt; select( -promotion_flag), use = "complete.obs")</span></span>
+<span id="cb4-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">corrplot(cor_matrix_menu,  method = "color",col = COL2('PiYG', 100), addCoef.col = "black", tl.col = "black", type = 'lower', tl.srt = 45)</span></span>
+<span id="cb4-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/time series engineering-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.<br>
+</p>
+<section id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="level3">
+<h3 class="anchored" data-anchor-id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</h3>
+<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion.<br>
+</p>
+<ol type="1">
+<li>While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.<br>
+</li>
+<li>Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.<br>
+</li>
+<li>Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb5-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: Overview profit with heatmap</span></span>
+<span id="cb5-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: "Overview profit with heatmap "</span></span>
+<span id="cb5-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb5-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb5-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 10</span></span>
+<span id="cb5-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 10</span></span>
+<span id="cb5-8"></span>
+<span id="cb5-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">tst &lt;- train |&gt;</span></span>
+<span id="cb5-10"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    group_by(week, promotion_flag, center_id) |&gt;</span></span>
+<span id="cb5-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))</span></span>
+<span id="cb5-12"></span>
+<span id="cb5-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#----------------------</span></span>
+<span id="cb5-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">tst|&gt;</span></span>
+<span id="cb5-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +</span></span>
+<span id="cb5-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion</span></span>
+<span id="cb5-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  scale_fill_gradient(low = "ivory", high = "darkgreen", name = "Average profit") +</span></span>
+<span id="cb5-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =</span></span>
+<span id="cb5-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "lightyellow"),</span></span>
+<span id="cb5-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                     name = "Promotion") +</span></span>
+<span id="cb5-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store</span></span>
+<span id="cb5-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       x = "Week", y = "Store ID") +</span></span>
+<span id="cb5-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal() +</span></span>
+<span id="cb5-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(legend.position="bottom",</span></span>
+<span id="cb5-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">          axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))</span></span>
+<span id="cb5-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Overview profit with heatmap-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Overview profit with heatmap</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.</p>
+</section>
+<section id="visulization-average-sales-and-revenue-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</h3>
+<p>The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Homepage promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.</p>
+<p><em>Note:</em> The non-promoted sales and revenue (blue line) remain relatively stable over time. The promoted periods exhibit more volatility, meaning promotions may be shifting demand rather than creating long-term sales growth.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -698,189 +626,549 @@ background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb6-2"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| label: data distribution</span></span>
+font-style: inherit;">#| label: Time series plots of sales volume and revenue</span></span>
 <span id="cb6-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| fig-cap: "Distrinution of  values"</span></span>
+font-style: inherit;">#| fig-cap: " "</span></span>
 <span id="cb6-4"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#| code-fold: true</span></span>
+font-style: inherit;">#| warning: false</span></span>
 <span id="cb6-5"><span class="in" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb6-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">#| fig-width: 8</span></span>
-<span id="cb6-6"></span>
 <span id="cb6-7"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Check for missing values</span></span>
-<span id="cb6-8"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">#| fig-height: 6</span></span>
+<span id="cb6-8"></span>
+<span id="cb6-9"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">kable(colSums(is.na(train)))</span></span>
-<span id="cb6-9"></span>
+font-style: inherit;"># ---------------------------</span></span>
 <span id="cb6-10"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Plot the original distribution of num_orders</span></span>
+font-style: inherit;"># 1. Time Series Plot of Sales Volume &amp; Revenue</span></span>
 <span id="cb6-11"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">s1 &lt;- </span></span>
+font-style: inherit;"># ---------------------------</span></span>
 <span id="cb6-12"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  train|&gt;</span></span>
+font-style: inherit;">sales_trend &lt;- train |&gt;</span></span>
 <span id="cb6-13"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggplot(aes(x = sqrt(num_orders))) +</span></span>
+font-style: inherit;">  group_by(week, promotion_flag) |&gt;</span></span>
 <span id="cb6-14"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+font-style: inherit;">  dplyr::summarise(average_sales = log(mean(num_orders),2), </span></span>
 <span id="cb6-15"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+font-style: inherit;">            average_profit = log(mean(profit),2),</span></span>
 <span id="cb6-16"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggtitle("Distribution of Square Root Transformation of num_orders") +</span></span>
-<span id="cb6-17"><span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">  xlab("Square Root transformed num_orders") +</span></span>
+font-style: inherit;">            .groups = 'drop')</span></span>
+<span id="cb6-17"></span>
 <span id="cb6-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ylab("Frequency")+</span></span>
-<span id="cb6-19"><span class="in" style="color: #5E5E5E;
+font-style: inherit;"># Plot Sales Volume Over Time</span></span>
+<span id="cb6-19"></span>
+<span id="cb6-20"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  theme_minimal()</span></span>
-<span id="cb6-20"></span>
+font-style: inherit;"> a1 &lt;-</span></span>
 <span id="cb6-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">s2 &lt;- </span></span>
+font-style: inherit;">   ggplot(sales_trend, aes(x = week, y = average_sales, color = as.factor(promotion_flag))) +</span></span>
 <span id="cb6-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  train|&gt;</span></span>
+font-style: inherit;">  geom_line(size = 1) +</span></span>
 <span id="cb6-23"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggplot(aes(x = sqrt(checkout_price))) +</span></span>
+font-style: inherit;">  labs(title = "1A) Average Sales Volume Over Time", x = "", y = "Average Sales (log2)", color = "Promotion") +</span></span>
 <span id="cb6-24"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+font-style: inherit;">  theme_minimal()+</span></span>
 <span id="cb6-25"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+font-style: inherit;">   theme(legend.title=element_blank(),</span></span>
 <span id="cb6-26"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ggtitle("Distribution of Square Root Transformation of checkout_price") +</span></span>
+font-style: inherit;">         legend.position="bottom",</span></span>
 <span id="cb6-27"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  xlab("Square Root transformed checkout_price") +</span></span>
+font-style: inherit;">    panel.background = element_blank())+</span></span>
 <span id="cb6-28"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  ylab("Frequency")+</span></span>
+font-style: inherit;">    theme(axis.line = element_line(color = 'black'))+</span></span>
 <span id="cb6-29"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">  theme_minimal()</span></span>
+font-style: inherit;">    guides(color="none")</span></span>
 <span id="cb6-30"></span>
 <span id="cb6-31"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#kable(summary(train))</span></span>
+font-style: inherit;"># Plot Revenue Over Time</span></span>
 <span id="cb6-32"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">grid.arrange(s1, s2, nrow = 2)</span></span>
+font-style: inherit;"> a2 &lt;-</span></span>
 <span id="cb6-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(sales_trend, aes(x = week, y = average_profit, color = as.factor(promotion_flag))) +</span></span>
+<span id="cb6-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_line(size = 0.8) +</span></span>
+<span id="cb6-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = "1B) Profit Over Time", x = "Week", y = "Average Profit (log2)", color = "Promotion") +</span></span>
+<span id="cb6-36"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb6-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   theme(legend.title=element_blank(),</span></span>
+<span id="cb6-38"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">         legend.position="bottom",</span></span>
+<span id="cb6-39"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    panel.background = element_blank())+</span></span>
+<span id="cb6-40"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(axis.line = element_line(color = 'black'))</span></span>
+<span id="cb6-41"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> </span></span>
+<span id="cb6-42"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> grid.arrange(a1, a2, nrow = 2)</span></span>
+<span id="cb6-43"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">x</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">week</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">center_id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">meal_id</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">checkout_price</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">base_price</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">emailer_for_promotion</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">homepage_featured</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">num_orders</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">city_code</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">region_code</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">center_type</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">op_area</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">category</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">cuisine</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">promotions</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">profit</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">promotion_flag</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-<p>Distrinution of values</p>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/data distribution-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption>Distrinution of values</figcaption>
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Time series plots of sales volume and revenue-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
+<p><strong>Promotion Effectiveness: Average Weekly Sales &amp; Revenue by Promotion Type</strong></p>
+<p><em>Sales Volume</em><br>
+Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and homepage), followed by homepage promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.</p>
+<p><em>Checkout Price</em><br>
+Figure 2B shows the range of prices customers paid at checkout under different promotions. Unlike the sales volume, there is no major difference in checkout price across promotions. There is some right-skewness with outliers, suggesting a small number of high-value purchases, but the overall trend remains stable. This suggests that promotions influence the number of items bought, but not the price per visit.</p>
+<p><em>Profit</em><br>
+Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb7-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: Boxplot of sales volume, checkout price and revenue</span></span>
+<span id="cb7-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: " "</span></span>
+<span id="cb7-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb7-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb7-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb7-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 4</span></span>
+<span id="cb7-8"></span>
+<span id="cb7-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ---------------------------</span></span>
+<span id="cb7-10"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Boxplots of Sales with vs. without Promotion</span></span>
+<span id="cb7-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ---------------------------</span></span>
+<span id="cb7-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">a &lt;- ggplot(train, aes(x = promotion_flag, y = log(num_orders,2), fill = promotion_flag)) +</span></span>
+<span id="cb7-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_boxplot() +</span></span>
+<span id="cb7-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = "2A) Sales Distribution", x = "", y = "Order Volume (log2)") +</span></span>
+<span id="cb7-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb7-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(</span></span>
+<span id="cb7-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      legend.position="bottom",</span></span>
+<span id="cb7-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  guides(fill="none")</span></span>
+<span id="cb7-21"></span>
+<span id="cb7-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">b&lt;- ggplot(train, aes(x = promotion_flag, y = checkout_price,  fill = promotion_flag)) +</span></span>
+<span id="cb7-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_boxplot() +</span></span>
+<span id="cb7-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = "2B) Checkout Price Distribution", x = "Promotion", y = "Checkout Price") +</span></span>
+<span id="cb7-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb7-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(</span></span>
+<span id="cb7-27"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      legend.position="bottom",</span></span>
+<span id="cb7-28"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-29"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-30"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  guides(fill="none")</span></span>
+<span id="cb7-31"></span>
+<span id="cb7-32"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">c&lt;- ggplot(train, aes(x = promotion_flag, y = log((profit),2), fill = promotion_flag)) +</span></span>
+<span id="cb7-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_boxplot() +</span></span>
+<span id="cb7-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = "2C) Profit Distribution", x = "", y = "Revenue (log2)") +</span></span>
+<span id="cb7-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb7-36"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(</span></span>
+<span id="cb7-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      legend.position="bottom",</span></span>
+<span id="cb7-38"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-39"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-40"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  guides(fill="none")</span></span>
+<span id="cb7-41"></span>
+<span id="cb7-42"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">grid.arrange(a,b,c, ncol = 3)</span></span>
+<span id="cb7-43"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Boxplot of sales volume, checkout price and revenue-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</h3>
+<p>In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.</p>
+<p><em>Impact of Promotions:</em><br>
+Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to “No promotion”.</p>
+<p><em>Homepage Promotion Baseline:</em><br>
+Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals.</p>
+<p><em>Meal-Specific Promotion Effectiveness:</em><br>
+Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from “promotion_flag”. Other meals, like Meal ID 1558, benefits more from “Email promotion”.</p>
+<p><em>Meals with Low Promotion Impact:</em><br>
+On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb8-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: del Promotions Impact popular items</span></span>
+<span id="cb8-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: " How Promotions Impact checkout price?"</span></span>
+<span id="cb8-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb8-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb8-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb8-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 8</span></span>
+<span id="cb8-8"></span>
+<span id="cb8-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">c1 &lt;- </span></span>
+<span id="cb8-10"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">train |&gt;</span></span>
+<span id="cb8-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  group_by(promotion_flag)|&gt;</span></span>
+<span id="cb8-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  dplyr::count(meal_id) |&gt;</span></span>
+<span id="cb8-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  mutate(p = round(100*(n / sum(n)),2))|&gt;</span></span>
+<span id="cb8-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  select(-n)|&gt;</span></span>
+<span id="cb8-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = reorder(factor(meal_id),p,, decreasing = TRUE),  fill = promotion_flag)) +</span></span>
+<span id="cb8-16"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_bar(aes(y = p), stat='identity', alpha=0.7) +</span></span>
+<span id="cb8-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  scale_color_manual(values=c('Order Percent'="#d88bb4")) +</span></span>
+<span id="cb8-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(x = '', y = 'Percentage', </span></span>
+<span id="cb8-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       title = '3A) Popular Meals During Promotions and No Promotions') +</span></span>
+<span id="cb8-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb8-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme(legend.position="bottom",</span></span>
+<span id="cb8-22"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=0.5))+</span></span>
+<span id="cb8-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  guides(fill="none")</span></span>
+<span id="cb8-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">c2 &lt;- </span></span>
+<span id="cb8-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">train|&gt;</span></span>
+<span id="cb8-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  #filter(meal_id %in% radom_meal)|&gt;</span></span>
+<span id="cb8-27"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  group_by(meal_id, promotion_flag) |&gt;</span></span>
+<span id="cb8-28"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  summarise(avg_profit = mean(profit), .groups = 'drop')|&gt;</span></span>
+<span id="cb8-29"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  ggplot(aes(x = as.factor(meal_id), y = log(avg_profit,2), fill = as.factor(promotion_flag))) +</span></span>
+<span id="cb8-30"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb8-31"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(title = "3B) Average Profit per Menu Item (With &amp; Without Promotion)", x = "Menu ID", y = "Avg Profit (log2)", fill = "Promotion") +</span></span>
+<span id="cb8-32"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb8-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  #guides(fill="none") +</span></span>
+<span id="cb8-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    theme(legend.position="bottom",</span></span>
+<span id="cb8-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        axis.text.x = element_text(angle = 90, vjust = 0.2, hjust=0.1))</span></span>
+<span id="cb8-36"></span>
+<span id="cb8-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">grid.arrange(c1, c2, nrow = 2)</span></span>
+<span id="cb8-38"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/del Promotions Impact popular items-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>How Promotions Impact checkout price?</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1">Analysis of Meal Popularity During Promotions and No-Promotions</h4>
+<p>The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There’s noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs.&nbsp;promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.</p>
+<p>We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn’t universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb9-2"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| label: Promotions Impact checkout price</span></span>
+<span id="cb9-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-cap: " How Promotions Impact checkout price?"</span></span>
+<span id="cb9-4"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| warning: false</span></span>
+<span id="cb9-5"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| code-fold: true</span></span>
+<span id="cb9-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-width: 8</span></span>
+<span id="cb9-7"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| fig-height: 6</span></span>
+<span id="cb9-8"></span>
+<span id="cb9-9"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute average checkout_price and number of orders before and during promotions for each meal</span></span>
+<span id="cb9-10"></span>
+<span id="cb9-11"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">checkout_price_comparison &lt;- train|&gt;</span></span>
+<span id="cb9-12"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  group_by(meal_id, promotions) |&gt;</span></span>
+<span id="cb9-13"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  summarise(avg_checkout_price = mean(checkout_price, na.rm = TRUE)) |&gt;</span></span>
+<span id="cb9-14"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  spread(promotions, avg_checkout_price)|&gt;</span></span>
+<span id="cb9-15"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  mutate(Price_Change_Percent = 100*(Yes - No)/No)</span></span>
+<span id="cb9-16"></span>
+<span id="cb9-17"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">comparison_df_order &lt;- train |&gt;</span></span>
+<span id="cb9-18"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  group_by(meal_id, promotions) |&gt;</span></span>
+<span id="cb9-19"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  summarise(avg_num_orders = mean(num_orders, na.rm = TRUE))|&gt;</span></span>
+<span id="cb9-20"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  spread(key = promotions, value = avg_num_orders)|&gt;</span></span>
+<span id="cb9-21"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  mutate(Order_Change_Percent = 100*(Yes - No)/No)</span></span>
+<span id="cb9-22"></span>
+<span id="cb9-23"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">comparison_df &lt;- left_join(comparison_df_order|&gt; select(meal_id, Order_Change_Percent),</span></span>
+<span id="cb9-24"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                           checkout_price_comparison|&gt; select(meal_id, Price_Change_Percent),</span></span>
+<span id="cb9-25"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                           by = "meal_id") </span></span>
+<span id="cb9-26"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check correlation between Price_Change_Percent vs Order_Change_Percent</span></span>
+<span id="cb9-27"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">correlation_po &lt;- round(cor(comparison_df$Order_Change_Percent , </span></span>
+<span id="cb9-28"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">                            comparison_df$Price_Change_Percent , use = "complete.obs"),2)</span></span>
+<span id="cb9-29"></span>
+<span id="cb9-30"></span>
+<span id="cb9-31"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the results</span></span>
+<span id="cb9-32"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">ggplot(comparison_df, aes(x = reorder(factor(meal_id),round(Price_Change_Percent,2)))) +</span></span>
+<span id="cb9-33"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_bar(aes(y = Price_Change_Percent), stat='identity', fill='steelblue', alpha=0.7) +</span></span>
+<span id="cb9-34"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_line(aes(y = 0.1*(Order_Change_Percent+4), group=1, color='Order Change Percent'), size=0.8) +</span></span>
+<span id="cb9-35"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  geom_point(aes(y = 0.1*(Order_Change_Percent+4), color='darkgray'),shape=21, size=2) +</span></span>
+<span id="cb9-36"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  scale_color_manual(values=c('Order Change Percent'="#d88bb4")) +</span></span>
+<span id="cb9-37"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  labs(x = 'Meal ID', y = 'Percentage Change', </span></span>
+<span id="cb9-38"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       title = 'Checkout Price Change &amp; Order Volume Change During Promotions',</span></span>
+<span id="cb9-39"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">       subtitle = paste("Correlation : Price Change vs. Order Volumne :" , correlation_po )) +</span></span>
+<span id="cb9-40"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme_minimal()+</span></span>
+<span id="cb9-41"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  theme(legend.position="bottom",</span></span>
+<span id="cb9-42"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))</span></span>
+<span id="cb9-43"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/index_files/figure-html/Promotions Impact checkout price-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>How Promotions Impact checkout price?</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="keytakeaways" class="level3">
+<h3 class="anchored" data-anchor-id="keytakeaways">Keytakeaways</h3>
+<p>As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together.</p>
+<p>The data shows checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more. We can identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a> ]]></description>

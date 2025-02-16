@@ -181,7 +181,7 @@ s2 <-
   train|>
   ggplot(aes(x = (checkout_price))) +
   geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
-  geom_density(alpha = 0.5, color = "#d88bb4") +
+  geom_density(alpha = 0.3, color = "#d88bb4", outline.type = "upper") +
   ggtitle("Distribution  of checkout_price") +
   xlab("checkout_price") +
   ylab("Frequency")+
@@ -443,6 +443,50 @@ grid.arrange(c1, c2, nrow = 2)
 The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There's noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs. promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.  
 
 We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn't universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.
+
+```{r}
+#| label: Promotions Impact checkout price
+#| fig-cap: " How Promotions Impact checkout price?"
+#| warning: false
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
+# Compute average checkout_price and number of orders before and during promotions for each meal
+
+checkout_price_comparison <- train|>
+  group_by(meal_id, promotions) |>
+  summarise(avg_checkout_price = mean(checkout_price, na.rm = TRUE)) |>
+  spread(promotions, avg_checkout_price)|>
+  mutate(Price_Change_Percent = 100*(Yes - No)/No)
+
+comparison_df_order <- train |>
+  group_by(meal_id, promotions) |>
+  summarise(avg_num_orders = mean(num_orders, na.rm = TRUE))|>
+  spread(key = promotions, value = avg_num_orders)|>
+  mutate(Order_Change_Percent = 100*(Yes - No)/No)
+
+comparison_df <- left_join(comparison_df_order|> select(meal_id, Order_Change_Percent),
+                           checkout_price_comparison|> select(meal_id, Price_Change_Percent),
+                           by = "meal_id") 
+# Check correlation between Price_Change_Percent vs Order_Change_Percent
+correlation_po <- round(cor(comparison_df$Order_Change_Percent , 
+                            comparison_df$Price_Change_Percent , use = "complete.obs"),2)
+
+
+# Plot the results
+ggplot(comparison_df, aes(x = reorder(factor(meal_id),round(Price_Change_Percent,2)))) +
+  geom_bar(aes(y = Price_Change_Percent), stat='identity', fill='steelblue', alpha=0.7) +
+  geom_line(aes(y = 0.1*(Order_Change_Percent+4), group=1, color='Order Change Percent'), size=0.8) +
+  geom_point(aes(y = 0.1*(Order_Change_Percent+4), color='darkgray'),shape=21, size=2) +
+  scale_color_manual(values=c('Order Change Percent'="#d88bb4")) +
+  labs(x = 'Meal ID', y = 'Percentage Change', 
+       title = 'Checkout Price Change & Order Volume Change During Promotions',
+       subtitle = paste("Correlation : Price Change vs. Order Volumne :" , correlation_po )) +
+  theme_minimal()+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
 
 ### Keytakeaways
 
