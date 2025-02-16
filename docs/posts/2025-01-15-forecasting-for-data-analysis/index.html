@@ -165,14 +165,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data Summary</a></li>
+  </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
   <ul class="collapse">
   <li><a href="#visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" id="toc-visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="nav-link" data-scroll-target="#visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</a></li>
   <li><a href="#visulization-average-sales-and-revenue-over-time" id="toc-visulization-average-sales-and-revenue-over-time" class="nav-link" data-scroll-target="#visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</a></li>
   <li><a href="#analysis-of-meal-popularity-during-promotions-and-no-promotions" id="toc-analysis-of-meal-popularity-during-promotions-and-no-promotions" class="nav-link" data-scroll-target="#analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</a></li>
+  <li><a href="#keytakeaways" id="toc-keytakeaways" class="nav-link" data-scroll-target="#keytakeaways">Keytakeaways</a></li>
   </ul></li>
-  <li><a href="#supplementary-analysis" id="toc-supplementary-analysis" class="nav-link" data-scroll-target="#supplementary-analysis">Supplementary Analysis</a></li>
   </ul>
 </nav>
     </div>
@@ -227,271 +230,22 @@ Two types of promotions (web, email) were shown in the data as below:<br>
 (1) Did revenue or profit increase?<br>
 (2) Which promotion worked best?<br>
 (3) To predict future demand for our menu items.</p>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<section id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="level3">
-<h3 class="anchored" data-anchor-id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</h3>
-<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion.<br>
-</p>
-<ol type="1">
-<li>While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.<br>
-</li>
-<li>Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.<br>
-</li>
-<li>Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.</li>
-</ol>
-<p><strong>Keytakeaway</strong><br>
-Not all stores need promotions, and some can maintain high profitability without them. Consider store-specific promotion strategies instead of universal discounting. Identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).</p>
-<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview profit with heatmap</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " How Promotions Impact Sales Volume (num_orders)"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 10</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 10</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">tst &lt;- train |&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">    group_by(week, promotion_flag, center_id) |&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">#----------------------</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">tst|&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_gradient(low = "white", high = "darkgreen", name = "Average profit") +</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "#d88bb4"),</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = "Promotion") +</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">       x = "Week", y = "Store ID") +</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position="bottom",</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/Overview profit with heatmap-1.png" class="img-fluid figure-img" width="960"></p>
-<figcaption>How Promotions Impact Sales Volume (num_orders)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="visulization-average-sales-and-revenue-over-time" class="level3">
-<h3 class="anchored" data-anchor-id="visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</h3>
-<p>The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Homepage promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.</p>
-<p><em>Note:</em> The non-promoted sales and revenue (blue line) remain relatively stable over time. The promoted periods exhibit more volatility, meaning promotions may be shifting demand rather than creating long-term sales growth.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Time series plots of sales volume and revenue</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " "</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Time Series Plot of Sales Volume &amp; Revenue</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">sales_trend &lt;- train |&gt;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(week, promotion_flag) |&gt;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::summarise(average_sales = log(mean(num_orders),2), </span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">            average_profit = log(mean(profit),2),</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">            .groups = 'drop')</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot Sales Volume Over Time</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="in"> a1 &lt;-</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="in">   ggplot(sales_trend, aes(x = week, y = average_sales, color = as.factor(promotion_flag))) +</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(size = 1) +</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "1A) Average Sales Volume Over Time", x = "", y = "Average Sales (log2)", color = "Promotion") +</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="in">   theme(legend.title=element_blank(),</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="in">         legend.position="bottom",</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_blank())+</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(axis.line = element_line(color = 'black'))+</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">    guides(color="none")</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot Revenue Over Time</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in"> a2 &lt;-</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(sales_trend, aes(x = week, y = average_profit, color = as.factor(promotion_flag))) +</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(size = 0.8) +</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "1B) Profit Over Time", x = "Week", y = "Average Profit (log2)", color = "Promotion") +</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="in">   theme(legend.title=element_blank(),</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="in">         legend.position="bottom",</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_blank())+</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(axis.line = element_line(color = 'black'))</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="in"> </span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in"> grid.arrange(a1, a2, nrow = 2)</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/Time series plots of sales volume and revenue-1.png" class="img-fluid figure-img" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Promotion Effectiveness: Average Weekly Sales &amp; Revenue by Promotion Type</strong></p>
-<p><em>Sales Volume</em><br>
-Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and homepage), followed by homepage promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.</p>
-<p><em>Checkout Price</em><br>
-Figure 2B shows the range of prices customers paid at checkout under different promotions. Unlike the sales volume, there is no major difference in checkout price across promotions. There is some right-skewness with outliers, suggesting a small number of high-value purchases, but the overall trend remains stable. This suggests that promotions influence the number of items bought, but not the price per visit.</p>
-<p><em>Profit</em><br>
-Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.</p>
-<p><em>Key Takeaways</em><br>
-While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. Checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Boxplot of sales volume, checkout price and revenue</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " "</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 4</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in"># Boxplots of Sales with vs. without Promotion</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in">a &lt;- ggplot(train, aes(x = promotion_flag, y = log(num_orders,2), fill = promotion_flag)) +</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2A) Sales Distribution", x = "", y = "Order Volume (log2)") +</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="in">b&lt;- ggplot(train, aes(x = promotion_flag, y = checkout_price,  fill = promotion_flag)) +</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2B) Checkout Price Distribution", x = "Promotion", y = "Checkout Price") +</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="in">c&lt;- ggplot(train, aes(x = promotion_flag, y = log((profit),2), fill = promotion_flag)) +</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2C) Profit Distribution", x = "", y = "Revenue (log2)") +</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(a,b,c, ncol = 3)</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/Boxplot of sales volume, checkout price and revenue-1.png" class="img-fluid figure-img" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions" class="level3">
-<h3 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</h3>
-<p>In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.</p>
-<p><em>Impact of Promotions:</em><br>
-Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to “No promotion”.</p>
-<p><em>Homepage Promotion Baseline:</em><br>
-Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals.</p>
-<p><em>Meal-Specific Promotion Effectiveness:</em><br>
-Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from “promotion_flag”. Other meals, like Meal ID 1558, benefits more from “Email promotion”.</p>
-<p><em>Meals with Low Promotion Impact:</em><br>
-On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: del Promotions Impact popular items</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " How Promotions Impact checkout price?"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">c1 &lt;- </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">train |&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(promotion_flag)|&gt;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::count(meal_id) |&gt;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(p = round(100*(n / sum(n)),2))|&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-n)|&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = reorder(factor(meal_id),p,, decreasing = TRUE),  fill = promotion_flag)) +</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_bar(aes(y = p), stat='identity', alpha=0.7) +</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values=c('Order Percent'="#d88bb4")) +</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = '', y = 'Percentage', </span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="in">       title = '3A) Popular Meals During Promotions and No Promotions') +</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position="bottom",</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=0.5))+</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="in">c2 &lt;- </span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="in">train|&gt;</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="in">  #filter(meal_id %in% radom_meal)|&gt;</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(meal_id, promotion_flag) |&gt;</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(avg_profit = mean(profit), .groups = 'drop')|&gt;</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = as.factor(meal_id), y = log(avg_profit,2), fill = as.factor(promotion_flag))) +</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_bar(stat = "identity", position = "dodge") +</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "3B) Average Profit per Menu Item (With &amp; Without Promotion)", x = "Menu ID", y = "Avg Profit (log2)", fill = "Promotion") +</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="in">  #guides(fill="none") +</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position="bottom",</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.x = element_text(angle = 90, vjust = 0.2, hjust=0.1))</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(c1, c2, nrow = 2)</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/del Promotions Impact popular items-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption>How Promotions Impact checkout price?</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1" class="level4">
-<h4 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1">Analysis of Meal Popularity During Promotions and No-Promotions</h4>
-<p>The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There’s noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs.&nbsp;promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.</p>
-<p>We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn’t universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.</p>
-</section>
-</section>
-</section>
-<section id="supplementary-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="supplementary-analysis">Supplementary Analysis</h2>
+<section id="data-summary" class="level3">
+<h3 class="anchored" data-anchor-id="data-summary">Data Summary</h3>
 <p>The data contains no missing values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview data</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Indentify missing values"</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in"># Check for missing values</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="in">kable(colSums(is.na(train)))</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Indentify missing values"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 6</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in"># Check for missing values</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">kable(colSums(is.na(train)))</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -579,49 +333,114 @@ On the right side of the plot, the meals have low percentages overall, and the i
 <p>Indentify missing values</p>
 </div>
 </div>
-<p><em>Numerical Variables</em><br>
-ID Variables: id, week, center_id, meal_id<br>
-Pricing Variables: checkout_price, base_price<br>
-Promotional Indicators: emailer_for_promotion, homepage_featured<br>
-Demand Variable (Target): num_orders<br>
-Location and Size Variables: city_code, region_code, op_area</p>
-<p><em>Categorical Variables</em><br>
-Center Type: Three types, with ‘TYPE_A’ being the most frequent.<br>
+<section id="categorical-variables" class="level4">
+<h4 class="anchored" data-anchor-id="categorical-variables">Categorical Variables<br>
+</h4>
+<p>Center Type: Three types, with ‘TYPE_A’ being the most frequent.<br>
 Meal Category: Fourteen categories, ‘Beverages’ being the most frequent.<br>
 Cuisine: Four types, with ‘Italian’ being the most common.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: data distribution</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: ""</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the original distribution of num_orders</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="in">s1 &lt;- </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in">  train|&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = sqrt(num_orders))) +</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">  ggtitle("Distribution of Square Root Transformation of num_orders") +</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("Square Root transformed num_orders") +</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">  ylab("Frequency")+</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in">s2 &lt;- </span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="in">  train|&gt;</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = sqrt(checkout_price))) +</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">  ggtitle("Distribution of Square Root Transformation of checkout_price") +</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("Square Root transformed checkout_price") +</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">  ylab("Frequency")+</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="in">#kable(summary(train))</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(s1, s2, nrow = 2)</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview categorical data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " Distribution of the categorical variables"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 6</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">freq_data &lt;- function(df){</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">  df &lt;- as.data.frame(df)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">  results_list &lt;- vector("list", ncol(df) - 1)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">  # Loop through the columns starting from the 2nd column</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">  for (i in 2:ncol(df)) {</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">       # Store the result of cal_freq(i) in the list</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">       results_list[[i - 1]] &lt;- cal_freqx(i, df)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="in">  df &lt;- do.call(rbind, results_list)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="in">  # label bar graph</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">  df$vars &lt;- ifelse(df$Freqx &gt; 0.08, as.character(df$Var1), "")</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="in">  return(df)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="in"> p &lt;-  freq_data(train |&gt; select(-promotion_flag) |&gt; mutate(store_id = as.factor(center_id)))</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in"> p |&gt;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">       ggplot(aes(x = round(Freqx,2), y = fct_rev(namex), fill = Var1)) + </span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">       geom_col(position = "fill", color = "white") +</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">       scale_x_continuous(labels = label_percent()) +</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="in">       labs(title = "Distribution of Categorical Variables:",</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in">       subtitle = paste("Top to down :" , unique(p$namex)[2],"," ,unique(p$namex)[1],"," , unique(p$namex)[3],"," , unique(p$namex)[4],"," , unique(p$namex)[5]),y = NULL, x = NULL, fill = "var1")+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="in">       guides(fill="none") +</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="in">       geom_text(aes(label = vars), position = position_stack(vjust = 0.5),</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="in">                 color = "white")+</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="in">      theme_void()</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/Overview categorical data-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Distribution of the categorical variables</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-variables" class="level4">
+<h4 class="anchored" data-anchor-id="numerical-variables">Numerical Variables<br>
+</h4>
+<p>ID Variables: id, week, center_id, meal_id<br>
+Pricing Variables: checkout_price, base_price<br>
+Demand Variable (Target): num_orders<br>
+Location and Size Variables: city_code, region_code, op_area</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: data distribution</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: ""</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 4</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the original distribution of num_orders</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">s1 &lt;- </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in">  train|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = (num_orders))) +</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">  ggtitle("Distribution of num_orders") +</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("num_orders") +</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="in">  ylab("Frequency")+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="in">s2 &lt;- </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">  train|&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = (checkout_price))) +</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="in">  ggtitle("Distribution  of checkout_price") +</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("checkout_price") +</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="in">  ylab("Frequency")+</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">s3 &lt;- </span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="in">  train|&gt;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = (base_price))) +</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.5, color = "#d88bb4") +</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="in">  ggtitle("Distribution  of base_price") +</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("checkout_price") +</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="in">  ylab("Frequency")+</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="in">#kable(summary(train))</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(s1, s2, s3, ncol = 3)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -631,8 +450,304 @@ Cuisine: Four types, with ‘Italian’ being the most common.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="time-series-engineering" class="level4">
+<h4 class="anchored" data-anchor-id="time-series-engineering">Time series engineering&nbsp;</h4>
+<p>Computes correlations to identify feature importance.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: time series engineering</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: ""</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 6</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="in">df_filtered &lt;- train |&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">  #filter(center_id %in% c(24:26))|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(week,center_id,meal_id, promotion_flag) |&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(avg_order = mean(num_orders), .groups = 'drop')|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(week) |&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">    num_orders_lag_1 = lag(avg_order, 1, default = 0),</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="in">    num_orders_lag_2 = lag(avg_order, 2, default = 0),</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="in">    num_orders_lag_4 = lag(avg_order, 4, default = 0),</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="in">    num_orders_ma_2 = rollapply(avg_order, width = 2, FUN = mean, fill = NA, align = "right"),</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="in">    num_orders_ma_4 = rollapply(avg_order, width = 4, FUN = mean, fill = NA, align = "right"),</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="in">    week_sin = sin(2 * pi * week / 52),</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="in">    week_cos = cos(2 * pi * week / 52)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------- Compute Correlation and Feature Importance -----</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="in"> cor_matrix_menu &lt;- cor(df_filtered |&gt; select( -promotion_flag), use = "complete.obs")</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="in">corrplot(cor_matrix_menu,  method = "color",col = COL2('PiYG', 100), addCoef.col = "black", tl.col = "black", type = 'lower', tl.srt = 45)</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/time series engineering-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.<br>
+</p>
+<section id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="level3">
+<h3 class="anchored" data-anchor-id="visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</h3>
+<p>As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion.<br>
+</p>
+<ol type="1">
+<li>While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.<br>
+</li>
+<li>Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.<br>
+</li>
+<li>Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview profit with heatmap</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Overview profit with heatmap "</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 10</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 10</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">tst &lt;- train |&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="in">    group_by(week, promotion_flag, center_id) |&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="in">      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="in">#----------------------</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="in">tst|&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_gradient(low = "ivory", high = "darkgreen", name = "Average profit") +</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="in">                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "lightyellow"),</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = "Promotion") +</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="in">       x = "Week", y = "Store ID") +</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position="bottom",</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="in">          axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/Overview profit with heatmap-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Overview profit with heatmap</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.</p>
+</section>
+<section id="visulization-average-sales-and-revenue-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</h3>
+<p>The blue line (No Promotions) is consistently lower and less volatile compared to other lines (Homepage promotion, Email promotion, Double promotion) in figure 1A. This suggests that promotions drive short-term spikes in sales, but the effect is not stable over time. There are frequent peaks and drops, indicating that sales surge when promotions are active but return to normal levels afterward. The profit trend (Figure 1B) mirrors the sales trend, confirming that higher sales during promotions contribute to revenue increases.However, the fluctuations in revenue suggest that while sales increase, revenue might not be growing at the same rate, possibly due to discounting.</p>
+<p><em>Note:</em> The non-promoted sales and revenue (blue line) remain relatively stable over time. The promoted periods exhibit more volatility, meaning promotions may be shifting demand rather than creating long-term sales growth.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Time series plots of sales volume and revenue</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " "</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 6</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Time Series Plot of Sales Volume &amp; Revenue</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="in">sales_trend &lt;- train |&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(week, promotion_flag) |&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::summarise(average_sales = log(mean(num_orders),2), </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">            average_profit = log(mean(profit),2),</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="in">            .groups = 'drop')</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot Sales Volume Over Time</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="in"> a1 &lt;-</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="in">   ggplot(sales_trend, aes(x = week, y = average_sales, color = as.factor(promotion_flag))) +</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(size = 1) +</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "1A) Average Sales Volume Over Time", x = "", y = "Average Sales (log2)", color = "Promotion") +</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">   theme(legend.title=element_blank(),</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="in">         legend.position="bottom",</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_blank())+</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(axis.line = element_line(color = 'black'))+</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in">    guides(color="none")</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot Revenue Over Time</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in"> a2 &lt;-</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(sales_trend, aes(x = week, y = average_profit, color = as.factor(promotion_flag))) +</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(size = 0.8) +</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "1B) Profit Over Time", x = "Week", y = "Average Profit (log2)", color = "Promotion") +</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="in">   theme(legend.title=element_blank(),</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="in">         legend.position="bottom",</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_blank())+</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(axis.line = element_line(color = 'black'))</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="in"> </span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="in"> grid.arrange(a1, a2, nrow = 2)</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/Time series plots of sales volume and revenue-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Promotion Effectiveness: Average Weekly Sales &amp; Revenue by Promotion Type</strong></p>
+<p><em>Sales Volume</em><br>
+Figure 2A shows how many orders were placed under different types of promotions.The y-axis is in a log scale (log2), meaning the values grow exponentially. The median order volume is highest for double promotions (both email and homepage), followed by homepage promotions, no promotions, and email promotions. The spread (height of the box) indicates variability, with double promotions showing more fluctuation in sales. The presence of numerous outliers at the upper end indicates that some stores experience exceptionally high sales under promotional influence.</p>
+<p><em>Checkout Price</em><br>
+Figure 2B shows the range of prices customers paid at checkout under different promotions. Unlike the sales volume, there is no major difference in checkout price across promotions. There is some right-skewness with outliers, suggesting a small number of high-value purchases, but the overall trend remains stable. This suggests that promotions influence the number of items bought, but not the price per visit.</p>
+<p><em>Profit</em><br>
+Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Boxplot of sales volume, checkout price and revenue</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " "</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 4</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="in"># Boxplots of Sales with vs. without Promotion</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="in"># ---------------------------</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">a &lt;- ggplot(train, aes(x = promotion_flag, y = log(num_orders,2), fill = promotion_flag)) +</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2A) Sales Distribution", x = "", y = "Order Volume (log2)") +</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="in">b&lt;- ggplot(train, aes(x = promotion_flag, y = checkout_price,  fill = promotion_flag)) +</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2B) Checkout Price Distribution", x = "Promotion", y = "Checkout Price") +</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="in">c&lt;- ggplot(train, aes(x = promotion_flag, y = log((profit),2), fill = promotion_flag)) +</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "2C) Profit Distribution", x = "", y = "Revenue (log2)") +</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">      legend.position="bottom",</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(size=11),</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.2))+</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(a,b,c, ncol = 3)</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/Boxplot of sales volume, checkout price and revenue-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</h3>
+<p>In figure 3A, the Meal IDs are arranged from left to right in descending order based on their overall popularity (total percentage of orders). This visualization helps identify which meals are popular and how promotions influence demand.</p>
+<p><em>Impact of Promotions:</em><br>
+Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to “No promotion”.</p>
+<p><em>Homepage Promotion Baseline:</em><br>
+Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals.</p>
+<p><em>Meal-Specific Promotion Effectiveness:</em><br>
+Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from “promotion_flag”. Other meals, like Meal ID 1558, benefits more from “Email promotion”.</p>
+<p><em>Meals with Low Promotion Impact:</em><br>
+On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: del Promotions Impact popular items</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: " How Promotions Impact checkout price?"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">c1 &lt;- </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">train |&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(promotion_flag)|&gt;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::count(meal_id) |&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(p = round(100*(n / sum(n)),2))|&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-n)|&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = reorder(factor(meal_id),p,, decreasing = TRUE),  fill = promotion_flag)) +</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_bar(aes(y = p), stat='identity', alpha=0.7) +</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values=c('Order Percent'="#d88bb4")) +</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = '', y = 'Percentage', </span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="in">       title = '3A) Popular Meals During Promotions and No Promotions') +</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position="bottom",</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=0.5))+</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill="none")</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="in">c2 &lt;- </span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="in">train|&gt;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="in">  #filter(meal_id %in% radom_meal)|&gt;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(meal_id, promotion_flag) |&gt;</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(avg_profit = mean(profit), .groups = 'drop')|&gt;</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = as.factor(meal_id), y = log(avg_profit,2), fill = as.factor(promotion_flag))) +</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "3B) Average Profit per Menu Item (With &amp; Without Promotion)", x = "Menu ID", y = "Avg Profit (log2)", fill = "Promotion") +</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()+</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="in">  #guides(fill="none") +</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position="bottom",</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.x = element_text(angle = 90, vjust = 0.2, hjust=0.1))</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(c1, c2, nrow = 2)</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/del Promotions Impact popular items-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>How Promotions Impact checkout price?</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-meal-popularity-during-promotions-and-no-promotions-1">Analysis of Meal Popularity During Promotions and No-Promotions</h4>
+<p>The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There’s noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs.&nbsp;promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.</p>
+<p>We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn’t universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.</p>
+</section>
+</section>
+<section id="keytakeaways" class="level3">
+<h3 class="anchored" data-anchor-id="keytakeaways">Keytakeaways</h3>
+<p>As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together.</p>
+<p>The data shows checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more. We can identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

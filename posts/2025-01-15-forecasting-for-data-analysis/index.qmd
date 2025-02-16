@@ -44,6 +44,9 @@ library(corrplot)
 library(knitr)
 library(gganimate)
 library(gifski)
+library(zoo)
+source("~/Github/ARDS/helper_ARDS.R")
+source("~/data/helper.R")
 # --------- The original data can be found here --------- # https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders
 
 # ------ Merge data --------- #
@@ -92,7 +95,147 @@ Our initial analysis is aim to discover:\
 (2) Which promotion worked best?\
 (3) To predict future demand for our menu items.
 
+### Data Summary
+
+The data contains no missing values.
+
+```{r}
+#| label: Overview data
+#| fig-cap: "Indentify missing values"
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
+# Check for missing values
+kable(colSums(is.na(train)))
+```
+
+#### Categorical Variables\
+Center Type: Three types, with 'TYPE_A' being the most frequent.\
+Meal Category: Fourteen categories, 'Beverages' being the most frequent.\
+Cuisine: Four types, with 'Italian' being the most common.
+
+```{r}
+#| label: Overview categorical data
+#| fig-cap: " Distribution of the categorical variables"
+#| warning: false
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
+freq_data <- function(df){
+
+  df <- as.data.frame(df)
+  results_list <- vector("list", ncol(df) - 1)
+  
+  # Loop through the columns starting from the 2nd column
+  for (i in 2:ncol(df)) {
+       # Store the result of cal_freq(i) in the list
+       results_list[[i - 1]] <- cal_freqx(i, df)
+      }
+  df <- do.call(rbind, results_list)
+
+  # label bar graph
+  df$vars <- ifelse(df$Freqx > 0.08, as.character(df$Var1), "")
+  return(df)
+}
+ p <-  freq_data(train |> select(-promotion_flag) |> mutate(store_id = as.factor(center_id)))
+
+ p |>
+       ggplot(aes(x = round(Freqx,2), y = fct_rev(namex), fill = Var1)) + 
+       geom_col(position = "fill", color = "white") +
+       scale_x_continuous(labels = label_percent()) +
+       labs(title = "Distribution of Categorical Variables:",
+       subtitle = paste("Top to down :" , unique(p$namex)[2],"," ,unique(p$namex)[1],"," , unique(p$namex)[3],"," , unique(p$namex)[4],"," , unique(p$namex)[5]),y = NULL, x = NULL, fill = "var1")+
+       guides(fill="none") +
+       geom_text(aes(label = vars), position = position_stack(vjust = 0.5),
+                 color = "white")+
+      theme_void()
+```
+
+#### Numerical Variables\
+ID Variables: id, week, center_id, meal_id\
+Pricing Variables: checkout_price, base_price\
+Demand Variable (Target): num_orders\
+Location and Size Variables: city_code, region_code, op_area
+
+```{r}
+#| label: data distribution
+#| fig-cap: ""
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 4
+
+# Plot the original distribution of num_orders
+s1 <- 
+  train|>
+  ggplot(aes(x = (num_orders))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution of num_orders") +
+  xlab("num_orders") +
+  ylab("Frequency")+
+  theme_minimal()
+
+s2 <- 
+  train|>
+  ggplot(aes(x = (checkout_price))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution  of checkout_price") +
+  xlab("checkout_price") +
+  ylab("Frequency")+
+  theme_minimal()
+
+s3 <- 
+  train|>
+  ggplot(aes(x = (base_price))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution  of base_price") +
+  xlab("checkout_price") +
+  ylab("Frequency")+
+  theme_minimal()
+
+#kable(summary(train))
+grid.arrange(s1, s2, s3, ncol = 3)
+```
+
+
+#### Time series engineering\ 
+Computes correlations to identify feature importance.
+
+```{r}
+#| label: time series engineering
+#| fig-cap: ""
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
+df_filtered <- train |>
+  #filter(center_id %in% c(24:26))|>
+  group_by(week,center_id,meal_id, promotion_flag) |>
+  summarise(avg_order = mean(num_orders), .groups = 'drop')|>
+  arrange(week) |>
+  mutate(
+    num_orders_lag_1 = lag(avg_order, 1, default = 0),
+    num_orders_lag_2 = lag(avg_order, 2, default = 0),
+    num_orders_lag_4 = lag(avg_order, 4, default = 0),
+    num_orders_ma_2 = rollapply(avg_order, width = 2, FUN = mean, fill = NA, align = "right"),
+    num_orders_ma_4 = rollapply(avg_order, width = 4, FUN = mean, fill = NA, align = "right"),
+    week_sin = sin(2 * pi * week / 52),
+    week_cos = cos(2 * pi * week / 52)
+  )
+
+# ---------- Compute Correlation and Feature Importance -----
+ cor_matrix_menu <- cor(df_filtered |> select( -promotion_flag), use = "complete.obs")
+corrplot(cor_matrix_menu,  method = "color",col = COL2('PiYG', 100), addCoef.col = "black", tl.col = "black", type = 'lower', tl.srt = 45)
+```
+
+
 ## Results
+
+Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.\
 
 ### Visulization: Effect of Promotion types on Weekly Profit in each store
 
@@ -101,11 +244,6 @@ As one of our goals is to identify patterns and correlations between promotion t
 1. While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.\
 2. Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.\
 3. Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.
-
-**Keytakeaway**\
-Not all stores need promotions, and some can maintain high profitability without them. Consider store-specific promotion strategies instead of universal discounting. Identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).
-
-Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.
 
 ```{r}
 #| label: Overview profit with heatmap 
@@ -123,9 +261,9 @@ tst <- train |>
 tst|>
   ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +
   geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion
-  scale_fill_gradient(low = "white", high = "darkgreen", name = "Average profit") +
+  scale_fill_gradient(low = "ivory", high = "darkgreen", name = "Average profit") +
   scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =
-                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "#d88bb4"),
+                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "lightyellow"),
                      name = "Promotion") +
   labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store
        x = "Week", y = "Store ID") +
@@ -134,6 +272,9 @@ tst|>
           axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ```
+
+
+Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.
 
 ### Visulization: Average Sales and Revenue Over Time
 
@@ -147,7 +288,7 @@ The blue line (No Promotions) is consistently lower and less volatile compared t
 #| warning: false
 #| code-fold: true
 #| fig-width: 8
-#| fig-height: 8
+#| fig-height: 6
 
 # ---------------------------
 # 1. Time Series Plot of Sales Volume & Revenue
@@ -196,9 +337,6 @@ Figure 2B shows the range of prices customers paid at checkout under different p
 
 *Profit*\
 Revenue is also log-transformed for better visualization as shown in figure 2C. Similar to the sales volume trend, double promotions generate the highest median revenue, followed by homepage promotions, no promotions, and email promotions. The spread of revenue is wider, meaning revenue varies significantly under all conditions. The presence of high-value outliers suggests that under certain conditions, promotions can lead to exceptionally high revenue generation.
-
-*Key Takeaways*\
-While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. Checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more.
 
 ```{r}
 #| label: Boxplot of sales volume, checkout price and revenue
@@ -306,59 +444,10 @@ The average profit per menu item (on the log2 scale) generally falls between app
 
 We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn't universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.
 
-## Supplementary Analysis
+### Keytakeaways
 
-The data contains no missing values.
+As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. 
 
-```{r}
-#| label: Overview data
-#| fig-cap: "Indentify missing values"
-#| code-fold: true
-#| fig-width: 8
+The data shows checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more. We can identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).
 
-# Check for missing values
-kable(colSums(is.na(train)))
-```
 
-*Numerical Variables*\
-ID Variables: id, week, center_id, meal_id\
-Pricing Variables: checkout_price, base_price\
-Promotional Indicators: emailer_for_promotion, homepage_featured\
-Demand Variable (Target): num_orders\
-Location and Size Variables: city_code, region_code, op_area
-
-*Categorical Variables*\
-Center Type: Three types, with 'TYPE_A' being the most frequent.\
-Meal Category: Fourteen categories, 'Beverages' being the most frequent.\
-Cuisine: Four types, with 'Italian' being the most common.
-
-```{r}
-#| label: data distribution
-#| fig-cap: ""
-#| code-fold: true
-#| fig-width: 8
-
-# Plot the original distribution of num_orders
-s1 <- 
-  train|>
-  ggplot(aes(x = sqrt(num_orders))) +
-  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
-  geom_density(alpha = 0.5, color = "#d88bb4") +
-  ggtitle("Distribution of Square Root Transformation of num_orders") +
-  xlab("Square Root transformed num_orders") +
-  ylab("Frequency")+
-  theme_minimal()
-
-s2 <- 
-  train|>
-  ggplot(aes(x = sqrt(checkout_price))) +
-  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
-  geom_density(alpha = 0.5, color = "#d88bb4") +
-  ggtitle("Distribution of Square Root Transformation of checkout_price") +
-  xlab("Square Root transformed checkout_price") +
-  ylab("Frequency")+
-  theme_minimal()
-
-#kable(summary(train))
-grid.arrange(s1, s2, nrow = 2)
-```
