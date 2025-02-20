@@ -20,6 +20,7 @@ citation-location: margin
 categories:
   - R 
   - Data organization
+preview: "cover.JPG"
 ---
 
 Making the data easier to understand!
@@ -37,7 +38,6 @@ This same storytelling approach can be applied to datasets tracking Methicillin-
 These datasets include 95% confidence intervals for the Standardized Infection Ratio (SIR) and statistical interpretations to compare MRSA BSI incidence against the national baseline. Additionally, the data tracks hospital progress towards national Healthcare-Associated Infection (HAI) reduction goals. Hospitals need to meet or exceed incremental SIR targets each year to stay on track.
 
 In this exercise, we will create an animated map to show whether MRSA BSI incidence in California was the same, better, or worse than the national baseline from 2019 to 2023. The map will use a color scale ranging from purple (-1, indicating worse than the national average) to yellow (1, indicating better than the national average) to depict these comparisons.
-
 
 ## Steps
 

@@ -19,7 +19,9 @@ reference-location: margin
 citation-location: margin
 categories:
   - Data Visualization
+preview: "cover.JPG"
 ---
+![](cover.JPG)
 
 ## Overview
 
@@ -45,6 +47,9 @@ library(knitr)
 library(gganimate)
 library(gifski)
 library(zoo)
+library(pheatmap)
+#library(patchwork)
+library(cowplot)
 source("~/Github/ARDS/helper_ARDS.R")
 source("~/data/helper.R")
 # --------- The original data can be found here --------- # https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders
@@ -182,7 +187,7 @@ s2 <-
   ggplot(aes(x = (checkout_price))) +
   geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
   geom_density(alpha = 0.3, color = "#d88bb4", outline.type = "upper") +
-  ggtitle("Distribution  of checkout_price") +
+  ggtitle("Distribution of checkout_price") +
   xlab("checkout_price") +
   ylab("Frequency")+
   theme_minimal()
@@ -192,13 +197,26 @@ s3 <-
   ggplot(aes(x = (base_price))) +
   geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
   geom_density(alpha = 0.5, color = "#d88bb4") +
-  ggtitle("Distribution  of base_price") +
-  xlab("checkout_price") +
+  ggtitle("Distribution of base_price") +
+  xlab("base_price") +
   ylab("Frequency")+
   theme_minimal()
 
+s4 <- 
+  train|>
+  ggplot(aes(x = (op_area ))) +
+  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(alpha = 0.5, color = "#d88bb4") +
+  ggtitle("Distribution of base_price") +
+  xlab("operation area") +
+  ylab("Frequency")+
+  theme_minimal()
+
+
+
 #kable(summary(train))
-grid.arrange(s1, s2, s3, ncol = 3)
+#grid.arrange(s1, s2, s3, ncol = 3)
+plot_grid(s1, s2, s3, s4, labels="AUTO")
 ```
 
 
@@ -245,6 +263,37 @@ As one of our goals is to identify patterns and correlations between promotion t
 2. Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.\
 3. Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.
 
+
+```{r}
+#| label: Heatmaps
+#| fig-cap: " How Promotions Impact overall Profit?"
+#| warning: false
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
+#library(pheatmap) ## for heatmap generation
+#library(ggplotify) ## to convert pheatmap to ggplot2
+#library(heatmaply) ## for constructing interactive heatmap
+
+tstx <- train |>
+    group_by(promotion_flag, center_id) |>
+      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))
+
+testx <- tstx |>
+  tidyr::pivot_wider(names_from = center_id, values_from = `Average Profit (log2)`)|>
+  mutate(across(everything(), ~replace_na(.x, 0)))
+
+testx <- data.frame(testx)
+rownames(testx) <- testx$promotion_flag
+
+flag <- data.frame(testx$promotion_flag)
+rownames(flag) <- testx$promotion_flag
+colnames(flag) <- "promotions"
+cols <- colorRampPalette(c( "white", "lightgreen", "darkgreen"))(100)  
+pheatmap(testx[,-c(1)],cutree_cols=2, cutree_rows=2, color = cols)
+```
+
 ```{r}
 #| label: Overview profit with heatmap 
 #| fig-cap: "Overview profit with heatmap "
@@ -253,18 +302,18 @@ As one of our goals is to identify patterns and correlations between promotion t
 #| fig-width: 10
 #| fig-height: 10
 
-tst <- train |>
-    group_by(week, promotion_flag, center_id) |>
-      dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))
 
-#----------------------
-tst|>
+#--------------- Heatmap overall------
+train |>
+    group_by(week, promotion_flag, center_id) |>
+    dplyr::summarise(`Average Profit (log2)` = log(mean(profit),2))|>
   ggplot(aes(x = as.factor(week), y = as.factor(center_id), fill = `Average Profit (log2)`)) +
   geom_tile(aes(color = promotion_flag), linewidth = 0.5) + # Color outline for promotion
   scale_fill_gradient(low = "ivory", high = "darkgreen", name = "Average profit") +
-  scale_color_manual(values = c("Double promotion" = "navy", "Email promotion" =
-                                  "lightblue", "Homepage promotion" = "#167bb2","No promotion" = "lightyellow"),
-                     name = "Promotion") +
+scale_color_manual(values = c("Double promotion" = "red", "Email promotion" =
+            "yellow", "Homepage promotion" = "orange","No promotion" = "white"),
+                    name = "Promotion") +
+  
   labs(title = " ", #Heatmap of Weekly Profit and Promotions per Store
        x = "Week", y = "Store ID") +
   theme_minimal() +
@@ -324,7 +373,7 @@ sales_trend <- train |>
     theme(axis.line = element_line(color = 'black'))
  
  grid.arrange(a1, a2, nrow = 2)
-
+ 
 ```
 
 **Promotion Effectiveness: Average Weekly Sales & Revenue by Promotion Type**
@@ -481,7 +530,7 @@ ggplot(comparison_df, aes(x = reorder(factor(meal_id),round(Price_Change_Percent
   geom_point(aes(y = 0.1*(Order_Change_Percent+4), color='darkgray'),shape=21, size=2) +
   scale_color_manual(values=c('Order Change Percent'="#d88bb4")) +
   labs(x = 'Meal ID', y = 'Percentage Change', 
-       title = 'Checkout Price Change & Order Volume Change During Promotions',
+       title = '4) Checkout Price Change & Order Volume Change During Promotions',
        subtitle = paste("Correlation : Price Change vs. Order Volumne :" , correlation_po )) +
   theme_minimal()+
   theme(legend.position="bottom",
@@ -493,5 +542,6 @@ ggplot(comparison_df, aes(x = reorder(factor(meal_id),round(Price_Change_Percent
 As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. 
 
 The data shows checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more. We can identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).
+
 
 
