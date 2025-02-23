@@ -21,7 +21,7 @@ categories:
   - Data Visualization
 preview: "cover.JPG"
 ---
-![](cover.JPG)
+ 
 
 ## Overview
 
