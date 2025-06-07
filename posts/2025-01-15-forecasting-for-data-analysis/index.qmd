@@ -1,5 +1,5 @@
 ---
-title: "Forecasting: exploratory data analaysis"
+title: "Forecasting: Exploratory Data Analaysis"
 author:
     name: Chris Lee
     url: https://clfee.github.io/
@@ -21,7 +21,6 @@ categories:
   - Data Visualization
 preview: "cover.JPG"
 ---
- 
 
 ## Overview
 
@@ -29,8 +28,7 @@ preview: "cover.JPG"
 
 Predicting customer demand is crucial for growing business. Without reliable forecasts, we risk stockouts or excess inventory, leading to wasted resources. This is especially important for our wedding and event catering service, where we work with perishable ingredients. By precisely estimating daily and weekly demand, we can optimize inventory, reduce waste, control costs, and consistently meet customer expectations.
 
-Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting](https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).  
-
+Before diving into forecasting, we’ll start with data exploration. This includes analyzing variable distributions, handling missing values, and uncovering key insights. For this analysis, we’ll use a dataset from Kaggle. You can explore it here: Kaggle - [Food Demand Forecasting](https://www.kaggle.com/code/anoopashware/food-demand-forecasting-predict-orders).
 
 ```{r}
 #| context: setup
@@ -88,8 +86,7 @@ avg_promotion_rate <- train |>
   mutate(p = round(100*(n / sum(n)),2))
 ```
 
-
-The data contains information from `{r} length(unique(train$center_id))` stores over a period of `{r} length(unique(unique(train$week)))` weeks.  
+The data contains information from `{r} length(unique(train$center_id))` stores over a period of `{r} length(unique(unique(train$week)))` weeks.\
 Two types of promotions (web, email) were shown in the data as below:\
 - `{r} sum(avg_promotion_rate$p[c(2,3)])`% stores ran one type of promotion.\
 - `{r} avg_promotion_rate$p[1]`% stores ran both types at the same time.\
@@ -115,7 +112,8 @@ The data contains no missing values.
 kable(colSums(is.na(train)))
 ```
 
-#### Categorical Variables\
+#### Categorical Variables
+
 Center Type: Three types, with 'TYPE_A' being the most frequent.\
 Meal Category: Fourteen categories, 'Beverages' being the most frequent.\
 Cuisine: Four types, with 'Italian' being the most common.
@@ -158,7 +156,8 @@ freq_data <- function(df){
       theme_void()
 ```
 
-#### Numerical Variables\
+#### Numerical Variables
+
 ID Variables: id, week, center_id, meal_id\
 Pricing Variables: checkout_price, base_price\
 Demand Variable (Target): num_orders\
@@ -219,8 +218,8 @@ s4 <-
 plot_grid(s1, s2, s3, s4, labels="AUTO")
 ```
 
+#### Time series engineering 
 
-#### Time series engineering\ 
 Computes correlations to identify feature importance.
 
 ```{r}
@@ -250,7 +249,6 @@ df_filtered <- train |>
 corrplot(cor_matrix_menu,  method = "color",col = COL2('PiYG', 100), addCoef.col = "black", tl.col = "black", type = 'lower', tl.srt = 45)
 ```
 
-
 ## Results
 
 Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.\
@@ -259,10 +257,9 @@ Since we are trying to forecast future demand, we can plot sales and profit of d
 
 As one of our goals is to identify patterns and correlations between promotion types, individual store performance, and weekly profit trends. We first used a heatmap to help us visualize how well our stores are performing over time and how different promotions impact our profits. Each cell in the heatmap represents the average profit for a specific store (rows) during a specific week (columns). The color intensity (ranging from light to dark green) indicates the magnitude of average profit, with darker greens representing higher profits. The Color bar represents a profit from 10.0 to 20.0. The border of the cell represents the promotion type being carried out in the store for the corresponding week. Namely Promotion, Double promotion, Email promotion, No promotion, and Homepage promotion.\
 
-1. While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.\
-2. Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.\
-3. Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.
-
+1.  While some stores (e.g., Store IDs around 40-50) consistently show higher profits (darker green), other stores (e.g., Store IDs around 140-150) show consistently lower profits (lighter green). This indicates that the strategies for these stores need a revisit.\
+2.  Weeks with promotions (identified by the border type) often correlate with higher profits (darker green cells). However, the effectiveness varies.\
+3.  Patterns in the heatmap suggest potential seasonal cycles, with profit fluctuations happening in waves.
 
 ```{r}
 #| label: Heatmaps
@@ -321,7 +318,6 @@ scale_color_manual(values = c("Double promotion" = "red", "Email promotion" =
           axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ```
-
 
 Since we are trying to forecast future demand, we can plot sales and profit of different promotions over time. To do this, we average the data across stores, as this can allow smoothing of the noise to see more of the signal.
 
@@ -441,10 +437,10 @@ In figure 3A, the Meal IDs are arranged from left to right in descending order b
 Several meals (especially on the left side of the plot) show a significant increase in order percentage when a promotion is applied. This indicates that promotions can be effective in boosting the popularity of certain meals.For some meals, the Double promotion (email+homepage) or Email promotion seems to have a noticeable impact compared to "No promotion".
 
 *Homepage Promotion Baseline:*\
-Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals. 
+Homepage promotion seems to be always present at some level for all meals, which suggests that homepage promotion might be a baseline strategy applied to all meals.
 
 *Meal-Specific Promotion Effectiveness:*\
-Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from "promotion_flag". Other meals, like Meal ID 1558, benefits more from "Email promotion". 
+Some meals respond well to specific types of promotions. For example, Meal ID 1962 sees a significant portion of its orders come from "promotion_flag". Other meals, like Meal ID 1558, benefits more from "Email promotion".
 
 *Meals with Low Promotion Impact:*\
 On the right side of the plot, the meals have low percentages overall, and the impact of promotions appears to be less significant. This could mean these meals are less popular regardless of promotions, or that the current promotions are not effective for these meals.
@@ -489,7 +485,8 @@ grid.arrange(c1, c2, nrow = 2)
 ```
 
 #### Analysis of Meal Popularity During Promotions and No-Promotions
-The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There's noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs. promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.  
+
+The average profit per menu item (on the log2 scale) generally falls between approximately 12 and 16 in figure 3B. There's noticeable variation in average profit across different menu items (identified by their Menu ID). Indeed, we compare the mean profits for No promotion vs. promotins (homepage, email, and homepage+email), the p-value is less than 0.05 from ANOVA test results show promotions substantially impact profits across menu items.
 
 We also see some items are inherently more profitable than others, regardless of the promotion strategy. Certain menu items (e.g., 1248, 1445, 1558) show higher profits under double (homepage and email) promotion, suggesting targeted discounts may work well for these meals. This may indicate that these meals experience higher order volume during promotions, making up for the reduced margin. Since, this isn't universally true for all menu items. Promotions should be customized per meal item—apply them only where they result in a net positive profit effect.
 
@@ -539,9 +536,6 @@ ggplot(comparison_df, aes(x = reorder(factor(meal_id),round(Price_Change_Percent
 
 ### Keytakeaways
 
-As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together. 
+As shown in the heatmap, we know not all stores respond promotions, and some can maintain high profitability without them. We should consider store-specific promotion strategies instead of universal discounting. While double promotions drive the highest sales and revenue, homepage and email promotions individually are not as effective as using both together.
 
 The data shows checkout price per transaction remains stable regardless of the promotion type, meaning the increase in revenue comes from selling more, not from charging more. We can identify stores where promotions significantly boost profits and focus campaigns on those locations. For low-response stores, explore alternative marketing (e.g., bundling, loyalty programs).
-
-
-
