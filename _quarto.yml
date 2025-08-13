@@ -19,6 +19,7 @@ website:
 
   
   navbar:
+    pinned: true
     background: "#908989"
     search: true
     title: false
@@ -28,7 +29,9 @@ website:
         file: index.qmd
         icon: house-door-fill
     right: 
-      - text: "Blog"
+      - icon: rss
+        aria-label: rss
+        text: "Blog"
         file: gallery.qmd
       - text: "About"
         file: about.qmd
@@ -43,11 +46,16 @@ format:
     mainfont: Nunito Sans
     monofont: monospace
     toc: true
+    toc-depth: 4
+    pagetitle: "Chris Lee | {{< meta title >}}"
+    page-layout: article
     fontcolor: "#252528"
     backgroundcolor: "#f4f4f5"
     link-external-newwindow: true
     date-format: "MMM YYYY"
     smooth-scroll: true
+    code-link: true
+    highlight-style: a11y
     resources:
       - img
 

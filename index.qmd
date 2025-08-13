@@ -1,17 +1,18 @@
 ---
-title: "Chris Lee"
-subtitle: "This is the place where I share new tools in data analysis and data science"
+pagetitle: "Chris Lee | About"
+title: "Welcome to my website -- I'm happy you're here!"
+subtitle: ""
 about:
   id: hero-heading
   template: jolla
   image: img/mi.PNG
   image-width: 15em
   image-shape: round
-  links:
-    - icon: github
-      text: Github
-      href: https://github.com/clfee
+
 ---
+::: {#hero-heading}
+:::
+With over 10 years of experience in cancer biology, I specialized in leveraging data analytical tools for omics study and biomarker discovery. Beyond the work, I have passion for animals, especially cats. I also enjoy gardening and exploring the world. Join me as I share insights from my scientific journey alongside my love for nature and adventure.
 
 
 

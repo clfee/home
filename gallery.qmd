@@ -1,21 +1,53 @@
 ---
+title: "World of Data"
+description-meta: "A blog for R code & data science content."
+image: assets/img/cmm1.PNG
 listing:
   contents: posts
-  feed: 
-    items: 10
-  sort-ui: true
-  sort: 
-    - "date desc"
-    - "title desc"
-  type: table
-  image-height: 50px
-  image-placeholder: /assets/images/dashboard.PNG
-  fields: [date, image, title]
+  type: default
+  image-align: left
+  fields: 
+    - title
+    - description
+    - date
+    - image
+    - categories
+    - reading-time
   categories: true
-  date-format: "YYYY-MM-DD"
-  page-size: 9
-toc: false
-toc-location: body
-page-layout: full
-title-block-banner: false
+  sort: "date desc"
+  page-size: 10
+  feed:
+    categories: 
+      - R
+format:
+  html:
+    include-after-body:
+      - ./assets/html/kofi.html
+      - ./assets/html/subscribe.html
 ---
+
+Welcome to my blog! I'm so happy you're here to learn with me. I'll be using this space to write about what I'm learning, working on, and am curious about.
+
+------------------------------------------------------------------------
+
+```{r, include=FALSE}
+# Code snippet modified from Danielle Navarro
+
+# https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#netlify-redirects
+
+# list names of post folders
+posts <- list.dirs(
+  path = here::here("blog"),
+  full.names = FALSE,
+  recursive = FALSE
+)
+
+# extract the slugs
+slugs <- gsub("^.*_", "", posts)
+
+# lines to insert to a netlify _redirect file
+redirects <- paste0("/blog/", slugs, " ", "/blog/", posts)
+
+# write the _redirect file
+writeLines(redirects, here::here("_redirects"))
+```

@@ -29,21 +29,13 @@ Education:
 
 ::: listing-box-education 
 
-University of Manchester | UK
-PhD in Cancer Studies | Sept 2004 - Jan 2009
-
-National Yang-Ming University | Taipei, Taiwan
-Msc in Genetics| Sept 2001 - Sept 2003
+test test
 
 :::
 
 Experiences:
 
 ::: listing-box-education 
-FUJI WEDDING VENUE GROUP  | Senior Data Analyst | Jan 2023 - PRESENT
-
-FUJI WEDDING VENUE GROUP  | Data Analyst | Jan 2016 - Dec 2022
-
-Protea  | Senior Scientist | Jan 2014 - Mar 2015
+ test tste 1
 
 :::

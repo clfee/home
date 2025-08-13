@@ -8,7 +8,7 @@
 
 <meta name="author" content="Chris Lee">
 
-<title>Chris Lee - Forecasting: exploratory data analaysis</title>
+<title>Chris Lee | Forecasting: Exploratory Data Analaysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,7 +59,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
@@ -106,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles/custom.scss">
-<meta property="og:title" content="Chris Lee - Forecasting: exploratory data analaysis">
+<meta property="og:title" content="Chris Lee | Forecasting: Exploratory Data Analaysis">
 <meta property="og:description" content="Data science applications brought to you by Chris Lee">
 <meta property="og:image" content="https://github.com/clfee/home/posts/2025-01-15-forecasting-for-data-analysis/img/cmm1.PNG">
 <meta property="og:site_name" content="Chris Lee">
@@ -137,7 +136,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../gallery.html"> 
+    <a class="nav-link" href="../../gallery.html"> <i class="bi bi-rss" role="img" aria-label="rss">
+</i> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -166,14 +166,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul>
+  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data Summary</a>
   <ul class="collapse">
-  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data Summary</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical Variables</a></li>
+  <li><a href="#numerical-variables" id="toc-numerical-variables" class="nav-link" data-scroll-target="#numerical-variables">Numerical Variables</a></li>
+  <li><a href="#time-series-engineering" id="toc-time-series-engineering" class="nav-link" data-scroll-target="#time-series-engineering">Time series engineering&nbsp;</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" id="toc-visulization-effect-of-promotion-types-on-weekly-profit-in-each-store" class="nav-link" data-scroll-target="#visulization-effect-of-promotion-types-on-weekly-profit-in-each-store">Visulization: Effect of Promotion types on Weekly Profit in each store</a></li>
   <li><a href="#visulization-average-sales-and-revenue-over-time" id="toc-visulization-average-sales-and-revenue-over-time" class="nav-link" data-scroll-target="#visulization-average-sales-and-revenue-over-time">Visulization: Average Sales and Revenue Over Time</a></li>
-  <li><a href="#analysis-of-meal-popularity-during-promotions-and-no-promotions" id="toc-analysis-of-meal-popularity-during-promotions-and-no-promotions" class="nav-link" data-scroll-target="#analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</a></li>
+  <li><a href="#analysis-of-meal-popularity-during-promotions-and-no-promotions" id="toc-analysis-of-meal-popularity-during-promotions-and-no-promotions" class="nav-link" data-scroll-target="#analysis-of-meal-popularity-during-promotions-and-no-promotions">Analysis of Meal Popularity During Promotions and No-Promotions</a>
+  <ul class="collapse">
+  <li><a href="#analysis-of-meal-popularity-during-promotions-and-no-promotions-1" id="toc-analysis-of-meal-popularity-during-promotions-and-no-promotions-1" class="nav-link" data-scroll-target="#analysis-of-meal-popularity-during-promotions-and-no-promotions-1">Analysis of Meal Popularity During Promotions and No-Promotions</a></li>
+  </ul></li>
   <li><a href="#keytakeaways" id="toc-keytakeaways" class="nav-link" data-scroll-target="#keytakeaways">Keytakeaways</a></li>
   </ul></li>
   </ul>
@@ -184,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Forecasting: exploratory data analaysis</h1>
+<h1 class="title">Forecasting: Exploratory Data Analaysis</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Data Visualization</div>
   </div>
@@ -216,7 +224,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><img src="cover.JPG" class="img-fluid"></p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p><strong>Why Forecasting Matters for Our Business</strong></p>
@@ -335,8 +342,7 @@ Two types of promotions (web, email) were shown in the data as below:<br>
 </div>
 </div>
 <section id="categorical-variables" class="level4">
-<h4 class="anchored" data-anchor-id="categorical-variables">Categorical Variables<br>
-</h4>
+<h4 class="anchored" data-anchor-id="categorical-variables">Categorical Variables</h4>
 <p>Center Type: Three types, with ‘TYPE_A’ being the most frequent.<br>
 Meal Category: Fourteen categories, ‘Beverages’ being the most frequent.<br>
 Cuisine: Four types, with ‘Italian’ being the most common.</p>
@@ -392,8 +398,7 @@ Cuisine: Four types, with ‘Italian’ being the most common.</p>
 </div>
 </section>
 <section id="numerical-variables" class="level4">
-<h4 class="anchored" data-anchor-id="numerical-variables">Numerical Variables<br>
-</h4>
+<h4 class="anchored" data-anchor-id="numerical-variables">Numerical Variables</h4>
 <p>ID Variables: id, week, center_id, meal_id<br>
 Pricing Variables: checkout_price, base_price<br>
 Demand Variable (Target): num_orders<br>
@@ -570,7 +575,7 @@ Location and Size Variables: city_code, region_code, op_area</p>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview profit with heatmap</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: Overview profit with heatmap </span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Overview profit with heatmap "</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>

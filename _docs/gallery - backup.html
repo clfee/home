@@ -79,9 +79,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-image','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-image','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -196,203 +196,133 @@ window.Quarto = {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
      <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
          <option value="listing-date-sort" data-direction="asc">
           Date - Oldest
         </option>
          <option value="listing-date-sort" data-direction="desc">
           Date - Newest
         </option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
      </select>
   </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
 </div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Data Visualization" data-listing-date-sort="1738389600000" data-listing-file-modified-sort="1739689726225" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3295">
-<div class="thumbnail">
-<p><a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external"></a></p><a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2025-01-15-forecasting-for-data-analysis\cover.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external">Forecasting: exploratory data analaysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="no-external">
-<div class="listing-date">
-2025-02-01
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="R,Data organization" data-listing-date-sort="1725166800000" data-listing-file-modified-sort="1739497510595" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1114">
-<div class="thumbnail">
-<p><a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external"></a></p><a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2025-02-01-Graphs-for-Communication\cover.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external">Graphs for Communication - Creating Animated Maps</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="no-external">
-<div class="listing-date">
-2024-09-01
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="R,Data organization" data-listing-date-sort="1723784400000" data-listing-file-modified-sort="1739241337869" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1281">
-<div class="thumbnail">
-<p><a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external"></a></p><a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2024-08-16-automated-custom-reports\cover.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external">Automated Reporting: A Game-Changer for Data Analysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-08-16-automated-custom-reports/index.html" class="no-external">
-<div class="listing-date">
-2024-08-16
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="R,Shiny,Data organization,sql,vlookup" data-listing-date-sort="1722488400000" data-listing-file-modified-sort="1739497543154" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2657">
-<div class="thumbnail">
-<p><a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external"></a></p><a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2024-08-01-tying-the-data-together\file_main.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external">Tying the data together</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-08-01-tying-the-data-together/index.html" class="no-external">
-<div class="listing-date">
-2024-08-01
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1721019600000" data-listing-file-modified-sort="1739308348602" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1255">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external"></a></p><a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2024-07-15-marketing-compaign-dashboard\cover.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external">Marketing Campaign at a Glance</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="no-external">
-<div class="listing-date">
-2024-07-15
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="R,Quarto,Dashboard" data-listing-date-sort="1719291600000" data-listing-file-modified-sort="1725045780441" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="247">
-<div class="thumbnail">
-<p><a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external"></a></p><a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\2024-06-25-create-a-Quarto-dashboard\dashboard.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external">Creating a Serveless Dashboard</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="no-external">
-<div class="listing-date">
-2024-06-25
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1724712614546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1037">
-<div class="thumbnail">
-<p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a></p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">
-<p class="card-img-top"><img src="assets\images\gradcam_res.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">Image Classification (Part2)</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="no-external">
-<div class="listing-date">
-2021-08-31
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1739241527257" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2611">
-<div class="thumbnail">
-<p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a></p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">
-<p class="card-img-top"><img src="assets\images\dauer.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">Image Classification (Part1)</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="no-external">
-<div class="listing-date">
-2021-08-31
-</div>
-</a>
-</div>
-</div>
-</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+</th>
+<th>
+</th>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="Data Visualization" data-listing-date-sort="1738389600000" data-listing-file-modified-sort="1740095661199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3405" data-listing-title-sort="Forecasting: exploratory data analaysis" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2025-02-01</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="posts\2025-01-15-forecasting-for-data-analysis\index_files\figure-html\cover.jpg" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2025-01-15-forecasting-for-data-analysis/index.html" class="title listing-title">Forecasting: exploratory data analaysis</a>
+</td>
+</tr>
+<tr data-index="1" data-categories="R,Data organization" data-listing-date-sort="1725166800000" data-listing-file-modified-sort="1740094567173" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1114" data-listing-title-sort="Graphs for Communication - Creating Animated Maps" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2024-09-01</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="posts\2025-02-01-Graphs-for-Communication\index_files\figure-html\cover.JPG" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2025-02-01-Graphs-for-Communication/index.html" class="title listing-title">Graphs for Communication - Creating Animated Maps</a>
+</td>
+</tr>
+<tr data-index="2" data-categories="R,Data organization" data-listing-date-sort="1723784400000" data-listing-file-modified-sort="1739241337869" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1281" data-listing-title-sort="Automated Reporting: A Game-Changer for Data Analysis" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2024-08-16</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="posts\2024-08-16-automated-custom-reports\index_files\figure-html\Boxplots-1.png" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2024-08-16-automated-custom-reports/index.html" class="title listing-title">Automated Reporting: A Game-Changer for Data Analysis</a>
+</td>
+</tr>
+<tr data-index="3" data-categories="R,Shiny,Data organization,sql,vlookup" data-listing-date-sort="1722488400000" data-listing-file-modified-sort="1739497543154" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2657" data-listing-title-sort="Tying the data together" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2024-08-01</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="posts\2024-08-01-tying-the-data-together\file_main.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2024-08-01-tying-the-data-together/index.html" class="title listing-title">Tying the data together</a>
+</td>
+</tr>
+<tr data-index="4" data-listing-date-sort="1721019600000" data-listing-file-modified-sort="1740285619766" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1255" data-listing-title-sort="Marketing Campaign at a Glance" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2024-07-15</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="assets\images\dashboard.png" style="height: 60px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2024-07-15-marketing-compaign-dashboard/index.html" class="title listing-title">Marketing Campaign at a Glance</a>
+</td>
+</tr>
+<tr data-index="5" data-categories="R,Quarto,Dashboard" data-listing-date-sort="1719291600000" data-listing-file-modified-sort="1725045780441" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="247" data-listing-title-sort="Creating a Serveless Dashboard" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2024-06-25</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="posts\2024-06-25-create-a-Quarto-dashboard\dashboard.PNG" style="height: 60px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2024-06-25-create-a-Quarto-dashboard/index.html" class="title listing-title">Creating a Serveless Dashboard</a>
+</td>
+</tr>
+<tr data-index="6" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1724712614546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1037" data-listing-title-sort="Image Classification (Part2)" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2021-08-31</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="assets\images\gradcam_res.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2021-08-31-malaria-cell-classification - p2/index.html" class="title listing-title">Image Classification (Part2)</a>
+</td>
+</tr>
+<tr data-index="7" data-categories="python,Image Classification" data-listing-date-sort="1630386000000" data-listing-file-modified-sort="1739241527257" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2611" data-listing-title-sort="Image Classification (Part1)" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">2021-08-31</span>
+</td>
+<td>
+<span class="listing-image"><p class="card-img-top"><img src="assets\images\dauer.PNG" style="height: 50px;"  class="thumbnail-image card-img"/></p></span>
+</td>
+<td>
+<a href="./posts/2021-08-31-malaria-cell-classification/index.html" class="title listing-title">Image Classification (Part1)</a>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
@@ -818,7 +748,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2024 · Made with r-project and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="65"></a></p>
+<p>© 2024 · Made with r-project and <a href="https://quarto.org/"><img src="https://quarto.org/quarto.png" class="img-fluid" alt="Quarto" width="35"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

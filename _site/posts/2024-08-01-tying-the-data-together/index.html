@@ -9,7 +9,7 @@
 <meta name="author" content="Chris Lee">
 <meta name="description" content="Effortless data combine, merge ,and search.">
 
-<title>Chris Lee - Tying the data together</title>
+<title>Chris Lee | Tying the data together</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,7 +60,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
@@ -107,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles/custom.scss">
-<meta property="og:title" content="Chris Lee - Tying the data together">
+<meta property="og:title" content="Chris Lee | Tying the data together">
 <meta property="og:description" content="Effortless data combine, merge ,and search.">
 <meta property="og:image" content="https://github.com/clfee/home/posts/2024-08-01-tying-the-data-together/img/cmm1.PNG">
 <meta property="og:site_name" content="Chris Lee">
@@ -138,7 +137,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../gallery.html"> 
+    <a class="nav-link" href="../../gallery.html"> <i class="bi bi-rss" role="img" aria-label="rss">
+</i> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -259,22 +259,24 @@ Expand for Code
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># identify columns appear in both data sets</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">renderUI</span>({</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_a</span>()), <span class="fu">names</span>(<span class="fu">data_b</span>()))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display no-overflow-x">
-<div id="outa8cd4c303762b857" class="shiny-html-output"></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'shiny' was built under R version 4.4.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="fu">data_c</span>(), input<span class="sc">$</span>var_ab, input<span class="sc">$</span>var_bc)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    temp_ab <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_ab)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>(dplyr<span class="sc">::</span><span class="fu">full_join</span>(temp_ab, <span class="fu">data_c</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_bc))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify columns appear in both data sets</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">renderUI</span>({</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_a</span>()), <span class="fu">names</span>(<span class="fu">data_b</span>()))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display no-overflow-x">
+<div id="outcd9adcd41e32b1d7" class="shiny-html-output"></div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="fu">data_c</span>(), input<span class="sc">$</span>var_ab, input<span class="sc">$</span>var_bc)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    temp_ab <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_ab)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>(dplyr<span class="sc">::</span><span class="fu">full_join</span>(temp_ab, <span class="fu">data_c</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_bc))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -295,31 +297,31 @@ Expand for Code
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reactive</span>({</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>())</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_checklist)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary          Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">|&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"Yes"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-</span>count, <span class="sc">-</span>countx)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    not_in_counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>))<span class="sc">|&gt;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"No"</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>     counts_summary <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">rbind</span>(counts,not_in_counts),<span class="dv">2</span>,as.character)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reactive</span>({</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>())</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_checklist)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary          Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"Yes"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-</span>count, <span class="sc">-</span>countx)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    not_in_counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>))<span class="sc">|&gt;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"No"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>     counts_summary <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">rbind</span>(counts,not_in_counts),<span class="dv">2</span>,as.character)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<pre class="shiny-text-output noplaceholder" id="outc79c15c260ec98c4"></pre>
+<pre class="shiny-text-output noplaceholder" id="out94ad2b7505a70b8a"></pre>
 </div>
 </div>
 </div>
@@ -345,8 +347,8 @@ Expand for Full Code
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -361,10 +363,13 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readxl' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'DT'</code></pre>
@@ -374,281 +379,281 @@ Attaching package: 'DT'</code></pre>
 
     dataTableOutput, renderDataTable</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"File Merger"</span>),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"1. Convert Retrieval Reference Number to General"</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_a"</span>, <span class="st">"Transaction file (CSV or XLSX)"</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"2a. Convert Retrieval Ref to General"</span>),</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"2b. Remove all rows above Merchant ID "</span>),</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_b"</span>, <span class="st">"Sales (CSV or XLSX)"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"3. Remove all rows above Summary Transaction Slip"</span>),</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"   Output: Merged File; Auto-Checked File "</span>),</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_c"</span>, <span class="st">"Funded Deposit (CSV or XLSX)"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"------------------------------------------"</span>),</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"4. (Optional) Upload a payportal list. Output: Manual-Checked File"</span>),</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"Must contain a column called **Merchant Reference Number**!"</span>),</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkboxInput</span>(<span class="st">"checklist"</span>, <span class="st">"Manual Check"</span>, <span class="at">value =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file"</span>, <span class="st">"Checklist (CSV or XLSX)"</span>, <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_a_b"</span>),</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_b_c"</span>),</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_checklist"</span>),</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">br</span>(),</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"A: Contains Summary Transaction Slip &amp; Retrival Ref (matched &amp; unmatched)"</span>),</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"downloadData"</span>, <span class="st">"Download Merged File"</span>),</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"B: Contains non-empty Summary Transaction Slip, count matched Retrival Ref &amp; Merchant ref"</span>),</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"exportData"</span>,   <span class="st">"Download Auto-Checkeds File"</span>),</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"C: Using uploaded checklist to match and count non-empty Summary Transaction Slip, Retrival Ref &amp; Merchant ref"</span>),</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"manual_input"</span>, <span class="st">"Download Manual-Checked File"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Transaction List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_a"</span>)),</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Sales List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_b"</span>)),</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Funded Deposit List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_c"</span>)),</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Merged File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_d"</span>)),</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Auto-Checked File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_e"</span>)),</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Checklist"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_f"</span>)),</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Manual-Checked File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_g"</span>))</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>  read_data <span class="ot">&lt;-</span> <span class="cf">function</span>(file) {</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file)) {</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    ext <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_ext</span>(file<span class="sc">$</span>name)</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ext <span class="sc">==</span> <span class="st">"csv"</span>) {</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file<span class="sc">$</span>datapath)</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (ext <span class="sc">==</span> <span class="st">"xlsx"</span>) {</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file<span class="sc">$</span>datapath)</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  data_a <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>    da <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_a)<span class="sc">%&gt;%</span></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Retrieval_Ref =</span> <span class="st">`</span><span class="at">Retrieval Reference Number</span><span class="st">`</span>)<span class="sc">%&gt;%</span> </span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>, Retrieval_Ref,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,Amount) </span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(da)</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove all rows above Merchant ID and change </span></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  data_b <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>file_b)</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>    db <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_b)<span class="sc">%&gt;%</span> </span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Retrieval_Ref =</span> <span class="st">`</span><span class="at">Retrieval Ref.</span><span class="st">`</span>)<span class="sc">%&gt;%</span> </span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>, Retrieval_Ref, <span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,</span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Payment Transaction Slip</span><span class="st">`</span>, <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>)</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>    db </span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove all rows above Summary Transaction Slip</span></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  data_c <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>file_c)</span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>    dc <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_c)</span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>    dc<span class="ot">&lt;-</span> dc[<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Payment'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Sale'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'/'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Summary'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>),]</span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>    dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)</span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>    <span class="co">#colnames(dc)[2:7] &lt;-  c("Summary Transaction Slip","Transaction Type","Transaction Count", "Reversal Flag",</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                   "Currency","Gross Amount", "Net Amount")</span></span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(dc) </span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_a_b <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_a(), data_b())</span></span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_a</span>()), <span class="fu">names</span>(<span class="fu">data_b</span>()))</span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_b_c <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_b(), data_c())</span></span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get(input$file_a, 'package:datasets')</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_b</span>()), <span class="fu">names</span>(<span class="fu">data_c</span>()))</span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_bc"</span>, <span class="st">"Select merge variable for Sales and Funded Depos it"</span>, <span class="at">choices =</span> var_names)</span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_checklist <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>checklist <span class="sc">!=</span> <span class="cn">FALSE</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get(input$file_a, 'package:datasets')</span></span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">merged_data</span>()), <span class="fu">names</span>(<span class="fu">data_f</span>()))</span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_checklist"</span>, <span class="st">"Select merge variable for Merge data and Checklist"</span>, <span class="at">choices =</span> var_names)</span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>  data_f <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>    dt <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file)</span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(dt)</span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_a <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_a())</span></span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_a</span>()),</span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>    )  </span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_b <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_b())</span></span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_b</span>()),</span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>    )  </span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_c <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_c())</span></span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_c</span>()),</span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a>    )  </span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="fu">data_c</span>(), input<span class="sc">$</span>var_ab, input<span class="sc">$</span>var_bc)</span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>    temp_ab <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_ab)</span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>(dplyr<span class="sc">::</span><span class="fu">full_join</span>(temp_ab, <span class="fu">data_c</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_bc))</span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>      <span class="fu">merged_data</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Check_merchantID</span><span class="st">`</span>,Check_Retrieval_Ref,<span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply</span>(df,<span class="dv">2</span>,as.character)</span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a>  manual_check <span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>())</span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_checklist)</span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a>               <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a>    counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">|&gt;</span></span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"Yes"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-</span>count, <span class="sc">-</span>countx)</span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>    not_in_counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>))<span class="sc">|&gt;</span></span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"No"</span>)</span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>     <span class="co">#counts_summary &lt;- rbind(counts,not_in_counts)</span></span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>     counts_summary <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">rbind</span>(counts,not_in_counts),<span class="dv">2</span>,as.character)<span class="co">#rbind(apply(counts,2,as.character),apply(not_in_counts,2,as.character))</span></span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_d <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">merged_data</span>()),</span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a>    )  </span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_e <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">processed_data</span>()),</span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>    )  </span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render the data table only if the checkbox is checked</span></span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_f <span class="ot">&lt;-</span> <span class="fu">renderDT</span>({</span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>checklist)</span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a>    <span class="co">#manual_check()</span></span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_f</span>()),</span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_g <span class="ot">&lt;-</span> <span class="fu">renderDT</span>({</span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>checklist)</span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">manual_check</span>()),</span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a>  <span class="do">######### Download ############</span></span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>downloadData <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"merged_data.csv"</span>)</span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>(<span class="fu">merged_data</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>exportData <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
-<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
-<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"auto_checked.csv"</span>)</span>
-<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>(<span class="fu">processed_data</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>manual_input <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
-<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
-<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"manual_checked.csv"</span>)</span>
-<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
-<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>( <span class="fu">manual_check</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"File Merger"</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"1. Convert Retrieval Reference Number to General"</span>),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_a"</span>, <span class="st">"Transaction file (CSV or XLSX)"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"2a. Convert Retrieval Ref to General"</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"2b. Remove all rows above Merchant ID "</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_b"</span>, <span class="st">"Sales (CSV or XLSX)"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"3. Remove all rows above Summary Transaction Slip"</span>),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"   Output: Merged File; Auto-Checked File "</span>),</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file_c"</span>, <span class="st">"Funded Deposit (CSV or XLSX)"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"------------------------------------------"</span>),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"4. (Optional) Upload a payportal list. Output: Manual-Checked File"</span>),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"Must contain a column called **Merchant Reference Number**!"</span>),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkboxInput</span>(<span class="st">"checklist"</span>, <span class="st">"Manual Check"</span>, <span class="at">value =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fileInput</span>(<span class="st">"file"</span>, <span class="st">"Checklist (CSV or XLSX)"</span>, <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".csv"</span>, <span class="st">".xlsx"</span>)),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_a_b"</span>),</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_b_c"</span>),</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">uiOutput</span>(<span class="st">"merge_vars_checklist"</span>),</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">br</span>(),</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"A: Contains Summary Transaction Slip &amp; Retrival Ref (matched &amp; unmatched)"</span>),</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"downloadData"</span>, <span class="st">"Download Merged File"</span>),</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"B: Contains non-empty Summary Transaction Slip, count matched Retrival Ref &amp; Merchant ref"</span>),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"exportData"</span>,   <span class="st">"Download Auto-Checkeds File"</span>),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>      <span class="co">#p("------------------------------------------"),</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>(<span class="st">"C: Using uploaded checklist to match and count non-empty Summary Transaction Slip, Retrival Ref &amp; Merchant ref"</span>),</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">downloadButton</span>(<span class="st">"manual_input"</span>, <span class="st">"Download Manual-Checked File"</span>)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Transaction List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_a"</span>)),</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Sales List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_b"</span>)),</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Funded Deposit List"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_c"</span>)),</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Merged File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_d"</span>)),</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Auto-Checked File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_e"</span>)),</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Checklist"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_f"</span>)),</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Manual-Checked File"</span>, DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"table_g"</span>))</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>  read_data <span class="ot">&lt;-</span> <span class="cf">function</span>(file) {</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file)) {</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    ext <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_ext</span>(file<span class="sc">$</span>name)</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ext <span class="sc">==</span> <span class="st">"csv"</span>) {</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file<span class="sc">$</span>datapath)</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (ext <span class="sc">==</span> <span class="st">"xlsx"</span>) {</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file<span class="sc">$</span>datapath)</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>  data_a <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>    da <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_a)<span class="sc">%&gt;%</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Retrieval_Ref =</span> <span class="st">`</span><span class="at">Retrieval Reference Number</span><span class="st">`</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>, Retrieval_Ref,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,Amount) </span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(da)</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove all rows above Merchant ID and change </span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>  data_b <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>file_b)</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>    db <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_b)<span class="sc">%&gt;%</span> </span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Retrieval_Ref =</span> <span class="st">`</span><span class="at">Retrieval Ref.</span><span class="st">`</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>, Retrieval_Ref, <span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Payment Transaction Slip</span><span class="st">`</span>, <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>)</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>    db </span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove all rows above Summary Transaction Slip</span></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>  data_c <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>file_c)</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    dc <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file_c)</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    dc<span class="ot">&lt;-</span> dc[<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Payment'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Sale'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'/'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)<span class="sc">&amp;</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>              <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Summary'</span>, dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>),]</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>    dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(dc<span class="sc">$</span><span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>)</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>    <span class="co">#colnames(dc)[2:7] &lt;-  c("Summary Transaction Slip","Transaction Type","Transaction Count", "Reversal Flag",</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                   "Currency","Gross Amount", "Net Amount")</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(dc) </span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_a_b <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_a(), data_b())</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_a</span>()), <span class="fu">names</span>(<span class="fu">data_b</span>()))</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_ab"</span>, <span class="st">"Select merge variable for Transaction and Sales"</span>, <span class="at">choices =</span> var_names)</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_b_c <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_b(), data_c())</span></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file_a <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get(input$file_a, 'package:datasets')</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">data_b</span>()), <span class="fu">names</span>(<span class="fu">data_c</span>()))</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_bc"</span>, <span class="st">"Select merge variable for Sales and Funded Depos it"</span>, <span class="at">choices =</span> var_names)</span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>merge_vars_checklist <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>checklist <span class="sc">!=</span> <span class="cn">FALSE</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get(input$file_a, 'package:datasets')</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>    var_names <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(<span class="fu">merged_data</span>()), <span class="fu">names</span>(<span class="fu">data_f</span>()))</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var_checklist"</span>, <span class="st">"Select merge variable for Merge data and Checklist"</span>, <span class="at">choices =</span> var_names)</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>  data_f <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(input<span class="sc">$</span>file <span class="sc">!=</span> <span class="st">""</span>, <span class="at">label =</span> <span class="st">"data set"</span>)</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>    dt <span class="ot">&lt;-</span> <span class="fu">read_data</span>(input<span class="sc">$</span>file)</span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(dt)</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_a <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_a())</span></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_a</span>()),</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>    )  </span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_b <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_b())</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_b</span>()),</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>    )  </span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_c <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>    <span class="co">#req(data_c())</span></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_c</span>()),</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a>    )  </span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>  merged_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="fu">data_c</span>(), input<span class="sc">$</span>var_ab, input<span class="sc">$</span>var_bc)</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>    temp_ab <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">data_a</span>(), <span class="fu">data_b</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_ab)</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>(dplyr<span class="sc">::</span><span class="fu">full_join</span>(temp_ab, <span class="fu">data_c</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_bc))</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>      <span class="fu">merged_data</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Check_merchantID</span><span class="st">`</span>,Check_Retrieval_Ref,<span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a>             <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply</span>(df,<span class="dv">2</span>,as.character)</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>  manual_check <span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>())</span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="fu">merged_data</span>(),<span class="fu">data_f</span>(), <span class="at">by =</span> input<span class="sc">$</span>var_checklist)</span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>    dt_org <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">`</span><span class="at">Date and Time</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Date</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Count</span><span class="st">`</span>,<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>,<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>,Retrieval_Ref,</span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Transaction Gross</span><span class="st">`</span>,<span class="st">`</span><span class="at">Transaction Net</span><span class="st">`</span>,<span class="st">`</span><span class="at">Gross Amount</span><span class="st">`</span>,<span class="st">`</span><span class="at">Net Amount</span><span class="st">`</span>,Currency,<span class="st">`</span><span class="at">Reversal Flag</span><span class="st">`</span>,</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a>               <span class="st">`</span><span class="at">Transaction Type</span><span class="st">`</span>)</span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a>    counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">""</span>)<span class="sc">|&gt;</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">Merchant Reference Number</span><span class="st">`</span>), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(Retrieval_Ref), <span class="at">countx =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"Yes"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-</span>count, <span class="sc">-</span>countx)</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>    not_in_counts <span class="ot">&lt;-</span> dt_org <span class="sc">|&gt;</span></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">Summary Transaction Slip</span><span class="st">`</span>))<span class="sc">|&gt;</span></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_merchantID =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Check_Retrieval_Ref =</span> <span class="fu">list</span>(<span class="dv">0</span>))<span class="sc">|&gt;</span></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">has_Summary_Transaction_Slip =</span> <span class="st">"No"</span>)</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>     <span class="co">#counts_summary &lt;- rbind(counts,not_in_counts)</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>     counts_summary <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">rbind</span>(counts,not_in_counts),<span class="dv">2</span>,as.character)<span class="co">#rbind(apply(counts,2,as.character),apply(not_in_counts,2,as.character))</span></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>(counts_summary)</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_d <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">merged_data</span>()),</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>    )  </span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_e <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">merged_data</span>())</span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">processed_data</span>()),</span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>    )  </span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render the data table only if the checkbox is checked</span></span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_f <span class="ot">&lt;-</span> <span class="fu">renderDT</span>({</span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>checklist)</span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a>    <span class="co">#manual_check()</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">data_f</span>()),</span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>table_g <span class="ot">&lt;-</span> <span class="fu">renderDT</span>({</span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>checklist)</span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="at">data =</span> <span class="fu">unique</span>(<span class="fu">manual_check</span>()),</span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>                  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">100</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a>  <span class="do">######### Download ############</span></span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>downloadData <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"merged_data.csv"</span>)</span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>(<span class="fu">merged_data</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>exportData <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"auto_checked.csv"</span>)</span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>(<span class="fu">processed_data</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>manual_input <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="fu">Sys.Date</span>(), <span class="st">"manual_checked.csv"</span>)</span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">unique</span>( <span class="fu">manual_check</span>()), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.</code></pre>
 </div>
